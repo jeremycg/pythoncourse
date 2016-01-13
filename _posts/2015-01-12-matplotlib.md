@@ -183,7 +183,7 @@ matplotlib is a python 2D plotting library which produces publication quality fi
     show()
 
 
-![png](/assets/matplotlib/output_3_0.png)
+![png](/pythoncourse/assets/matplotlib/output_3_0.png)
 
 
 ---
@@ -199,7 +199,7 @@ matplotlib is a python 2D plotting library which produces publication quality fi
     show()
 
 
-![png](/assets/matplotlib/output_5_0.png)
+![png](/pythoncourse/assets/matplotlib/output_5_0.png)
 
 
 ---
@@ -215,7 +215,7 @@ matplotlib is a python 2D plotting library which produces publication quality fi
     show()
 
 
-![png](/assets/matplotlib/output_7_0.png)
+![png](/pythoncourse/assets/matplotlib/output_7_0.png)
 
 
 ---
@@ -231,7 +231,7 @@ matplotlib is a python 2D plotting library which produces publication quality fi
     show()
 
 
-![png](/assets/matplotlib/output_9_0.png)
+![png](/pythoncourse/assets/matplotlib/output_9_0.png)
 
 
 ---
@@ -256,7 +256,7 @@ matplotlib is a python 2D plotting library which produces publication quality fi
     show()
 
 
-![png](/assets/matplotlib/output_11_0.png)
+![png](/pythoncourse/assets/matplotlib/output_11_0.png)
 
 
 
@@ -275,7 +275,7 @@ matplotlib is a python 2D plotting library which produces publication quality fi
     show()
 
 
-![png](/assets/matplotlib/output_12_0.png)
+![png](/pythoncourse/assets/matplotlib/output_12_0.png)
 
 
 
