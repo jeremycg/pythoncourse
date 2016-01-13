@@ -9,7 +9,7 @@
 title: Python for Data Science
 email: jeremycgray@gmail.com
 description: A website to house content for the Python for Data Science course taught by Jeremy Gray
-baseurl: "pythoncourse" # the subpath of your site, e.g. /blog
+baseurl: "/pythoncourse" # the subpath of your site, e.g. /blog
 url: "http://jeremy.kiwi.nz/pythoncourse" # the base hostname & protocol for your site
 twitter_username:
 github_username:
