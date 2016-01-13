@@ -175,7 +175,7 @@ matplotlib is a python 2D plotting library which produces publication quality fi
 
 ---
 
-## ggplot2 “Hello, world!”
+## matplotlib “Hello, world!”
 
 
 
