@@ -183,7 +183,7 @@ matplotlib is a python 2D plotting library which produces publication quality fi
     show()
 
 
-![png](/pythoncourse/assets/matplotlib/output_3_0.png)
+![png](/pythoncourse/pythoncourse/assets/matplotlib/output_3_0.png)
 
 
 ---
