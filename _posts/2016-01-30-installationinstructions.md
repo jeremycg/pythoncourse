@@ -17,7 +17,7 @@ reproducibility of analysis.
 We will be using [Anaconda](https://www.continuum.io/why-anaconda) from
 continuum analytics as our Python distribution for this course. This is so we
 can start with a working Python platform, with iPython, Jupyter notebooks and
-and IDE, Spyder.
+an IDE, Spyder.
 
 We will use Python 3.5 for the course, rather than 2.7 - Python 2.7 is due to
 hit [end of life in 2020](http://legacy.python.org/dev/peps/pep-0373/) and all
