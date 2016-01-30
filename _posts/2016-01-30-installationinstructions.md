@@ -77,14 +77,14 @@ not work, try installing the launcher and retrying:
 conda install -f launcher
 conda install -f node-webkit
 {% endhighlight %}
-![launcher](/assets/install/launcher.png)
+![launcher](/pythoncourse/assets/install/launcher.png)
 
 ### iPython-QtConsole
 
 iPython-QtConsole an advanced interpreter, with the large number of included
 modules of iPython and the ability to include graphics. Launch it:
 
-![ipythonqt](/assets/install/ipythonqt.png)
+![ipythonqt](/pythoncourse//assets/install/ipythonqt.png)
 
 In the window, type out the following commands (don't worry if you don't
 understand them yet). You should get the following graph in your window.
@@ -99,7 +99,7 @@ plt.xlabel('X');
 {% endhighlight %}
 
 
-![png](/assets/install/output_27_1.png)
+![png](/pythoncourse/assets/install/output_27_1.png)
 
 
 ### Spyder
@@ -107,7 +107,7 @@ plt.xlabel('X');
 Spyder is an IDE for Python, and allows us to write, run and troubleshoot
 scripts interactively. Launch Spyder:
 
-![spyder](/assets/install/spyder.png)
+![spyder](/pythoncourse/assets/install/spyder.png)
 
 The large left pane is a script editor, the right upper pane allows us to
 explore the variables, objects and functions we have in memory, and the right
@@ -129,11 +129,11 @@ s://github.com/ipython/ipython/wiki/IPython%20kernels%20for%20other%20languages)
 greater detail later in the course.
 
 These instructions are written in a notebook, download them here -
-[download](/assets/install/notebook.zip), unzip, then open ipython-notebook. It should
+[download](/pythoncourse/assets/install/notebook.zip), unzip, then open ipython-notebook. It should
 launch a browser window pointing to [http://localhost:8888/tree](http://localhost:8888/tree) if not, click the
 link to open it:
 
-![ipython1](/assets/install/ipython1.png)
+![ipython1](/pythoncourse/assets/install/ipython1.png)
 
 This is a locally served webpage, no files leave your local computer.
 
@@ -162,7 +162,7 @@ plt.ylabel('position');
 {% endhighlight %}
 
 
-![png](/assets/install/output_36_0.png)
+![png](/pythoncourse/assets/install/output_36_0.png)
 
 
 ## Wrap-up
