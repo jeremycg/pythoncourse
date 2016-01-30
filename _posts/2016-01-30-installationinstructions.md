@@ -61,7 +61,7 @@ Python 3.5.1 :: Anaconda 2.4.1 (64 bit)
 If not, make sure you downloaded the correct version above, or make sure you
 know why (if you are using another version of Python).
 
-Using conda, we can also install alternate environments, for a walkthrough of
+Using conda, we can also install alternate environments, for a walk-through of
 how to use Python 2.7 as well as 3.5 see [this
 website](http://conda.pydata.org/docs/py2or3.html)
 
@@ -171,7 +171,7 @@ You should now have installed Python 3.5, and taken a brief tour of the 3
 interfaces we will use for the rest of the course.
 
 If anything gave errors, the first step is to uninstall, redownload the
-installer and resinstall. If you are still having problems, ask one of your
+installer and reinstall. If you are still having problems, ask one of your
 colleagues, or leave a comment in the comment box below (NB please be aware,
 comments are hosted on disqus and public, please do not give out any senstive
 information).
