@@ -29,7 +29,7 @@ Go to the [download page for anaconda](https://www.continuum.io/downloads) and
 download the installer for your OS. Make sure you get the 3.5 version, not 2.7.
 Follow the installation instructions for your OS.
 
-![install](/assets/install/websiteinstall.png)
+![install](/pythoncourse/assets/install/websiteinstall.png)
 
 ### Verifying and Updating
 
