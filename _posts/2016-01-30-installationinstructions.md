@@ -8,11 +8,11 @@ comments: true
 
 ### Introduction
 
-Welcome to the Python Course!
+Welcome to Python @ Precima!
 
-Over the next 10 weeks, we will go over the basic python data types and syntax,
-the current data science stack, data visualisation and best practices for
-reproducibility of analysis.
+Over the next 10 weeks, we will go over how to use Python for data science. We 
+will cover data types and structures, syntax, the current data science stack, 
+data visualisation, best practices for reproducibility of analysis, and so on.
 
 We will be using [Anaconda](https://www.continuum.io/why-anaconda) from
 continuum analytics as our Python distribution for this course. This is so we
@@ -33,7 +33,7 @@ Follow the installation instructions for your OS.
 
 ### Verifying and Updating
 
-From there, open your command line and enter:
+From there, open your command line (use Windows Powershell or type 'cmd' in Start>Run) and enter:
 {% highlight bash %}
 conda --version
 {% endhighlight %}
