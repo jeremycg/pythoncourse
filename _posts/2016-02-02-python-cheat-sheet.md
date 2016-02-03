@@ -203,7 +203,7 @@ or conda at command line
 #Modules are imported using 'import'
 import numpy as np
 import pandas as pd
-#now if we want to use a numpy function, we use pd.function
+#now if we want to use a numpy function, we use np.function
 
 #we can import certain functions, so we don't have to use the module name
 from pandas import Series, DataFrame
