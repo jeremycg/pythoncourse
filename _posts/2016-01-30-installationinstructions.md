@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Installation Instructions
+title: "00 Installation Instructions"
 author: Jeremy
 tags:
 comments: true
