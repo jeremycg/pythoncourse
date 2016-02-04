@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "00 Installation Instructions Python @ Precima – Applied Statistics Stream"
+title: "00 Installation Instructions - Python @ Precima – Applied Statistics Stream"
 author: Jeremy
 tags:
 comments: true
