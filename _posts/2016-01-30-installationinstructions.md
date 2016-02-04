@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "00 Installation Instructions"
+title: "00 Installation Instructions Python @ Precima – R&D Stream"
 author: Jeremy
 tags:
 comments: true
