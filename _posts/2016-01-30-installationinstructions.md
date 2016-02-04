@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "00 Installation Instructions - Python @ Precima – R&D Stream"
+title: "00 Installation Instructions"
 author: Jeremy
 tags:
+ - R&D stream
 comments: true
 ---
 
@@ -10,8 +11,8 @@ comments: true
 
 Welcome to Python @ Precima!
 
-Over the next 10 weeks, we will go over how to use Python for data science. We 
-will cover data types and structures, syntax, the current data science stack, 
+Over the next 10 weeks, we will go over how to use Python for data science. We
+will cover data types and structures, syntax, the current data science stack,
 data visualisation, best practices for reproducibility of analysis, and so on.
 
 We will be using [Anaconda](https://www.continuum.io/why-anaconda) from

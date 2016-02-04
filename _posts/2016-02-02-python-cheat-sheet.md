@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "01 Python Cheat Sheet - Python @ Precima – R&D Stream"
+title: "01 Python Cheat Sheet"
 author: Jeremy
-tags: R&D
+tags:
+ - R&D stream
 comments: true
 ---
 

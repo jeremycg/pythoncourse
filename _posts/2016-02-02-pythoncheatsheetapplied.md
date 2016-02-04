@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "01 Python Cheat Sheet - Python @ Precima – Applied Statistics Stream"
+title: "01 Python Cheat Sheet"
 author: Jeremy
-tags: Applied
+tags:
+ - Applied stream
 comments: true
 ---
 
