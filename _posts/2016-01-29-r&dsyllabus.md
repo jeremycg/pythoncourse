@@ -1,13 +1,34 @@
 ---
 layout: post
-title: "00 Syllabus and Logistics"
+title: "Syllabus and Logistics"
 author: Jeremy
 tags:
  - R&D stream
 comments: true
 ---
-The R&D stream will meet on Mondays at 1300-1430 in the
-Ontario room on the 6th floor of 438 University, if available.
+The R&D stream will meet on Mondays from 1:00-2:30PM EST in the Ontario room (when available) on the 6th floor of 438 University. Since Monday, Feb 15th is a holiday, the first R&D class will be on Tuesday, the 16th at 1PM EST.
+
+Date & Room Schedule (might be updated as course progresses)
+
+1. Tuesday, Feb 16th – TBA
+
+2. Monday, Feb 22nd – Manitoba (6th floor)
+
+3. Monday, Feb 29th – Manitoba
+
+4.      Monday, Mar 7th –  Ontario (6th floor)
+
+5.      Monday, Mar 14th – Ontario
+
+6.      Monday, Mar 21st – Ontario
+
+7.      Monday, Mar 28th – Ontario
+
+8.      Monday, Apr 4th – Ontario
+
+9.      Monday, Apr 11th – Ontario
+
+10.     Monday, Apr 18th – Ontario
 
 Below is an outline of the course - lessons may be added or modified as the course
 progresses.
@@ -49,27 +70,26 @@ progresses.
 *	Advanced data munging
 *	Time series in Pandas
 
-### Lesson 6: Work flow
+### Lesson 5: Work flow
 
 * Working on the server
 *	Working with SQL and other data
 *	Jupyter Notebooks
 *	Script organization and modules
 
-### Lesson 7: Exploratory analysis in Python
+### Lesson 6: Exploratory analysis in Python
 
 *	Linear models, t-tests, ANOVA, igraph
 *	Methods available in SciPy, NumPy and scikit packages
 *	Matplotlib/seaborn, Pandas plotting, ggplot for Python
 *	Saving, embedding and using plots
 
-### Lesson 8: Machine Learning and scikit-learn
+### Lesson 7: Machine Learning and scikit-learn
 
-* Text mining and regular expressions
 *	Data formats and methods
 *	Unsupervised clustering example – kmeans
 
-### Lesson 9: scikit-learn 2
+### Lesson 8: scikit-learn 2
 
 * Feature selection
 * Model validation
@@ -77,9 +97,15 @@ progresses.
 * Supervised clustering example – random forest
 
 
-### Lesson 10: Optimization
+### Lesson 9: Optimization
 
 *	Advanced Python coding
 *	Profiling, debugging and testing code
 * Parallel processing
 * Working out of memory
+
+### Lesson 10: Text wrangling/Advanced Python
+
+* Regular expressions
+* NLP
+* Advanced PYthon coding

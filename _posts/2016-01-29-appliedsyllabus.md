@@ -1,14 +1,37 @@
 ---
 layout: post
-title: "00 Syllabus and Logistics"
+title: "Syllabus and Logistics"
 author: Jeremy
 tags:
  - Applied Statistics stream
 comments: true
 ---
 
-The Applied statistics stream will meet on Wednesdays at 1430-1600 in the
-Ontario room on the 6th floor of 438 University, if available.
+Applied section:
+
+The Applied Statistics stream will meet on Wednesdays from 2:30-4:00PM EST in the Ontario room (when available) on the 6th floor of 438 University. The first class will be on Wednesday, Feb 10th.
+
+Date & Room Schedule (might be updated as course progresses)
+
+1.      Wednesday, Feb 10th – Ontario (6th floor)
+
+2.      Wednesday, Feb 17th – Manitoba (6th floor)
+
+3.      Wednesday, Feb 24th – Ontario
+
+4.      Wednesday, Mar 2nd – Ontario
+
+5.      Wednesday, Mar 9th – Ontario
+
+6.      Wednesday, Mar 16th – Ontario
+
+7.      Wednesday, Mar 23rd – Ontario
+
+8.      Wednesday, Mar 30th – Manitoba
+
+9.      Wednesday, Apr 6th – Ontario
+
+10.   Wednesday, Apr 13th – British Columbia (6th floor)
 
 Below is an outline of the course - lessons may be added or modified as the course
 progresses.
@@ -54,7 +77,7 @@ progresses.
 
 ### Lesson 6: Work flow
 
-* Working on the server 
+* Working on the server
 *	Working with SQL and other data
 *	Jupyter Notebooks
 *	Script organization and modules
