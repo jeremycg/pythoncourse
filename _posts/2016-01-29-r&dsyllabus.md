@@ -10,7 +10,7 @@ The R&D stream will meet on Mondays from 1:00-2:30PM EST in the Ontario room (wh
 
 Date & Room Schedule (might be updated as course progresses)
 
-1. Tuesday, Feb 16th – TBA
+1. Tuesday, Feb 16th – Abbotsford (3rd floor)
 
 2. Monday, Feb 22nd – Manitoba (6th floor)
 

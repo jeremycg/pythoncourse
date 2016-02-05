@@ -80,6 +80,7 @@ progresses.
 * Working on the server
 *	Working with SQL
 *	Script organization and modules
+*	Jupyter Notebooks
 
 
 ### Lesson 7: Basic statistics in Python
@@ -95,7 +96,6 @@ progresses.
 
 ### Lesson 9: Reproducible Research in Python
 
-*	Jupyter Notebooks
 *	Basic git
 *	MarkDown
 * Make and Pydoit
@@ -103,5 +103,6 @@ progresses.
 
 ### Lesson 10: Machine Learning and scikit-learn
 
+* Introduction to sci-kit-learn
 *	Data formats and methods
 *	Unsupervised clustering example – kmeans
