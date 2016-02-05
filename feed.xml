@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Python for Data Science</title>
-    <description>A website to house content for the Python for Data Science course taught by Jeremy Gray</description>
+    <title>Python @ Precima</title>
+    <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 04 Feb 2016 13:52:19 -0500</pubDate>
-    <lastBuildDate>Thu, 04 Feb 2016 13:52:19 -0500</lastBuildDate>
+    <pubDate>Fri, 05 Feb 2016 14:56:02 -0500</pubDate>
+    <lastBuildDate>Fri, 05 Feb 2016 14:56:02 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -447,7 +447,7 @@ items in Python are objects.&lt;/p&gt;
         <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/02/02/pythoncheatsheetapplied.html</link>
         <guid isPermaLink="true">http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/02/02/pythoncheatsheetapplied.html</guid>
         
-        <category>Applied stream</category>
+        <category>Applied Statistics stream</category>
         
         
       </item>
@@ -1060,7 +1060,7 @@ information).&lt;/p&gt;
         <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/01/30/installationinstructionsapplied.html</link>
         <guid isPermaLink="true">http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/01/30/installationinstructionsapplied.html</guid>
         
-        <category>Applied stream</category>
+        <category>Applied Statistics stream</category>
         
         
       </item>
