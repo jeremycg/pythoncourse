@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 05 Feb 2016 17:59:21 -0500</pubDate>
-    <lastBuildDate>Fri, 05 Feb 2016 17:59:21 -0500</lastBuildDate>
+    <pubDate>Fri, 05 Feb 2016 18:09:10 -0500</pubDate>
+    <lastBuildDate>Fri, 05 Feb 2016 18:09:10 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -1243,7 +1243,7 @@ information).&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;
-    &lt;p&gt;Tuesday, Feb 16th – TBA&lt;/p&gt;
+    &lt;p&gt;Tuesday, Feb 16th – Abbotsford (3rd floor)&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Monday, Feb 22nd – Manitoba (6th floor)&lt;/p&gt;
@@ -1477,6 +1477,7 @@ progresses.&lt;/p&gt;
   &lt;li&gt;Working on the server&lt;/li&gt;
   &lt;li&gt;Working with SQL&lt;/li&gt;
   &lt;li&gt;Script organization and modules&lt;/li&gt;
+  &lt;li&gt;Jupyter Notebooks&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;lesson-7-basic-statistics-in-python&quot;&gt;Lesson 7: Basic statistics in Python&lt;/h3&gt;
@@ -1497,7 +1498,6 @@ progresses.&lt;/p&gt;
 &lt;h3 id=&quot;lesson-9-reproducible-research-in-python&quot;&gt;Lesson 9: Reproducible Research in Python&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Jupyter Notebooks&lt;/li&gt;
   &lt;li&gt;Basic git&lt;/li&gt;
   &lt;li&gt;MarkDown&lt;/li&gt;
   &lt;li&gt;Make and Pydoit&lt;/li&gt;
@@ -1507,6 +1507,7 @@ progresses.&lt;/p&gt;
 &lt;h3 id=&quot;lesson-10-machine-learning-and-scikit-learn&quot;&gt;Lesson 10: Machine Learning and scikit-learn&lt;/h3&gt;
 
 &lt;ul&gt;
+  &lt;li&gt;Introduction to sci-kit-learn&lt;/li&gt;
   &lt;li&gt;Data formats and methods&lt;/li&gt;
   &lt;li&gt;Unsupervised clustering example – kmeans&lt;/li&gt;
 &lt;/ul&gt;
