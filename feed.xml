@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 05 Feb 2016 14:56:02 -0500</pubDate>
-    <lastBuildDate>Fri, 05 Feb 2016 14:56:02 -0500</lastBuildDate>
+    <pubDate>Fri, 05 Feb 2016 15:25:59 -0500</pubDate>
+    <lastBuildDate>Fri, 05 Feb 2016 15:25:59 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -1231,6 +1231,217 @@ information).&lt;/p&gt;
         <guid isPermaLink="true">http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/01/30/installationinstructions.html</guid>
         
         <category>R&amp;D stream</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>00 Syllabus and Logistics</title>
+        <description>&lt;p&gt;The R&amp;amp;D stream will meet on Mondays at 1300-1430 in the
+Ontario room on the 6th floor of 438 University, if available.&lt;/p&gt;
+
+&lt;p&gt;Below is an outline of the course - lessons may be added or modified as the course
+progresses.&lt;/p&gt;
+
+&lt;h3 id=&quot;lesson-1-control-flow-and-basic-operations&quot;&gt;Lesson 1: Control flow and Basic operations&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Introduction to Anaconda and IPython&lt;/li&gt;
+  &lt;li&gt;Scalar Data types&lt;/li&gt;
+  &lt;li&gt;Basic Data Structures/Sequences&lt;/li&gt;
+  &lt;li&gt;If, else, while and for loops&lt;/li&gt;
+  &lt;li&gt;Ternary expressions&lt;/li&gt;
+  &lt;li&gt;List/Set/Dict comprehensions&lt;/li&gt;
+  &lt;li&gt;“Pythonic” programming&lt;/li&gt;
+  &lt;li&gt;Built in functions and methods&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-2-functions-and-classes&quot;&gt;Lesson 2: Functions and Classes&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Writing functions&lt;/li&gt;
+  &lt;li&gt;Function scope and side effects&lt;/li&gt;
+  &lt;li&gt;Lambda functions&lt;/li&gt;
+  &lt;li&gt;Closures&lt;/li&gt;
+  &lt;li&gt;Classes: Object orientated programming in Python&lt;/li&gt;
+  &lt;li&gt;Functions vs methods&lt;/li&gt;
+  &lt;li&gt;Generating classes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-3-numpy-and-pandas-1&quot;&gt;Lesson 3: NumPy and Pandas 1&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Modules in Python&lt;/li&gt;
+  &lt;li&gt;Vectorization in NumPy&lt;/li&gt;
+  &lt;li&gt;Expansion to Pandas&lt;/li&gt;
+  &lt;li&gt;Reading, displaying and exporting csv files&lt;/li&gt;
+  &lt;li&gt;Basic subsetting, functions and methods on dataframes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-4-numpy-and-pandas-2&quot;&gt;Lesson 4: NumPy and Pandas 2&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;Reshaping, pivoting and aggregating using Pandas&lt;/li&gt;
+  &lt;li&gt;Advanced data munging&lt;/li&gt;
+  &lt;li&gt;Time series in Pandas&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-6-work-flow&quot;&gt;Lesson 6: Work flow&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Working on the server&lt;/li&gt;
+  &lt;li&gt;Working with SQL and other data&lt;/li&gt;
+  &lt;li&gt;Jupyter Notebooks&lt;/li&gt;
+  &lt;li&gt;Script organization and modules&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-7-exploratory-analysis-in-python&quot;&gt;Lesson 7: Exploratory analysis in Python&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Linear models, t-tests, ANOVA, igraph&lt;/li&gt;
+  &lt;li&gt;Methods available in SciPy, NumPy and scikit packages&lt;/li&gt;
+  &lt;li&gt;Matplotlib/seaborn, Pandas plotting, ggplot for Python&lt;/li&gt;
+  &lt;li&gt;Saving, embedding and using plots&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-8-machine-learning-and-scikit-learn&quot;&gt;Lesson 8: Machine Learning and scikit-learn&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Text mining and regular expressions&lt;/li&gt;
+  &lt;li&gt;Data formats and methods&lt;/li&gt;
+  &lt;li&gt;Unsupervised clustering example – kmeans&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-9-scikit-learn-2&quot;&gt;Lesson 9: scikit-learn 2&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Feature selection&lt;/li&gt;
+  &lt;li&gt;Model validation&lt;/li&gt;
+  &lt;li&gt;Dimension reduction&lt;/li&gt;
+  &lt;li&gt;Supervised clustering example – random forest&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-10-optimization&quot;&gt;Lesson 10: Optimization&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Advanced Python coding&lt;/li&gt;
+  &lt;li&gt;Profiling, debugging and testing code&lt;/li&gt;
+  &lt;li&gt;Parallel processing&lt;/li&gt;
+  &lt;li&gt;Working out of memory&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 29 Jan 2016 00:00:00 -0500</pubDate>
+        <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/01/29/r&dsyllabus.html</link>
+        <guid isPermaLink="true">http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/01/29/r&dsyllabus.html</guid>
+        
+        <category>R&amp;D stream</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>00 Syllabus and Logistics</title>
+        <description>&lt;p&gt;The Applied statistics stream will meet on Wednesdays at 1430-1600 in the
+Ontario room on the 6th floor of 438 University, if available.&lt;/p&gt;
+
+&lt;p&gt;Below is an outline of the course - lessons may be added or modified as the course
+progresses.&lt;/p&gt;
+
+&lt;h3 id=&quot;lesson-1-introduction-to-python&quot;&gt;Lesson 1: Introduction to Python&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Introduction to Anaconda and IPython&lt;/li&gt;
+  &lt;li&gt;Python 3 versus 2.7&lt;/li&gt;
+  &lt;li&gt;Scalar Data types&lt;/li&gt;
+  &lt;li&gt;Basic Data Structures/Sequences&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-2-control-flow-and-basic-operations&quot;&gt;Lesson 2: Control flow and Basic operations&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If, else, while and for loops&lt;/li&gt;
+  &lt;li&gt;Ternary expressions&lt;/li&gt;
+  &lt;li&gt;List/Set/Dict comprehensions&lt;/li&gt;
+  &lt;li&gt;“Pythonic” programming&lt;/li&gt;
+  &lt;li&gt;Built in functions and methods&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-3-functions-and-classes&quot;&gt;Lesson 3: Functions and Classes&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Writing functions&lt;/li&gt;
+  &lt;li&gt;Function scope and side effects&lt;/li&gt;
+  &lt;li&gt;Lambda functions&lt;/li&gt;
+  &lt;li&gt;Closures&lt;/li&gt;
+  &lt;li&gt;Classes: Object orientated programming in Python&lt;/li&gt;
+  &lt;li&gt;Functions vs methods&lt;/li&gt;
+  &lt;li&gt;Generating classes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-4-numpy-and-pandas-1&quot;&gt;Lesson 4: NumPy and Pandas 1&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Modules in Python&lt;/li&gt;
+  &lt;li&gt;Vectorization in NumPy&lt;/li&gt;
+  &lt;li&gt;Expansion to Pandas&lt;/li&gt;
+  &lt;li&gt;Reading, displaying and exporting csv files&lt;/li&gt;
+  &lt;li&gt;Basic subsetting, functions and methods on dataframes&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-5-numpy-and-pandas-2&quot;&gt;Lesson 5: NumPy and Pandas 2&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Reshaping, pivoting and aggregating using Pandas&lt;/li&gt;
+  &lt;li&gt;Advanced data munging&lt;/li&gt;
+  &lt;li&gt;Time series in Pandas&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-6-work-flow&quot;&gt;Lesson 6: Work flow&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Working on the server&lt;/li&gt;
+  &lt;li&gt;Working with SQL and other data&lt;/li&gt;
+  &lt;li&gt;Jupyter Notebooks&lt;/li&gt;
+  &lt;li&gt;Script organization and modules&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-7-basic-statistics-in-python&quot;&gt;Lesson 7: Basic statistics in Python&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Linear models, t-tests, ANOVA, networks&lt;/li&gt;
+  &lt;li&gt;Basic clustering&lt;/li&gt;
+  &lt;li&gt;Methods available in SciPy, NumPy and scikit packages&lt;/li&gt;
+  &lt;li&gt;Data munging&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-8-graphing-and-data-visualization&quot;&gt;Lesson 8: Graphing and data Visualization&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Matplotlib/Seaborn, Pandas plotting, ggplot for Python&lt;/li&gt;
+  &lt;li&gt;Saving, embedding and using plots&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-9-reproducible-research-in-python&quot;&gt;Lesson 9: Reproducible Research in Python&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Basic git&lt;/li&gt;
+  &lt;li&gt;MarkDown&lt;/li&gt;
+  &lt;li&gt;Make and Pydoit&lt;/li&gt;
+  &lt;li&gt;Profiling, debugging and unit testing&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-10-machine-learning-and-scikit-learn&quot;&gt;Lesson 10: Machine Learning and scikit-learn&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Text mining and regular expressions&lt;/li&gt;
+  &lt;li&gt;Data formats and methods&lt;/li&gt;
+  &lt;li&gt;Unsupervised clustering example – kmeans&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 29 Jan 2016 00:00:00 -0500</pubDate>
+        <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/01/29/appliedsyllabus.html</link>
+        <guid isPermaLink="true">http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/01/29/appliedsyllabus.html</guid>
+        
+        <category>Applied Statistics stream</category>
         
         
       </item>
