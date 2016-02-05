@@ -41,65 +41,64 @@ progresses.
 * Introduction to Anaconda and IPython
 *	Scalar Data types
 *	Basic Data Structures/Sequences
-*	If, else, while and for loops
-*	Ternary expressions
-*	List/Set/Dict comprehensions
+*	Loops and expressions
+*	List comprehensions
 *	“Pythonic” programming
-*	Built in functions and methods
 
 ### Lesson 2: Functions and Classes
 
 *	Writing functions
 *	Function scope and side effects
 *	Lambda functions
-*	Closures
 *	Classes: Object orientated programming in Python
-*	Functions vs methods
 *	Generating classes
 
 ### Lesson 3: NumPy and Pandas 1
 
 *	Modules in Python
 *	Vectorization in NumPy
-*	Expansion to Pandas
+*	Panda DataFrames
 *	Reading, displaying and exporting csv files
-*	Basic subsetting, functions and methods on dataframes
+*	Subsetting, functions and methods on dataframes
 
 ### Lesson 4: NumPy and Pandas 2
 *	Reshaping, pivoting and aggregating using Pandas
 *	Advanced data munging
-*	Time series in Pandas
+*	Time series analysis
 
-### Lesson 5: Work flow
+### Lesson 5: Python in Practice
 
 * Working on the server
-*	Working with SQL and other data
-*	Jupyter Notebooks
+*	Working with SQL and other data sources
+*	Jupyter notebooks
 *	Script organization and modules
+* git
+* pydoit
 
 ### Lesson 6: Exploratory analysis in Python
 
-*	Linear models, t-tests, ANOVA, igraph
-*	Methods available in SciPy, NumPy and scikit packages
-*	Matplotlib/seaborn, Pandas plotting, ggplot for Python
-*	Saving, embedding and using plots
+*	Linear and non-linear models
+* Model fitting and comparison
+* Network analysis
+*	Plotting with Matplotlib and Seaborn
 
 ### Lesson 7: Machine Learning and scikit-learn
 
 *	Data formats and methods
-*	Unsupervised clustering example – kmeans
+*	Unsupervised clustering
+* Model validation
 
 ### Lesson 8: scikit-learn 2
 
 * Feature selection
-* Model validation
 * Dimension reduction
-* Supervised clustering example – random forest
+* Supervised clustering and random forests
+* Time series analysis
+* Ensemble methods
 
 
 ### Lesson 9: Optimization
 
-*	Advanced Python coding
 *	Profiling, debugging and testing code
 * Parallel processing
 * Working out of memory
@@ -107,5 +106,5 @@ progresses.
 ### Lesson 10: Text wrangling/Advanced Python
 
 * Regular expressions
-* NLP
+* Natural language processing
 * Advanced Python coding

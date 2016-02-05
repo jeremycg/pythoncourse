@@ -73,22 +73,20 @@ progresses.
 
 *	Reshaping, pivoting and aggregating using Pandas
 *	Advanced data munging
-*	Time series in Pandas
+* Tidy and untidy data
 
 ### Lesson 6: Work flow
 
 * Working on the server
-*	Working with SQL and other data
-*	Jupyter Notebooks
+*	Working with SQL
 *	Script organization and modules
 
 
 ### Lesson 7: Basic statistics in Python
 
-*	Linear models, t-tests, ANOVA, networks
+*	Linear models, t-tests, ANOVA
 * Basic clustering
 *	Methods available in SciPy, NumPy and scikit packages
-*	Data munging
 
 ### Lesson 8: Graphing and data Visualization
 
@@ -97,6 +95,7 @@ progresses.
 
 ### Lesson 9: Reproducible Research in Python
 
+*	Jupyter Notebooks
 *	Basic git
 *	MarkDown
 * Make and Pydoit
@@ -104,6 +103,5 @@ progresses.
 
 ### Lesson 10: Machine Learning and scikit-learn
 
-* Text mining and regular expressions
 *	Data formats and methods
 *	Unsupervised clustering example – kmeans
