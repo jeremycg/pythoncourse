@@ -108,4 +108,4 @@ progresses.
 
 * Regular expressions
 * NLP
-* Advanced PYthon coding
+* Advanced Python coding
