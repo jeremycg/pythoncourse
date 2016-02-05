@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 05 Feb 2016 17:10:08 -0500</pubDate>
-    <lastBuildDate>Fri, 05 Feb 2016 17:10:08 -0500</lastBuildDate>
+    <pubDate>Fri, 05 Feb 2016 17:29:12 -0500</pubDate>
+    <lastBuildDate>Fri, 05 Feb 2016 17:29:12 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -1236,9 +1236,43 @@ information).&lt;/p&gt;
       </item>
     
       <item>
-        <title>00 Syllabus and Logistics</title>
-        <description>&lt;p&gt;The R&amp;amp;D stream will meet on Mondays at 1300-1430 in the
-Ontario room on the 6th floor of 438 University, if available.&lt;/p&gt;
+        <title>Syllabus and Logistics</title>
+        <description>&lt;p&gt;The R&amp;amp;D stream will meet on Mondays from 1:00-2:30PM EST in the Ontario room (when available) on the 6th floor of 438 University. Since Monday, Feb 15th is a holiday, the first R&amp;amp;D class will be on Tuesday, the 16th at 1PM EST.&lt;/p&gt;
+
+&lt;p&gt;Date &amp;amp; Room Schedule (might be updated as course progresses)&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Tuesday, Feb 16th – TBA&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Monday, Feb 22nd – Manitoba (6th floor)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Monday, Feb 29th – Manitoba&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Monday, Mar 7th –  Ontario (6th floor)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Monday, Mar 14th – Ontario&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Monday, Mar 21st – Ontario&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Monday, Mar 28th – Ontario&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Monday, Apr 4th – Ontario&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Monday, Apr 11th – Ontario&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Monday, Apr 18th – Ontario&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;p&gt;Below is an outline of the course - lessons may be added or modified as the course
 progresses.&lt;/p&gt;
@@ -1285,7 +1319,7 @@ progresses.&lt;/p&gt;
   &lt;li&gt;Time series in Pandas&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;lesson-6-work-flow&quot;&gt;Lesson 6: Work flow&lt;/h3&gt;
+&lt;h3 id=&quot;lesson-5-work-flow&quot;&gt;Lesson 5: Work flow&lt;/h3&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Working on the server&lt;/li&gt;
@@ -1294,7 +1328,7 @@ progresses.&lt;/p&gt;
   &lt;li&gt;Script organization and modules&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;lesson-7-exploratory-analysis-in-python&quot;&gt;Lesson 7: Exploratory analysis in Python&lt;/h3&gt;
+&lt;h3 id=&quot;lesson-6-exploratory-analysis-in-python&quot;&gt;Lesson 6: Exploratory analysis in Python&lt;/h3&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Linear models, t-tests, ANOVA, igraph&lt;/li&gt;
@@ -1303,15 +1337,14 @@ progresses.&lt;/p&gt;
   &lt;li&gt;Saving, embedding and using plots&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;lesson-8-machine-learning-and-scikit-learn&quot;&gt;Lesson 8: Machine Learning and scikit-learn&lt;/h3&gt;
+&lt;h3 id=&quot;lesson-7-machine-learning-and-scikit-learn&quot;&gt;Lesson 7: Machine Learning and scikit-learn&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Text mining and regular expressions&lt;/li&gt;
   &lt;li&gt;Data formats and methods&lt;/li&gt;
   &lt;li&gt;Unsupervised clustering example – kmeans&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;lesson-9-scikit-learn-2&quot;&gt;Lesson 9: scikit-learn 2&lt;/h3&gt;
+&lt;h3 id=&quot;lesson-8-scikit-learn-2&quot;&gt;Lesson 8: scikit-learn 2&lt;/h3&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Feature selection&lt;/li&gt;
@@ -1320,13 +1353,21 @@ progresses.&lt;/p&gt;
   &lt;li&gt;Supervised clustering example – random forest&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;lesson-10-optimization&quot;&gt;Lesson 10: Optimization&lt;/h3&gt;
+&lt;h3 id=&quot;lesson-9-optimization&quot;&gt;Lesson 9: Optimization&lt;/h3&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Advanced Python coding&lt;/li&gt;
   &lt;li&gt;Profiling, debugging and testing code&lt;/li&gt;
   &lt;li&gt;Parallel processing&lt;/li&gt;
   &lt;li&gt;Working out of memory&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lesson-10-text-wranglingadvanced-python&quot;&gt;Lesson 10: Text wrangling/Advanced Python&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Regular expressions&lt;/li&gt;
+  &lt;li&gt;NLP&lt;/li&gt;
+  &lt;li&gt;Advanced PYthon coding&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 29 Jan 2016 00:00:00 -0500</pubDate>
@@ -1339,9 +1380,45 @@ progresses.&lt;/p&gt;
       </item>
     
       <item>
-        <title>00 Syllabus and Logistics</title>
-        <description>&lt;p&gt;The Applied statistics stream will meet on Wednesdays at 1430-1600 in the
-Ontario room on the 6th floor of 438 University, if available.&lt;/p&gt;
+        <title>Syllabus and Logistics</title>
+        <description>&lt;p&gt;Applied section:&lt;/p&gt;
+
+&lt;p&gt;The Applied Statistics stream will meet on Wednesdays from 2:30-4:00PM EST in the Ontario room (when available) on the 6th floor of 438 University. The first class will be on Wednesday, Feb 10th.&lt;/p&gt;
+
+&lt;p&gt;Date &amp;amp; Room Schedule (might be updated as course progresses)&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Wednesday, Feb 10th – Ontario (6th floor)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Wednesday, Feb 17th – Manitoba (6th floor)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Wednesday, Feb 24th – Ontario&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Wednesday, Mar 2nd – Ontario&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Wednesday, Mar 9th – Ontario&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Wednesday, Mar 16th – Ontario&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Wednesday, Mar 23rd – Ontario&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Wednesday, Mar 30th – Manitoba&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Wednesday, Apr 6th – Ontario&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Wednesday, Apr 13th – British Columbia (6th floor)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;p&gt;Below is an outline of the course - lessons may be added or modified as the course
 progresses.&lt;/p&gt;
