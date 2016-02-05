@@ -3,7 +3,7 @@ layout: post
 title: "00 Installation Instructions"
 author: Jeremy
 tags:
- - Applied stream
+ - Applied Statistics stream
 comments: true
 ---
 

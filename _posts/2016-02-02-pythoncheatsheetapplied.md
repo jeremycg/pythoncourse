@@ -3,7 +3,7 @@ layout: post
 title: "01 Python Cheat Sheet"
 author: Jeremy
 tags:
- - Applied stream
+ - Applied Statistics stream
 comments: true
 ---
 
