@@ -29,7 +29,7 @@ Materials for both sections will be available online for everyone.
 
 The Applied Statistics section will be held on Wednesdays, from 2:30-4:00PM EST. The first class is February 10th.
 
-The R&D section will be held on Mondays, from 1:00-2:30PM EST. Since Feb 15th is a holiday, the first class is (tentatively) Tuesday, February 16th.
+The R&D section will be held on Mondays, from 1:00-2:30PM EST. Since Feb 15th is a holiday, the first class is Tuesday, February 16th.
 
 Whenever possible, classes will be held in the Ontario room on the 6th floor of 438 University (but please check “Syllabus and Logistics” in your stream for exact room assignments on exact dates).
 
