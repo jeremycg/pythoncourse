@@ -68,12 +68,11 @@ progresses.
 
 ### Lesson 5: Python in Practice
 
-* Working on the server
+* Working on remote servers
 *	Working with SQL and other data sources
 *	Jupyter notebooks
 *	Script organization and modules
-* git
-* pydoit
+* git and pydoit
 
 ### Lesson 6: Exploratory analysis in Python
 
@@ -103,7 +102,7 @@ progresses.
 * Parallel processing
 * Working out of memory
 
-### Lesson 10: Text wrangling/Advanced Python
+### Lesson 10: Text wrangling / Advanced Python
 
 * Regular expressions
 * Natural language processing
