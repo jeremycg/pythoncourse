@@ -41,7 +41,7 @@ progresses.
 *	Introduction to Anaconda and IPython
 *	Python 3 versus 2.7
 *	Scalar Data types
-*	Basic Data Structures/Sequences
+*	Data Structures/Sequences
 
 ### Lesson 2: Control flow and Basic operations
 
@@ -67,7 +67,7 @@ progresses.
 *	Vectorization in NumPy
 *	Expansion to Pandas
 *	Reading, displaying and exporting csv files
-*	Basic subsetting, functions and methods on dataframes
+*	Subsetting, functions and methods on dataframes
 
 ### Lesson 5: NumPy and Pandas 2
 
@@ -77,16 +77,15 @@ progresses.
 
 ### Lesson 6: Work flow
 
-* Working on the server
+* Working on remote servers
 *	Working with SQL
 *	Script organization and modules
 *	Jupyter Notebooks
 
 
-### Lesson 7: Basic statistics in Python
+### Lesson 7: Statistics in Python
 
-*	Linear models, t-tests, ANOVA
-* Basic clustering
+*	Linear and non-linear models, hypothesis tests, ANOVA, Clustering
 *	Methods available in SciPy, NumPy and scikit packages
 
 ### Lesson 8: Graphing and data Visualization
@@ -96,8 +95,7 @@ progresses.
 
 ### Lesson 9: Reproducible Research in Python
 
-*	Basic git
-*	MarkDown
+*	git and MarkDown
 * Make and Pydoit
 *	Profiling, debugging and unit testing
 
