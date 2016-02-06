@@ -5,12 +5,12 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 06 Feb 2016 09:43:54 -0500</pubDate>
-    <lastBuildDate>Sat, 06 Feb 2016 09:43:54 -0500</lastBuildDate>
+    <pubDate>Sat, 06 Feb 2016 15:31:22 -0500</pubDate>
+    <lastBuildDate>Sat, 06 Feb 2016 15:31:22 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
-        <title>01 Python Cheat Sheet</title>
+        <title>Python Cheat Sheet</title>
         <description>&lt;p&gt;This is a quick walk-through of basic Python syntax - &lt;a href=&quot;/pythoncourse/assets/cheatsheet/cheatsheet.ipynb&quot;&gt;download the Jupyter notebook here&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;basic-math&quot;&gt;Basic Math&lt;/h3&gt;
@@ -453,7 +453,7 @@ items in Python are objects.&lt;/p&gt;
       </item>
     
       <item>
-        <title>01 Python Cheat Sheet</title>
+        <title>Python Cheat Sheet</title>
         <description>&lt;p&gt;This is a quick walk-through of basic Python syntax - &lt;a href=&quot;/pythoncourse/assets/cheatsheet/cheatsheet.ipynb&quot;&gt;download the Jupyter notebook here&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;basic-math&quot;&gt;Basic Math&lt;/h3&gt;
@@ -896,7 +896,7 @@ items in Python are objects.&lt;/p&gt;
       </item>
     
       <item>
-        <title>00 Installation Instructions</title>
+        <title>Installation Instructions</title>
         <description>&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
 
 &lt;p&gt;Welcome to Python @ Precima!&lt;/p&gt;
@@ -1066,7 +1066,7 @@ information).&lt;/p&gt;
       </item>
     
       <item>
-        <title>00 Installation Instructions</title>
+        <title>Installation Instructions</title>
         <description>&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
 
 &lt;p&gt;Welcome to Python @ Precima!&lt;/p&gt;
