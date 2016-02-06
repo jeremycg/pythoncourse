@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "01 Python Cheat Sheet"
+title: "Python Cheat Sheet"
 author: Jeremy
 tags:
  - R&D stream
