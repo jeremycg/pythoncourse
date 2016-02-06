@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "00 Installation Instructions"
+title: "Installation Instructions"
 author: Jeremy
 tags:
  - R&D stream
