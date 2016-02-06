@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 05 Feb 2016 18:09:10 -0500</pubDate>
-    <lastBuildDate>Fri, 05 Feb 2016 18:09:10 -0500</lastBuildDate>
+    <pubDate>Sat, 06 Feb 2016 09:43:54 -0500</pubDate>
+    <lastBuildDate>Sat, 06 Feb 2016 09:43:54 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -1318,12 +1318,11 @@ progresses.&lt;/p&gt;
 &lt;h3 id=&quot;lesson-5-python-in-practice&quot;&gt;Lesson 5: Python in Practice&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Working on the server&lt;/li&gt;
+  &lt;li&gt;Working on remote servers&lt;/li&gt;
   &lt;li&gt;Working with SQL and other data sources&lt;/li&gt;
   &lt;li&gt;Jupyter notebooks&lt;/li&gt;
   &lt;li&gt;Script organization and modules&lt;/li&gt;
-  &lt;li&gt;git&lt;/li&gt;
-  &lt;li&gt;pydoit&lt;/li&gt;
+  &lt;li&gt;git and pydoit&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;lesson-6-exploratory-analysis-in-python&quot;&gt;Lesson 6: Exploratory analysis in Python&lt;/h3&gt;
@@ -1361,7 +1360,7 @@ progresses.&lt;/p&gt;
   &lt;li&gt;Working out of memory&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;lesson-10-text-wranglingadvanced-python&quot;&gt;Lesson 10: Text wrangling/Advanced Python&lt;/h3&gt;
+&lt;h3 id=&quot;lesson-10-text-wrangling--advanced-python&quot;&gt;Lesson 10: Text wrangling / Advanced Python&lt;/h3&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Regular expressions&lt;/li&gt;
@@ -1428,7 +1427,7 @@ progresses.&lt;/p&gt;
   &lt;li&gt;Introduction to Anaconda and IPython&lt;/li&gt;
   &lt;li&gt;Python 3 versus 2.7&lt;/li&gt;
   &lt;li&gt;Scalar Data types&lt;/li&gt;
-  &lt;li&gt;Basic Data Structures/Sequences&lt;/li&gt;
+  &lt;li&gt;Data Structures/Sequences&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;lesson-2-control-flow-and-basic-operations&quot;&gt;Lesson 2: Control flow and Basic operations&lt;/h3&gt;
@@ -1460,7 +1459,7 @@ progresses.&lt;/p&gt;
   &lt;li&gt;Vectorization in NumPy&lt;/li&gt;
   &lt;li&gt;Expansion to Pandas&lt;/li&gt;
   &lt;li&gt;Reading, displaying and exporting csv files&lt;/li&gt;
-  &lt;li&gt;Basic subsetting, functions and methods on dataframes&lt;/li&gt;
+  &lt;li&gt;Subsetting, functions and methods on dataframes&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id=&quot;lesson-5-numpy-and-pandas-2&quot;&gt;Lesson 5: NumPy and Pandas 2&lt;/h3&gt;
@@ -1474,17 +1473,16 @@ progresses.&lt;/p&gt;
 &lt;h3 id=&quot;lesson-6-work-flow&quot;&gt;Lesson 6: Work flow&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Working on the server&lt;/li&gt;
+  &lt;li&gt;Working on remote servers&lt;/li&gt;
   &lt;li&gt;Working with SQL&lt;/li&gt;
   &lt;li&gt;Script organization and modules&lt;/li&gt;
   &lt;li&gt;Jupyter Notebooks&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;lesson-7-basic-statistics-in-python&quot;&gt;Lesson 7: Basic statistics in Python&lt;/h3&gt;
+&lt;h3 id=&quot;lesson-7-statistics-in-python&quot;&gt;Lesson 7: Statistics in Python&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Linear models, t-tests, ANOVA&lt;/li&gt;
-  &lt;li&gt;Basic clustering&lt;/li&gt;
+  &lt;li&gt;Linear and non-linear models, hypothesis tests, ANOVA, Clustering&lt;/li&gt;
   &lt;li&gt;Methods available in SciPy, NumPy and scikit packages&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1498,8 +1496,7 @@ progresses.&lt;/p&gt;
 &lt;h3 id=&quot;lesson-9-reproducible-research-in-python&quot;&gt;Lesson 9: Reproducible Research in Python&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Basic git&lt;/li&gt;
-  &lt;li&gt;MarkDown&lt;/li&gt;
+  &lt;li&gt;git and MarkDown&lt;/li&gt;
   &lt;li&gt;Make and Pydoit&lt;/li&gt;
   &lt;li&gt;Profiling, debugging and unit testing&lt;/li&gt;
 &lt;/ul&gt;
