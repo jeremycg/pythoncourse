@@ -77,8 +77,12 @@ website.</p>
 download. Grab todays lesson from <a href="/pythoncourse/assets/notebooks/r&amp;d/lesson 00.ipynb">this
 link!</a>.</p>
 
+<p>In this lesson I’ll assume you either attended the Applied Stream intro to data
+types lecture, or have read it through <a href="http://jeremy.kiwi.nz/pythoncourse/2016/02/09/lesson00applied.html">from the
+website</a>.</p>
+
 <p>Today we will briefly go over course logistics and the Anaconda environment and
-then dive into Python data types.</p>
+then dive into Python statements and functions.</p>
 
 <h3 id="python">Python</h3>
 
@@ -148,13 +152,11 @@ by a 3 trained user.</p>
 
 <h3 id="course-logistics">Course Logistics</h3>
 
-<p>This stream of the course will cover applied data science in Python. We will
-start by covering the basic data types and structures, move on to loops and
-statements, then functions and classes. In lessons 4 and 5 we will introduce the
-standard data  modules, Pandas and NumPy, then move on into graphing,
-reproducible research and machine learning in the later stages of the course.
-Please let me know if you have any particular applications or problems, and we
-will try and address the common ones in class.</p>
+<p>We will start by covering the basic data types and structures, move on to loops
+and statements, then functions and classes. In lessons 4 and 5 we will introduce
+the standard data  modules, Pandas and NumPy, then move on into graphing, code
+optimization and machine learning. Please let me know if you have any particular
+applications or problems, and we will try and address the common ones in class.</p>
 
 <p>We are tracking progress, to make sure this course is giving value for your time
 - Please make sure you answer the quizzes and assessments we will send out later
@@ -170,45 +172,109 @@ pandas section - It won’t be necessary to purchase but is a good book if a
 little outdated. For the other lessons, links will be provided to the relevant
 docs.</p>
 
-<h2 id="basic-data-types">Basic Data Types</h2>
+<h2 id="basic-data-types-review">Basic Data Types Review</h2>
 
-<h3 id="numbers">Numbers</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Example</th>
+      <th>Mutable</th>
+      <th>Ordered</th>
+      <th>Duplicates</th>
+      <th>Subsetting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>int</td>
+      <td>2</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td>2.5</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <td>complex</td>
+      <td>2.5 + 0.6J</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <td>boolean</td>
+      <td>True</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <td>string</td>
+      <td>‘abcd’</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>x[1]</td>
+    </tr>
+    <tr>
+      <td>list</td>
+      <td>[1,2,3,’a’]</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>x[1]</td>
+    </tr>
+    <tr>
+      <td>tuple</td>
+      <td>(1,2,3,’a’)</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>x[1]</td>
+    </tr>
+    <tr>
+      <td>set</td>
+      <td>{1,2,3,4}</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>frozenset</td>
+      <td>{1,2,3,4}</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>dictionary</td>
+      <td>{1:1,2:2}</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>x[‘key’]</td>
+    </tr>
+  </tbody>
+</table>
 
-<p>Python has ints, floats and complex numbers - we can check using the <code class="highlighter-rouge">type</code>
-function</p>
-
-<p><strong>In [1]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">type</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>int
-</code></pre>
-</div>
-
-<p><strong>In [2]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">type</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>float
-</code></pre>
-</div>
-
-<p><strong>In [4]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">type</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mf">0.3</span><span class="n">J</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>complex
-</code></pre>
-</div>
+<h3 id="numbers---advanced">Numbers - Advanced</h3>
 
 <p>Internally, floats are stored as double in <code class="highlighter-rouge">C</code> - use sys.float_info for more
 information about tolerances etc.</p>
 
-<p>Complex is stored as two floats - the real and imaginary parts.</p>
-
-<p>Integers have unlimited precision</p>
-
-<p><strong>In [5]:</strong></p>
+<p><strong>In [86]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">sys</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">float_info</span></code></pre></figure>
@@ -216,6 +282,8 @@ information about tolerances etc.</p>
 <div class="highlighter-rouge"><pre class="highlight"><code>sys.float_info(max=1.7976931348623157e+308, max_exp=1024, max_10_exp=308, min=2.2250738585072014e-308, min_exp=-1021, min_10_exp=-307, dig=15, mant_dig=53, epsilon=2.220446049250313e-16, radix=2, rounds=1)
 </code></pre>
 </div>
+
+<p>Integers have unlimited precision</p>
 
 <p><strong>In [6]:</strong></p>
 
@@ -238,76 +306,41 @@ conversion implicilty and keeps type <code class="highlighter-rouge">int</code>:
 </code></pre>
 </div>
 
-<p>We can assign values to variables:</p>
+<h3 id="booleans---advanced">Booleans - Advanced</h3>
 
-<p><strong>In [8]:</strong></p>
+<p>We can use three additional boolean comparisons not mentioned in the previous
+class: <code class="highlighter-rouge">in</code> and <code class="highlighter-rouge">is</code> and <code class="highlighter-rouge">not</code>:</p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="mi">23</span>
-<span class="n">b</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">4</span>
-<span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">2</span></code></pre></figure>
+<p><strong>In [46]:</strong></p>
 
-<p>There are some rules about variable names - they cannot start with numbers, must
-be alphanumeric with no spaces, and should be lowercase with underscores and
-somewhat informative about what they represent:</p>
-
-<p>Check out the <a href="http://docs.python-
-guide.org/en/latest/writing/style/">official Python style guide</a>, or <a href="https://google.github.io/styleguide/pyguide.html">Googles Python style
-guide</a> for more tips regarding
-variable names and general coding style.</p>
-
-<p>In iPython based interpreters, we can use <code class="highlighter-rouge">whos</code> to see all our declared
-variables (or use the spyder IDE)</p>
-
-<p><strong>In [9]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">whos</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>Variable   Type      Data/Info
-------------------------------
-a          int       23
-b          int       16
-c          int       -2
-d          float     1.5
-sys        module    &lt;module 'sys' (built-in)&gt;
-</code></pre>
-</div>
-
-<h3 id="warning---floating-point-errors">Warning - Floating Point Errors</h3>
-
-<p>We would expect the below to be equal to -0.2 - what is going on?</p>
-
-<p><strong>In [10]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">-</span><span class="mf">0.1</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">-</span> <span class="mf">0.3</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>-0.19999999999999998
-</code></pre>
-</div>
-
-<p>This is a floating point error. It occurs as computers work in binary and 1/10
-is a repeating fraction in binary, much like 1/3 is in base 10. We will discuss
-mitigation techniques later in the course - for now be aware when working with
-floats.</p>
-
-<h3 id="booleans">Booleans</h3>
-
-<p>We have the standard boolean operators</p>
-
-<p>Which can then be chained using <code class="highlighter-rouge">and</code> <code class="highlighter-rouge">or</code> with not as a negation</p>
-
-<p><strong>In [11]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="mi">2</span> <span class="o">&gt;=</span> <span class="mi">3</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>False
-</code></pre>
-</div>
-
-<p><strong>In [12]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="mi">1</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="mi">3</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="mi">3</span> <span class="ow">in</span> <span class="n">l</span></code></pre></figure>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>True
+</code></pre>
+</div>
+
+<p><strong>In [49]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="mi">5</span> <span class="ow">is</span> <span class="n">l</span>
+<span class="c">##very similar to ==</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>True
+</code></pre>
+</div>
+
+<p><strong>In [50]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#we are checking identity, not equality</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">k</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">l</span> <span class="ow">is</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">l</span>
+<span class="k">print</span><span class="p">(</span><span class="n">l</span> <span class="ow">is</span> <span class="n">k</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>False
+True
 </code></pre>
 </div>
 
@@ -319,14 +352,12 @@ floats.</p>
 </code></pre>
 </div>
 
-<p>In addition to True and False, we also have None, which we will discuss later in
-the course</p>
+<p>In Python (and most sensible languages), boolean comparisons are short circuit
+operators - once one conditon is impossible we stop evaluating. This can get a
+good speed up on code if you have one expensive comparison and one that is not -
+put the cheap calculation first</p>
 
-<p>In Python, booleans are short circuit operators - once one conditon is
-impossible we stop evaluating. this can get a good speed up on code if you have
-one expensive comparison and one that is not - put the cheap calculation first</p>
-
-<p><strong>In [14]:</strong></p>
+<p><strong>In [61]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#del(l)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
@@ -339,493 +370,15 @@ False
 </code></pre>
 </div>
 
-<h3 id="warning---bitwise-operations">Warning - Bitwise Operations</h3>
+<h3 id="data-structures-review">Data Structures Review</h3>
 
-<p>You probably don’t want to use <code class="highlighter-rouge">|</code>, <code class="highlighter-rouge">&amp;</code> or <code class="highlighter-rouge">^</code> which many other languages do for
-<code class="highlighter-rouge">or</code> <code class="highlighter-rouge">and</code> and <code class="highlighter-rouge">not</code>- they are for <a href="https://wiki.python.org/moin/BitwiseOperators">bitwise
-comparison</a>.</p>
+<p><strong>In [63]:</strong></p>
 
-<p><strong>In [15]:</strong></p>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">mystruct</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="p">(</span><span class="s">'abcd'</span><span class="p">,</span> <span class="p">{</span><span class="mf">2.5</span><span class="p">,</span> <span class="mi">3</span><span class="n">J</span><span class="p">}),</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,[</span><span class="s">'hello'</span><span class="p">],{</span><span class="s">'k1'</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="s">'k2'</span><span class="p">:{</span><span class="s">'k1'</span><span class="p">:[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]}}]]</span></code></pre></figure>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="mi">12</span> <span class="o">|</span> <span class="mi">9</span></code></pre></figure>
+<p><strong>In [None]:</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>13
-</code></pre>
-</div>
-
-<p><strong>In [16]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="nb">bin</span><span class="p">(</span><span class="mi">12</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">bin</span><span class="p">(</span><span class="mi">9</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">bin</span><span class="p">(</span><span class="mi">13</span><span class="p">))</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>0b1100
-0b1001
-0b1101
-</code></pre>
-</div>
-
-<h3 id="strings">Strings</h3>
-
-<p>Strings are character type data:</p>
-
-<p><strong>In [17]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="s">"abcde"</span>
-<span class="n">g</span> <span class="o">=</span> <span class="s">'use the </span><span class="se">\\</span><span class="s"> to escape </span><span class="se">\'</span><span class="s">special</span><span class="se">\'</span><span class="s"> characters or </span><span class="se">\n</span><span class="s"> make new lines and </span><span class="se">\t</span><span class="s"> tabs'</span>
-<span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>use the \ to escape 'special' characters or
- make new lines and 	 tabs
-</code></pre>
-</div>
-
-<p><strong>In [18]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">g</span> <span class="o">=</span><span class="s">'''
-this is
-a long
-string'''</span>
-<span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>this is
-a long
-string
-</code></pre>
-</div>
-
-<p>We can do (some) math on strings</p>
-
-<p><strong>In [19]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">d</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">a</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>abcdeabcde
-
-
-
----------------------------------------------------------------------------
-
-TypeError                                 Traceback (most recent call last)
-
-&lt;ipython-input-19-badeb938c1f1&gt; in &lt;module&gt;()
-      1 print(a * 2)
-----&gt; 2 print(a + d)
-      3 print(a * a)
-
-
-TypeError: Can't convert 'float' object to str implicitly
-</code></pre>
-</div>
-
-<h2 id="subsetting">Subsetting</h2>
-
-<p>When we want to get a subset of a string (or many other Python objects) we use
-subsetting.</p>
-
-<p>Python is a 0-indexed language, meaning we start counting at 0. For a
-digression, see here for a <a href="http://exple.tive.org/blarg/2013/10/22/citation-needed/">possible origin of 0
-indexing</a>.</p>
-
-<p>This leads to the famous quote “The two big problems in computer science are
-cache invalidation, naming things and off by one errors”.</p>
-
-<p><strong>In [20]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_string</span> <span class="o">=</span> <span class="s">'Hello world'</span>
-<span class="c">#a single element</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_string</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="c">#a slice</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
-<span class="c">#from the start</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_string</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
-<span class="c">#to the end</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_string</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
-<span class="c">#negative indices count from the end</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_string</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:])</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>H
-Hel
-Hel
-lo world
-rld
-</code></pre>
-</div>
-
-<p>Indexing can also use a third place ie <code class="highlighter-rouge">x[from:to:by]</code>, but this is not used
-often in practice.</p>
-
-<p><strong>In [21]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">my_string</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_string</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_string</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>Hlowrd
-dlrow olleH
-Hlo
-</code></pre>
-</div>
-
-<p>Strings are immutable - we cannot easily change elements of them in place:</p>
-
-<p><strong>In [22]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_string</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s">'h'</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>---------------------------------------------------------------------------
-
-TypeError                                 Traceback (most recent call last)
-
-&lt;ipython-input-22-8e10d58363b9&gt; in &lt;module&gt;()
-----&gt; 1 my_string[0] = 'h'
-
-
-TypeError: 'str' object does not support item assignment
-</code></pre>
-</div>
-
-<h3 id="methods">Methods</h3>
-
-<p>Methods are functions which are specific to a certain type of object. They are
-called using x.method()</p>
-
-<p>We can see a list in Spyder by using tab or use help(object) to get a list</p>
-
-<p><strong>In [23]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_string</span> <span class="o">=</span> <span class="s">'abcde'</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_string</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_string</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>
-<span class="c">#help(my_string)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>ABCDE
-abcde
-Abcde
-</code></pre>
-</div>
-
-<h3 id="functions">Functions</h3>
-
-<p>We have a number of built in functions in Python, similar to methods but not
-linked to a specific class. See the list at the <a href="https://docs.python.org/3.5/library/functions.html">official Python docs
-website</a></p>
-
-<p>For help, use help(function) or read the online docs.</p>
-
-<h3 id="print-formatting">Print Formatting</h3>
-
-<p>We can format our print output using our defined variables:</p>
-
-<p><strong>In [24]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="mf">13.13</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'blah blah </span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'Floating point numbers: </span><span class="si">%1.2</span><span class="s">f'</span> <span class="o">%</span><span class="p">(</span><span class="mf">13.144</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'First: </span><span class="si">%</span><span class="s">s, Second: </span><span class="si">%1.2</span><span class="s">f, Third: </span><span class="si">%</span><span class="s">r'</span> <span class="o">%</span><span class="p">(</span><span class="s">'hi!'</span><span class="p">,</span> <span class="mf">3.14</span><span class="p">,</span> <span class="mi">22</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'First: {y}, Second: {x}, Third: {z}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y</span> <span class="o">=</span> <span class="s">"hi"</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mf">12.1</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">12</span><span class="p">))</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>blah blah 13.13
-Floating point numbers: 13.14
-First: hi!, Second: 3.14, Third: 22
-First: hi, Second: 12, Third: 12.1
-</code></pre>
-</div>
-
-<h2 id="basic-data-containers">Basic Data Containers</h2>
-
-<h3 id="lists">Lists</h3>
-
-<p>Lists are the workhorse of Python - they are a way of containing multiple pieces
-of data in a single place.</p>
-
-<p>Lists may be recognised as similar to arrays in other languages - we don’t need
-to preassign type, size or any other attributes</p>
-
-<p><strong>In [25]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="c">#subsetting similar to strings</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
-<span class="c">#add similarly to strings</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_list</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_list</span> <span class="o">+</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_list</span> <span class="o">+</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[1, 2]
-[1, 2, 3, 4, 1, 2, 3, 4]
-[1, 2, 3, 4, 1, 2, 3]
-[1, 2, 3, 4, [1, 2, 3, 4]]
-</code></pre>
-</div>
-
-<p>Lists can contain multiple data types, including other lists:</p>
-
-<p><strong>In [26]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="bp">True</span><span class="p">,</span> <span class="s">"hi"</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">my_list</span><span class="p">))</span>
-<span class="c">#nested subset</span>
-<span class="k">print</span><span class="p">([</span><span class="n">my_list</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">my_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;class 'list'&gt;
-['i', 3]
-</code></pre>
-</div>
-
-<p>Lists are mutable</p>
-
-<p><strong>In [27]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">"bye"</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[True, 'bye', 1, 3.4, [1, 2, 3]]
-</code></pre>
-</div>
-
-<h3 id="list-methods">List Methods</h3>
-
-<p>Lists have their own methods. Many of these will modify a list in place, so
-beware</p>
-
-<p><strong>In [28]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="bp">True</span><span class="p">,</span> <span class="s">"hi"</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
-<span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">'a new list item'</span><span class="p">)</span>
-<span class="n">my_list</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[True, 'hi', 1, 3.4, [1, 2, 3], 'a new list item']
-</code></pre>
-</div>
-
-<p><strong>In [29]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_list</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="n">my_list</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[True, 'hi', 1, 3.4, [1, 2, 3], 'a new list item', 1, 2, 3]
-</code></pre>
-</div>
-
-<p><strong>In [30]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">my_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
-<span class="n">my_list</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[1, 2, 3, 4]
-[4, 3, 2, 1]
-</code></pre>
-</div>
-
-<h3 id="warning">Warning</h3>
-
-<p>Python lists are not copied on reassignment. This will cause problems!</p>
-
-<p><strong>In [31]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">my_list2</span> <span class="o">=</span> <span class="n">my_list</span>
-<span class="n">my_list2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">my_list</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[5, 2, 3, 4]
-</code></pre>
-</div>
-
-<p>We can fix it using slicing, copying or the list() function:</p>
-
-<p><strong>In [32]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">my_list2</span> <span class="o">=</span> <span class="n">my_list</span><span class="p">[:]</span>
-<span class="n">my_list2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">my_list</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[1, 2, 3, 4]
-</code></pre>
-</div>
-
-<p><strong>In [33]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">my_list2</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
-<span class="n">my_list2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">my_list</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[1, 2, 3, 4]
-</code></pre>
-</div>
-
-<p><strong>In [34]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-<span class="n">my_list2</span> <span class="o">=</span> <span class="n">my_list</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">my_list2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">my_list</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[1, 2, 3, 4]
-</code></pre>
-</div>
-
-<h3 id="tuples">Tuples</h3>
-
-<p>Tuples are more or less immutable lists, and as such have less methods
-associated with them</p>
-
-<p><strong>In [35]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_tup</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_tup</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_tup</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_tup</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">my_tup</span><span class="p">))</span>
-<span class="n">my_tup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>4
-3
-2
-[1, 2, 3, 4, 5, 1]
-
-
-
----------------------------------------------------------------------------
-
-TypeError                                 Traceback (most recent call last)
-
-&lt;ipython-input-35-e9f3c06e3e04&gt; in &lt;module&gt;()
-      4 print(my_tup.count(1))
-      5 print(list(my_tup))
-----&gt; 6 my_tup[0] = 1
-
-
-TypeError: 'tuple' object does not support item assignment
-</code></pre>
-</div>
-
-<p><strong>In [36]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#multiple assignment technically uses tuples</span>
-<span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span></code></pre></figure>
-
-<p>Tuples are a great choice when using parameters in a script - we cannot
-overwrite them by mistake without reassigning the entire tuple</p>
-
-<h3 id="sets">Sets</h3>
-
-<p>Sets work like the mathematical notion of sets - only unique elements are
-allowed, and they are unordered</p>
-
-<p><strong>In [37]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_set</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">}</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_set</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">my_set</span><span class="p">))</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">1,</span><span class="w"> </span><span class="err">2,</span><span class="w"> </span><span class="err">3,</span><span class="w"> </span><span class="err">4,</span><span class="w"> </span><span class="err">5</span><span class="p">}</span><span class="w">
-</span><span class="err">&lt;class</span><span class="w"> </span><span class="err">'set'&gt;</span><span class="w">
-</span></code></pre>
-</div>
-
-<p><strong>In [38]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># no subsetting by index!</span>
-<span class="c"># hence no mutability either</span>
-<span class="n">my_set</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>---------------------------------------------------------------------------
-
-TypeError                                 Traceback (most recent call last)
-
-&lt;ipython-input-38-820e4eb6e783&gt; in &lt;module&gt;()
-      1 # no subsetting by index!
-      2 # hence no mutability either
-----&gt; 3 my_set[0]
-
-
-TypeError: 'set' object does not support indexing
-</code></pre>
-</div>
-
-<h3 id="dictionaries">Dictionaries</h3>
-
-<p>Python dictionaries are a very useful data structure, which we will modify into
-DataFrames inside pandas.</p>
-
-<p>For now they are very similar to hashes or lookup tables from other languages -
-we access data inside them by key, rather than index. As such, they are
-unordered, similar to sets.</p>
-
-<p><strong>In [39]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#key:values pairs, keys must be unique</span>
-<span class="n">my_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s">'key1'</span> <span class="p">:</span> <span class="s">"val1"</span><span class="p">,</span> <span class="s">'key2'</span><span class="p">:</span><span class="s">'val2'</span><span class="p">,</span> <span class="mi">1</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="mi">2</span><span class="p">:</span><span class="s">"a"</span><span class="p">}</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_dict</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">1:</span><span class="w"> </span><span class="err">[1,</span><span class="w"> </span><span class="err">2,</span><span class="w"> </span><span class="err">3,</span><span class="w"> </span><span class="err">4],</span><span class="w"> </span><span class="err">'key2':</span><span class="w"> </span><span class="err">'val2',</span><span class="w"> </span><span class="err">2:</span><span class="w"> </span><span class="err">'a',</span><span class="w"> </span><span class="err">'key1':</span><span class="w"> </span><span class="err">'val1'</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
-
-<p><strong>In [40]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">my_dict</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_dict</span><span class="p">[</span><span class="s">'key2'</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_dict</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[1, 2, 3, 4]
-val2
-
-
-
----------------------------------------------------------------------------
-
-KeyError                                  Traceback (most recent call last)
-
-&lt;ipython-input-40-cb18261125fd&gt; in &lt;module&gt;()
-      1 print(my_dict[1])
-      2 print(my_dict['key2'])
-----&gt; 3 print(my_dict[0])
-
-
-KeyError: 0
-</code></pre>
-</div>
-
-<p><strong>In [41]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_dict</span><span class="p">[</span><span class="s">'newkey'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'newval'</span>
-<span class="n">my_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">"newkey2"</span><span class="p">:</span><span class="s">'newval2'</span><span class="p">})</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_dict</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">1:</span><span class="w"> </span><span class="err">[1,</span><span class="w"> </span><span class="err">2,</span><span class="w"> </span><span class="err">3,</span><span class="w"> </span><span class="err">4],</span><span class="w"> </span><span class="err">'key2':</span><span class="w"> </span><span class="err">'val2',</span><span class="w"> </span><span class="err">'newkey2':</span><span class="w"> </span><span class="err">'newval2',</span><span class="w"> </span><span class="err">'newkey':</span><span class="w"> </span><span class="err">'newval',</span><span class="w"> </span><span class="err">2:</span><span class="w"> </span><span class="err">'a',</span><span class="w"> </span><span class="err">'key1':</span><span class="w"> </span><span class="err">'val1'</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
-
-<p><strong>In [42]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">my_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_dict</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
-<span class="k">print</span><span class="p">(</span><span class="n">my_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>dict_keys([1, 'key2', 'newkey2', 'newkey', 2, 'key1'])
-dict_items([(1, [1, 2, 3, 4]), ('key2', 'val2'), ('newkey2', 'newval2'), ('newkey', 'newval'), (2, 'a'), ('key1', 'val1')])
-dict_values([[1, 2, 3, 4], 'val2', 'newval2', 'newval', 'a', 'val1'])
-</code></pre>
-</div>
-
-<p><strong>In [43]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">my_dict</span><span class="p">[</span><span class="s">'key1'</span><span class="p">]</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>'val1'
-</code></pre>
-</div>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#subsetting here</span></code></pre></figure>
 
 <h2 id="python-statements">Python Statements</h2>
 
@@ -971,13 +524,14 @@ k1v1
 
 <p>Similarly, we can use while loops, and run a loop until a condition is met</p>
 
-<p><strong>In [48]:</strong></p>
+<p><strong>In [90]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
 
 <span class="k">while</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">-=</span> <span class="mi">1</span></code></pre></figure>
+    <span class="n">x</span> <span class="o">-=</span> <span class="mi">1</span>
+<span class="c">#also +=, *=, /=</span></code></pre></figure>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>5
 4
@@ -1041,7 +595,7 @@ how did you get here?
 <p>continue and break only go up to the nearest closest loop - if we are nested we
 don’t go right to the end of the statement:</p>
 
-<p><strong>In [50]:</strong></p>
+<p><strong>In [84]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="s">"hi"</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
 
@@ -1063,12 +617,12 @@ don’t go right to the end of the statement:</p>
 
 <h3 id="range">Range</h3>
 
-<p>we saw earlier, we cannot modify in place using a loop. We can instead use
+<p>We saw earlier, we cannot modify in place using a loop. We can instead use
 <code class="highlighter-rouge">range</code> to generate indices and use these (NB range in Python 3 is similar to
-xrange in Python 2.7, not <code class="highlighter-rouge">range</code>). Range objects are not instantly ennnumerated
+xrange in Python 2.7, not <code class="highlighter-rouge">range</code>). Range objects are not instantly ennumerated
 - we dont have to hold them in memory.</p>
 
-<p><strong>In [51]:</strong></p>
+<p><strong>In [85]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#similar to the subset from:to:by</span>
 <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -1077,6 +631,11 @@ xrange in Python 2.7, not <code class="highlighter-rouge">range</code>). Range o
 <div class="highlighter-rouge"><pre class="highlight"><code>range
 </code></pre>
 </div>
+
+<p><strong>In [None]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#not instantly ennumerated! this would fill the memory of nearly all computers</span>
+<span class="nb">range</span><span class="p">(</span><span class="mi">100000000000000000</span><span class="p">)</span></code></pre></figure>
 
 <p><strong>In [52]:</strong></p>
 
@@ -1288,7 +847,7 @@ myfirstfun(arg1, arg2)
 <p>We might not want our function to work on strings! We can Raise an error is the
 arguments are not numeric:</p>
 
-<p><strong>In [70]:</strong></p>
+<p><strong>In [92]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfirstfun</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">):</span>
     <span class="s">'''Here is the docstring. this will be displayed to a user calling help(myfirstfun)
@@ -1296,7 +855,7 @@ arguments are not numeric:</p>
     This argument takes two arguments, and returns the sum of them
     '''</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span>
+        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span><span class="p">,</span> <span class="s">"This function requires numerics"</span>
     <span class="k">return</span><span class="p">(</span><span class="n">arg1</span> <span class="o">+</span> <span class="n">arg2</span><span class="p">)</span>
 
 <span class="n">myfirstfun</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></code></pre></figure>
@@ -1305,7 +864,7 @@ arguments are not numeric:</p>
 </code></pre>
 </div>
 
-<p><strong>In [71]:</strong></p>
+<p><strong>In [93]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">myfirstfun</span><span class="p">(</span><span class="s">"h"</span><span class="p">,</span> <span class="s">"i"</span><span class="p">)</span></code></pre></figure>
 
@@ -1313,19 +872,305 @@ arguments are not numeric:</p>
 
 AssertionError                            Traceback (most recent call last)
 
-&lt;ipython-input-71-b9e7ba21c90e&gt; in &lt;module&gt;()
+&lt;ipython-input-93-b9e7ba21c90e&gt; in &lt;module&gt;()
 ----&gt; 1 myfirstfun("h", "i")
 
 
-&lt;ipython-input-70-7c34ebdeb1eb&gt; in myfirstfun(arg1, arg2)
+&lt;ipython-input-92-f4e6512fed1f&gt; in myfirstfun(arg1, arg2)
       5     '''
       6     for i in arg1, arg2:
-----&gt; 7         assert type(i) == int or type(i) == float
+----&gt; 7         assert type(i) == int or type(i) == float, "This function requires numerics"
       8     return(arg1 + arg2)
       9
 
 
-AssertionError:
+AssertionError: This function requires numerics
+</code></pre>
+</div>
+
+<h3 id="passing-multiple-arguments-and-default-values">Passing Multiple Arguments and Default Values</h3>
+
+<p>Some functions will need to take an unknown number of arguments, or a default
+value:</p>
+
+<p><strong>In [4]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfirstfun</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="o">*</span><span class="n">moreargs</span><span class="p">):</span>
+    <span class="s">'''Here is the docstring. this will be displayed to a user calling help(myfirstfun)
+    It can be as long as you'd like.
+    This argument takes two arguments, and returns the sum of them
+    any extra arguments are printed to the screen
+    '''</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"here are the extra arguments {x}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">moreargs</span><span class="p">)))</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">arg1</span> <span class="o">+</span> <span class="n">arg2</span><span class="p">)</span>
+
+<span class="n">myfirstfun</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>here are the extra arguments [3, 4, 5, 6]
+
+
+
+
+
+3
+</code></pre>
+</div>
+
+<p><strong>In [5]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">myfirstfun</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>here are the extra arguments []
+
+
+
+
+
+12
+</code></pre>
+</div>
+
+<h3 id="named-arguments">Named Arguments</h3>
+
+<p>Python supports named arguments, unlike most languages, but similar to R:</p>
+
+<p><strong>In [9]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">a</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">myfunction</span><span class="p">(</span><span class="n">b</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c">#by position, expect 29</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>11
+</code></pre>
+</div>
+
+<p>We go by name, then order</p>
+
+<p><strong>In [26]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="s">"hi"</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s">"bye"</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="s">"hey"</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="n">myfunction</span><span class="p">(</span><span class="s">"hello"</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s">"no"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">myfunction</span><span class="p">(</span><span class="s">"hello"</span><span class="p">,</span> <span class="s">"no"</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>hello
+hi
+no
+hey
+
+
+hello
+no
+bye
+hey
+</code></pre>
+</div>
+
+<p>We can combine named and unnamed values. Any positional arguments are passed as
+a tuple, any named arguments are passed as a dictionary. We add a * to
+positional, and ** to keyword arguments.</p>
+
+<p>Named arguments must go last:</p>
+
+<p><strong>In [35]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="o">*</span><span class="n">positional</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Positional:"</span><span class="p">,</span> <span class="n">positional</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Keywords:"</span><span class="p">,</span> <span class="n">keywords</span><span class="p">)</span>
+
+<span class="n">myfunction</span><span class="p">(</span><span class="s">'one'</span><span class="p">,</span> <span class="s">'two'</span><span class="p">,</span> <span class="s">'three'</span><span class="p">)</span>
+<span class="n">myfunction</span><span class="p">(</span><span class="s">'one'</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="s">'two'</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="s">'three'</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Positional: ('one', 'two', 'three')
+Keywords: {}
+None
+Positional: ('one',)
+Keywords: {'a': 'two', 'b': 'three'}
+</code></pre>
+</div>
+
+<p><strong>In [36]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">myfunction</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="s">'one'</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="s">'two'</span><span class="p">,</span> <span class="s">'three'</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>  File "&lt;ipython-input-36-80cc4c5ccb1f&gt;", line 1
+    myfunction(a = 'one', b = 'two', 'three')
+                                    ^
+SyntaxError: positional argument follows keyword argument
+</code></pre>
+</div>
+
+<h3 id="warning">Warning</h3>
+
+<p>For default values, we evaluate them at function definition - this saves time
+but can lead to error when using mutable defaults</p>
+
+<p><strong>In [19]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="o">^</span><span class="mi">45</span><span class="p">):</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>48
+6
+
+
+
+---------------------------------------------------------------------------
+
+NameError                                 Traceback (most recent call last)
+
+&lt;ipython-input-19-ec15857dd71f&gt; in &lt;module&gt;()
+      3 print(myfunction())
+      4 print(myfunction(2,4))
+----&gt; 5 print(b)
+
+
+NameError: name 'b' is not defined
+</code></pre>
+</div>
+
+<p><strong>In [24]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="p">[]):</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">(</span><span class="mi">42</span><span class="p">))</span>
+<span class="c">#extremely weird behaviour for anyone coming from R!</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[2]
+[2, 42]
+</code></pre>
+</div>
+
+<p><strong>In [37]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">(</span><span class="mi">42</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[2]
+[42]
+</code></pre>
+</div>
+
+<h3 id="closures">Closures</h3>
+
+<p>We can do almost anything we’d like inside a function, including defining other
+functions:</p>
+
+<p><strong>In [39]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">internaldef</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">c</span> <span class="o">**</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">helper</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="n">internaldef</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>64
+</code></pre>
+</div>
+
+<p>Internal functions have access to the enclosing variables:</p>
+
+<p><strong>In [41]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">internaldef</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">c</span> <span class="o">**</span> <span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">helper</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="n">internaldef</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>8
+</code></pre>
+</div>
+
+<p>And we can even return them (a function generating function is technically a
+‘closure’):</p>
+
+<p><strong>In [81]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">makepow</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">pown</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">num</span> <span class="o">**</span> <span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">pown</span><span class="p">)</span>
+<span class="n">pow4</span> <span class="o">=</span> <span class="n">makepow</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">pow4</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>81
+</code></pre>
+</div>
+
+<h3 id="lambda-functions-and-map">Lambda Functions and map</h3>
+
+<p>Lambda functions are functions which are defined and used in the same place -
+they are ‘anonymous’ (see Rs version <code class="highlighter-rouge">lapply(x, function(z) z^2</code>)). They are
+generally used inside another statement, where defining a function is not worth
+the time.</p>
+
+<p>We can also use the lamdba to define a function:</p>
+
+<p><strong>In [78]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">myfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
+<span class="n">myfun</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>3
+</code></pre>
+</div>
+
+<p><strong>In [80]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span>
+<span class="p">[</span><span class="n">myfun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">l</span><span class="p">]</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[3, 7, 11]
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">map</code> takes two arguments - a function (often a lambda function) and a sequence
+(or sequences) to iterate over</p>
+
+<p><strong>In [75]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">x</span> <span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[1, 4, 3, 16, 5, 36]
+</code></pre>
+</div>
+
+<p><strong>In [94]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">k</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[0, 7, 16, 27, 40, 55]
+</code></pre>
+</div>
+
+<p><strong>In [98]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">y</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[6, 1, 8, 3, 10, 5]
 </code></pre>
 </div>
 
