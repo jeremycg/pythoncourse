@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>lesson 00 - R&D Stream</title>
+  <title>Lesson 00 - R&D Stream</title>
   <meta name="description" content="Welcome to the Python course @ Precima">
 
   <link rel="stylesheet" href="/pythoncourse/css/main.css">
@@ -61,28 +61,24 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">lesson 00 - R&D Stream</h1>
+    <h1 class="post-title" itemprop="name headline">Lesson 00 - R&D Stream</h1>
     <p class="post-meta"><time datetime="2016-02-12T00:00:00-05:00" itemprop="datePublished">Feb 12, 2016</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Jeremy</span></span></p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
     <h2 id="welcome-to-the-python-course--precima">Welcome to the Python course @ Precima</h2>
 
-<p>Hopefully everyone has read the syllabus, cheat sheets and course outline on the
-website.</p>
+<p>Hopefully, by now, everyone has read the syllabus, cheat sheets and course outline on the
+<a href="http://www.jeremy.kiwi.nz/pythoncourse">main website</a>.</p>
 
-<p>They are available at www.jeremy.kiwi.nz/pythoncourse.</p>
+<p>Moreover, in this lesson, it’s assumed you either attended the Applied Stream intro to data
+types lecture, and/or have read through <a href="http://jeremy.kiwi.nz/pythoncourse/2016/02/09/lesson00applied.html">Lesson 00 - Applied Section</a>.</p>
 
-<p>All lessons are made as iPython notebooks and will be available on this site to
-download. Grab todays lesson from <a href="/pythoncourse/assets/notebooks/r&amp;d/lesson 00.ipynb">this
-link!</a>.</p>
-
-<p>In this lesson I’ll assume you either attended the Applied Stream intro to data
-types lecture, or have read it through <a href="http://jeremy.kiwi.nz/pythoncourse/2016/02/09/lesson00applied.html">from the
-website</a>.</p>
-
-<p>Today we will briefly go over course logistics and the Anaconda environment and
+<p>Today we will briefly go over the Anaconda environment and
 then dive into Python statements and functions.</p>
+
+<p>All lessons are made as iPython/Jupyter notebooks and will be available on this site to
+download. Grab todays lesson from <a href="/pythoncourse/assets/notebooks/r&amp;d/lesson 00.ipynb">this link!</a>.</p>
 
 <h3 id="python">Python</h3>
 
@@ -110,27 +106,6 @@ restrictive in licensing. The downside is new statistical methods tend to appear
 in R before Python, although as the community grows, this has become less of a
 problem.</p>
 
-<h3 id="anaconda-ipython-and-spyder">Anaconda, iPython and Spyder</h3>
-
-<p>We will use Anaconda, a distribution of Python by Continuum Analytics, put
-together for use in data science.</p>
-
-<p>Anaconda comes with most of the modules we need for data analysis, as well as
-Jupyter notebooks, and the IDE we will use for the first couple of lessons,
-Spyder.</p>
-
-<p>We have installed the launcher, which allows updating and launching these apps,
-the Spyder IDE which allows coding and running scripts in an integrated
-environment, the iPython-QT console, which is an advanced console allowing
-inline graphing, and the iPython notebook, which allows development in
-interactive notebooks in the browser. These programs all run Python code - the
-difference is in how you interact with the environment.</p>
-
-<p>iPython notebooks are currently in the process of being rebranded into Jupyter
-notebooks - the launcher and documentation will refer to them interchangeably.</p>
-
-<p>Coding along with the lesson is encouraged!</p>
-
 <h3 id="vs-3">2.7 vs 3</h3>
 
 <p>In 2008, Python version 3.0 was released. Due to the number and nature of
@@ -150,29 +125,59 @@ differences we will see are <code class="highlighter-rouge">print()</code> vs <c
 generators. Python code found online will often be 2.7, but should be readable
 by a 3 trained user.</p>
 
+<h3 id="anaconda-spyder-and-ipythonjupyter">Anaconda, Spyder and iPython/Jupyter</h3>
+
+<p>We will use Anaconda, a distribution of Python by Continuum Analytics, put
+together for use in data science.</p>
+
+<p>Anaconda comes with most of the modules we need for data analysis. The Anaconda launcher 
+updates and launches these apps, and includes:</p>
+
+<p>(i) Spyder, which is the IDE we will use for the first few lessons. Tt allows coding and 
+running scripts in an integrated environment.</p>
+
+<p>(ii) The iPython/Jupyter notebook, which is a platform for developing interative code-driven 
+documents (like these lessons!) in a browser. (iPython notebooks 
+are currently in the process of being rebranded into Jupyter
+notebooks. The launcher and documentation - and we - will refer to them interchangeably).</p>
+
+<p>(ii)  The iPython-QT console, which is an advanced console allowing
+inline graphing</p>
+
+<p>These programs all run Python on the backend - the difference is in how you 
+interact with the environment, the possibilities that the environment provides, and how 
+the input and output of your code is displayed and documented.</p>
+
 <h3 id="course-logistics">Course Logistics</h3>
 
-<p>We will start by covering the basic data types and structures, move on to loops
-and statements, then functions and classes. In lessons 4 and 5 we will introduce
-the standard data  modules, Pandas and NumPy, then move on into graphing, code
-optimization and machine learning. Please let me know if you have any particular
-applications or problems, and we will try and address the common ones in class.</p>
+<p>We will start the first part of the course by covering the data types and structures, 
+before move on to loops and statements, then functions and classes. After that, we will 
+introduce the standard data modules, Pandas and NumPy. Then, we will move onto graphing, 
+optimization, machine learning and other fun topics.</p>
 
-<p>We are tracking progress, to make sure this course is giving value for your time
-- Please make sure you answer the quizzes and assessments we will send out later
-in the course.</p>
+<p>Please note that the topics for the second half of the R&amp;D class can be somewhat flexible - they 
+can be adapted to suit the common interests of the class. So please let me know if you are working 
+on something particular, or would like to look at a specific application or problem, and we can 
+try and address these in the later classes.</p>
+
+<p>Finally, note that we are tracking both group and indiviaul progress, to make sure this course is 
+giving value for your time. In this light, all attendees are required to complete all quizzes and assessments 
+we will send out during the course. The time committment for this section is, at minimum, 5 hours a week (though 
+a few more hours is strongly recommended).</p>
+
+<p>One last thing: coding along with the lesson is encouraged!</p>
 
 <h3 id="outside-resources">Outside Resources</h3>
 
 <p>A number of people have asked about text books or online resources for the
 course. Most Python tutorials online will assume a knowledge at around the level
-we will reach at the end of lesson 3. I’m using <a href="http://shop.oreilly.com/product/0636920023784.do">Python for Data
-Analysis</a> for the numpy and
-pandas section - It won’t be necessary to purchase but is a good book if a
-little outdated. For the other lessons, links will be provided to the relevant
+we will reach after a few lessons. I’m using <a href="http://shop.oreilly.com/product/0636920023784.do">Python for Data
+Analysis</a> for the Numpy and
+Pandas section - it won’t be necessary to purchase but is a good book (if a
+little outdated). For the other lessons, links will be provided to the relevant
 docs.</p>
 
-<h2 id="basic-data-types-review">Basic Data Types Review</h2>
+<h3 id="basic-data-types-review">Basic Data Types Review</h3>
 
 <table>
   <thead>
@@ -308,8 +313,8 @@ conversion implicilty and keeps type <code class="highlighter-rouge">int</code>:
 
 <h3 id="booleans---advanced">Booleans - Advanced</h3>
 
-<p>We can use three additional boolean comparisons not mentioned in the previous
-class: <code class="highlighter-rouge">in</code> and <code class="highlighter-rouge">is</code> and <code class="highlighter-rouge">not</code>:</p>
+<p>In additional to the standard boolean opeartors (&lt;,&gt;,==,!=,) mentioned in the intro 
+class, there are three others: <code class="highlighter-rouge">in</code> and <code class="highlighter-rouge">is</code> and <code class="highlighter-rouge">not</code>:</p>
 
 <p><strong>In [46]:</strong></p>
 
@@ -354,8 +359,8 @@ True
 
 <p>In Python (and most sensible languages), boolean comparisons are short circuit
 operators - once one conditon is impossible we stop evaluating. This can get a
-good speed up on code if you have one expensive comparison and one that is not -
-put the cheap calculation first</p>
+good speed up on code if you have one expensive comparison and one that is not.
+Therefore, put the cheap calculation first!</p>
 
 <p><strong>In [61]:</strong></p>
 
@@ -769,7 +774,7 @@ course.</p>
 loops once you can’t follow clearly what the comprehension is doing (I would
 almost never use a nested comprehension)!</p>
 
-<h2 id="intro-to-functions">Intro to Functions</h2>
+<h3 id="intro-to-functions">Intro to Functions</h3>
 
 <p>Functions are one of the key parts of any programming language. Today we will
 touch on basic syntax and definition, and move into a more thorough exploration
