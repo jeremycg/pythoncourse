@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 14 Feb 2016 11:20:42 -0500</pubDate>
-    <lastBuildDate>Sun, 14 Feb 2016 11:20:42 -0500</lastBuildDate>
+    <pubDate>Sun, 14 Feb 2016 11:22:35 -0500</pubDate>
+    <lastBuildDate>Sun, 14 Feb 2016 11:22:35 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -14,10 +14,10 @@
         <description>&lt;h2 id=&quot;welcome-to-the-python-course--precima&quot;&gt;Welcome to the Python course @ Precima&lt;/h2&gt;
 
 &lt;p&gt;Hopefully, by now, everyone has read the syllabus, cheat sheets and course outline on the
-&lt;a href=&quot;http://www.jeremy.kiwi.nz/pythoncourse&quot;&gt;main website&lt;/a&gt;.&lt;/p&gt;
+&lt;a href=&quot;/pythoncourse&quot;&gt;main website&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Moreover, in this lesson, it’s assumed you either attended the Applied Stream intro to data
-types lecture, and/or have read through &lt;a href=&quot;http://jeremy.kiwi.nz/pythoncourse/2016/02/09/lesson00applied.html&quot;&gt;Lesson 00 - Applied Section&lt;/a&gt;.&lt;/p&gt;
+types lecture, and/or have read through &lt;a href=&quot;/pythoncourse/2016/02/09/lesson00applied.html&quot;&gt;Lesson 00 - Applied Section&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Today we will briefly go over the Anaconda environment and
 then dive into Python statements and functions.&lt;/p&gt;
@@ -75,39 +75,39 @@ by a 3 trained user.&lt;/p&gt;
 &lt;p&gt;We will use Anaconda, a distribution of Python by Continuum Analytics, put
 together for use in data science.&lt;/p&gt;
 
-&lt;p&gt;Anaconda comes with most of the modules we need for data analysis. The Anaconda launcher 
+&lt;p&gt;Anaconda comes with most of the modules we need for data analysis. The Anaconda launcher
 updates and launches these apps, and includes:&lt;/p&gt;
 
-&lt;p&gt;(i) Spyder, which is the IDE we will use for the first few lessons. Tt allows coding and 
+&lt;p&gt;(i) Spyder, which is the IDE we will use for the first few lessons. Tt allows coding and
 running scripts in an integrated environment.&lt;/p&gt;
 
-&lt;p&gt;(ii) The iPython/Jupyter notebook, which is a platform for developing interative code-driven 
-documents (like these lessons!) in a browser. (iPython notebooks 
+&lt;p&gt;(ii) The iPython/Jupyter notebook, which is a platform for developing interative code-driven
+documents (like these lessons!) in a browser. (iPython notebooks
 are currently in the process of being rebranded into Jupyter
 notebooks. The launcher and documentation - and we - will refer to them interchangeably).&lt;/p&gt;
 
 &lt;p&gt;(ii)  The iPython-QT console, which is an advanced console allowing
 inline graphing&lt;/p&gt;
 
-&lt;p&gt;These programs all run Python on the backend - the difference is in how you 
-interact with the environment, the possibilities that the environment provides, and how 
+&lt;p&gt;These programs all run Python on the backend - the difference is in how you
+interact with the environment, the possibilities that the environment provides, and how
 the input and output of your code is displayed and documented.&lt;/p&gt;
 
 &lt;h3 id=&quot;course-logistics&quot;&gt;Course Logistics&lt;/h3&gt;
 
-&lt;p&gt;We will start the first part of the course by covering the data types and structures, 
-before move on to loops and statements, then functions and classes. After that, we will 
-introduce the standard data modules, Pandas and NumPy. Then, we will move onto graphing, 
+&lt;p&gt;We will start the first part of the course by covering the data types and structures,
+before move on to loops and statements, then functions and classes. After that, we will
+introduce the standard data modules, Pandas and NumPy. Then, we will move onto graphing,
 optimization, machine learning and other fun topics.&lt;/p&gt;
 
-&lt;p&gt;Please note that the topics for the second half of the R&amp;amp;D class can be somewhat flexible - they 
-can be adapted to suit the common interests of the class. So please let me know if you are working 
-on something particular, or would like to look at a specific application or problem, and we can 
+&lt;p&gt;Please note that the topics for the second half of the R&amp;amp;D class can be somewhat flexible - they
+can be adapted to suit the common interests of the class. So please let me know if you are working
+on something particular, or would like to look at a specific application or problem, and we can
 try and address these in the later classes.&lt;/p&gt;
 
-&lt;p&gt;Finally, note that we are tracking both group and indiviaul progress, to make sure this course is 
-giving value for your time. In this light, all attendees are required to complete all quizzes and assessments 
-we will send out during the course. The time committment for this section is, at minimum, 5 hours a week (though 
+&lt;p&gt;Finally, note that we are tracking both group and indiviaul progress, to make sure this course is
+giving value for your time. In this light, all attendees are required to complete all quizzes and assessments
+we will send out during the course. The time committment for this section is, at minimum, 5 hours a week (though
 a few more hours is strongly recommended).&lt;/p&gt;
 
 &lt;p&gt;One last thing: coding along with the lesson is encouraged!&lt;/p&gt;
@@ -258,7 +258,7 @@ conversion implicilty and keeps type &lt;code class=&quot;highlighter-rouge&quot
 
 &lt;h3 id=&quot;booleans---advanced&quot;&gt;Booleans - Advanced&lt;/h3&gt;
 
-&lt;p&gt;In additional to the standard boolean opeartors (&amp;lt;,&amp;gt;,==,!=,) mentioned in the intro 
+&lt;p&gt;In additional to the standard boolean opeartors (&amp;lt;,&amp;gt;,==,!=,) mentioned in the intro
 class, there are three others: &lt;code class=&quot;highlighter-rouge&quot;&gt;in&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;is&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;not&lt;/code&gt;:&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;In [46]:&lt;/strong&gt;&lt;/p&gt;
