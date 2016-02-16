@@ -5,20 +5,13 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 15 Feb 2016 20:37:17 -0500</pubDate>
-    <lastBuildDate>Mon, 15 Feb 2016 20:37:17 -0500</lastBuildDate>
+    <pubDate>Mon, 15 Feb 2016 20:40:34 -0500</pubDate>
+    <lastBuildDate>Mon, 15 Feb 2016 20:40:34 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
         <title>Lesson 00 - R&amp;D Stream</title>
-        <description>&lt;hr /&gt;
-&lt;p&gt;layout: post
-title: “lesson00”
-tags:
-    - python
-    - notebook
-—
-## Welcome to the Python course @ Precima&lt;/p&gt;
+        <description>&lt;h2 id=&quot;welcome-to-the-python-course--precima&quot;&gt;Welcome to the Python course @ Precima&lt;/h2&gt;
 
 &lt;p&gt;Hopefully, by now, everyone has read the syllabus, cheat sheets and course
 outline on the
