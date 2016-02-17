@@ -16,7 +16,7 @@ Today we go over a quick review and some extensions of last lesson, then dive
 into Python statements and functions.
 
 Grab todays lesson from [this
-link!](/pythoncourse/assets/notebooks/applied/lesson 01 - applied.ipynb).
+link!](/pythoncourse/assets/notebooks/applied/lesson 01.ipynb).
 
 ### Statements
 
@@ -803,7 +803,7 @@ myfirstfun(1,2)
 
 
 
-**In [37]:**
+**In [1]:**
 
 {% highlight python %}
 myfirstfun("h", "i")
@@ -812,352 +812,49 @@ myfirstfun("h", "i")
 
     ---------------------------------------------------------------------------
 
-    AssertionError                            Traceback (most recent call last)
+    NameError                                 Traceback (most recent call last)
 
-    <ipython-input-37-b9e7ba21c90e> in <module>()
+    <ipython-input-1-b9e7ba21c90e> in <module>()
     ----> 1 myfirstfun("h", "i")
 
 
-    <ipython-input-36-f4e6512fed1f> in myfirstfun(arg1, arg2)
-          5     '''
-          6     for i in arg1, arg2:
-    ----> 7         assert type(i) == int or type(i) == float, "This function requires numerics"
-          8     return(arg1 + arg2)
-          9
+    NameError: name 'myfirstfun' is not defined
 
 
-    AssertionError: This function requires numerics
+## Exercises
 
+* `in` can generalise to strings - `'im' in 'Precima'` will give True. Can you
+think of a way to test if letters are in a string in any order? For now, ignore
+any duplicates. 'imP' should resolve to True if compared to 'Precima'
 
-### Passing Multiple Arguments and Default Values
+* Rewrite your answer above using `all`, a for loop, and a comprehension (if you
+didn't use these). Which one feels the most natural to you?
 
-Some functions will need to take an unknown number of arguments, or a default
-value:
+* We have a nested dictionary of transactions - dict =
+{'user1':{1:345,2:546.5,3:987}, 'user2':{1:546, 2:744.4, 3:454.4}}. Use a nested
+list comprehension to get out a list of the values:[[345, 546.5, 987], [546,
+744.4, 454.4]]. Can you think of a better way? Can you zip this list to [(345,
+546), (546.5, 744.4), (987, 454.4)]?
 
-**In [38]:**
+* Why does range not enumerate to a list all at once? How can you force it to?
 
-{% highlight python %}
-def myfirstfun(arg1, arg2 = 2, *moreargs):
-    '''
-    This function takes two arguments, and returns the sum of them
-    any extra arguments are printed to the screen
-    '''
-    for i in arg1, arg2:
-        assert type(i) == int or type(i) == float
-    print("here are the extra arguments {x}".format(x = list(moreargs)))
-    return(arg1 + arg2)
+* How does zip behave on lists of different sizes? (l = [1,2,3], k =
+[1,2,3,4,5]). Make a loop that works until the longest list ends. What should
+the output look like and why?
 
-myfirstfun(1,2,3,4,5,6)
-{% endhighlight %}
+* We can index previous members of a sequence in a for loop, using a number of
+methods. Use `enumerate` and a for loop to test whether each member of list l =
+[1,1,2,3,5,8,13,21,34,55,88,143] is the sum of the previous two objects of the
+list. Think about how to treat the first two values. The output should be a list
+of booleans
 
-    here are the extra arguments [3, 4, 5, 6]
+* Rewrite the previous loop using range. How will you treat the first two values
+now? Can you think of a way to do this using only for i in l (nb off the top of
+my head, I can't)?
 
+* Write a list comprehension giving True for only those values which are perfect
+cubes - ie x\*\*1/3 gives an integer. Think about how to avoid floating point
+errors: use google, or use a function I briefly introduced today. l =
+[1,8,16,27,64] will give [True, True, False, True, True]
 
-
-
-
-    3
-
-
-
-**In [39]:**
-
-{% highlight python %}
-myfirstfun(10)
-{% endhighlight %}
-
-    here are the extra arguments []
-
-
-
-
-
-    12
-
-
-
-### Warning
-
-For default values, we evaluate them at function definition - this saves time
-but can lead to error when using mutable defaults
-
-**In [40]:**
-
-{% highlight python %}
-def myfunction(a = 1, b = 2^45):
-    return(a + b)
-print(myfunction())
-print(myfunction(2,4))
-print(b)
-{% endhighlight %}
-
-    48
-    6
-    no
-
-
-**In [41]:**
-
-{% highlight python %}
-def myfunction(item = "apples", basket = []):
-    basket.append(item)
-    return(basket)
-
-print(myfunction("apples"))
-print(myfunction("bananas"))
-#extremely weird behaviour for anyone coming from R!
-{% endhighlight %}
-
-    ['apples']
-    ['apples', 'bananas']
-
-
-**In [42]:**
-
-{% highlight python %}
-def myfunction(item = 1, basket = None):
-    if basket is None:
-        basket = []
-    basket.append(item)
-    return(basket)
-print(myfunction("apples"))
-print(myfunction("bananas"))
-{% endhighlight %}
-
-    ['apples']
-    ['bananas']
-
-
-### Closures
-
-We can do almost anything we'd like inside a function, including defining other
-functions:
-
-**In [43]:**
-
-{% highlight python %}
-def internaldef(a,b):
-    def helper(c):
-        return(c ** 5)
-    return(helper(a) + helper(b))
-internaldef(2,2)
-{% endhighlight %}
-
-
-
-
-    64
-
-
-
-Internal functions have access to the enclosing variables:
-
-**In [44]:**
-
-{% highlight python %}
-def internaldef(a,b):
-    def helper(c):
-        return(c ** b)
-    return(helper(a) + helper(b))
-internaldef(2,2)
-{% endhighlight %}
-
-
-
-
-    8
-
-
-
-And we can even return them (a function generating function is technically a
-'closure'):
-
-**In [45]:**
-
-{% highlight python %}
-def makepow(a):
-    def pown(num):
-        return(num ** a)
-    return(pown)
-pow4 = makepow(4)
-pow4(3)
-{% endhighlight %}
-
-
-
-
-    81
-
-
-
-### Lambda Functions and map
-
-Lambda functions are functions which are defined and used in the same place -
-they are 'anonymous' (see Rs version `lapply(x, function(z) z^2`)). They are
-generally used inside another statement, where defining a function is not worth
-the time.
-
-We can also use the lamdba to define a function:
-
-**In [46]:**
-
-{% highlight python %}
-myfun = lambda x,y: x+y
-myfun(1,2)
-{% endhighlight %}
-
-
-
-
-    3
-
-
-
-**In [47]:**
-
-{% highlight python %}
-l = [[1,2],[3,4],[5,6]]
-[myfun(x,y) for x,y in l]
-{% endhighlight %}
-
-
-
-
-    [3, 7, 11]
-
-
-
-`map` takes two arguments - a function (often a lambda function) and a sequence
-(or sequences) to iterate over
-
-**In [48]:**
-
-{% highlight python %}
-l = [1,2,3,4,5,6]
-x = map(lambda x: x if x % 2 == 1 else x **2, l)
-list(x)
-{% endhighlight %}
-
-
-
-
-    [1, 4, 3, 16, 5, 36]
-
-
-
-**In [49]:**
-
-{% highlight python %}
-l = range(6)
-k = range(6,12)
-x = map(lambda x,y : x*y, l,k)
-list(x)
-{% endhighlight %}
-
-
-
-
-    [0, 7, 16, 27, 40, 55]
-
-
-
-**In [50]:**
-
-{% highlight python %}
-x = map(lambda x, y: x if x%2 == 1 else y, l,k)
-list(x)
-{% endhighlight %}
-
-
-
-
-    [6, 1, 8, 3, 10, 5]
-
-
-
-## Functional Programming : Filter, Any, All
-
-In addition to map, several other built in functions use lambda functions, or
-take functions as arguments. Python purists might say to use the more explicit
-loops, but functional programming is highly optimized.
-
-### Filter
-
-Filter is used to remove certain items from a sequence:
-
-**In [51]:**
-
-{% highlight python %}
-basket = ['oranges','bread','bananas','milk']
-fruits = ['oranges','apples','bananas','kiwis','strawberries', 'pears']
-out = []
-for item in basket:
-    if item in fruits:
-        out.append(item)
-out
-{% endhighlight %}
-
-
-
-
-    ['oranges', 'bananas']
-
-
-
-**In [52]:**
-
-{% highlight python %}
-x = filter(lambda x: x in fruits, basket)
-list(x)
-{% endhighlight %}
-
-
-
-
-    ['oranges', 'bananas']
-
-
-
-### Any and all
-
-any and all are functions which check if every (or any) member or an iterable
-are True:
-
-**In [53]:**
-
-{% highlight python %}
-l = [True, True, True]
-print(all(l))
-print(any(l))
-{% endhighlight %}
-
-    True
-    True
-
-
-We can use them similar to generators however:
-
-**In [54]:**
-
-{% highlight python %}
-basket = ['oranges','bread','bananas','milk']
-fruits = ['oranges','apples','bananas','kiwis','strawberries', 'pears']
-print(any(item in fruits for item in basket))
-print(all(item in fruits for item in basket))
-{% endhighlight %}
-
-    True
-    False
-
-
-**In [55]:**
-
-{% highlight python %}
-#empty lists have differing behaviour
-l = []
-print(any(l))
-print(all(l))
-{% endhighlight %}
-
-    False
-    True
+* Write the above as a for loop.
