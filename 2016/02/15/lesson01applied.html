@@ -85,7 +85,7 @@ Section</a>.</p>
 <p>Today we go over a quick review and some extensions of last lesson, then dive
 into Python statements and functions.</p>
 
-<p>Grab todays lesson from <a href="/pythoncourse/assets/notebooks/applied/lesson 01 - applied.ipynb">this
+<p>Grab todays lesson from <a href="/pythoncourse/assets/notebooks/applied/lesson 01.ipynb">this
 link!</a>.</p>
 
 <h3 id="statements">Statements</h3>
@@ -803,303 +803,71 @@ arguments are not numeric:</p>
 </code></pre>
 </div>
 
-<p><strong>In [37]:</strong></p>
+<p><strong>In [1]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">myfirstfun</span><span class="p">(</span><span class="s">"h"</span><span class="p">,</span> <span class="s">"i"</span><span class="p">)</span></code></pre></figure>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>---------------------------------------------------------------------------
 
-AssertionError                            Traceback (most recent call last)
+NameError                                 Traceback (most recent call last)
 
-&lt;ipython-input-37-b9e7ba21c90e&gt; in &lt;module&gt;()
+&lt;ipython-input-1-b9e7ba21c90e&gt; in &lt;module&gt;()
 ----&gt; 1 myfirstfun("h", "i")
 
 
-&lt;ipython-input-36-f4e6512fed1f&gt; in myfirstfun(arg1, arg2)
-      5     '''
-      6     for i in arg1, arg2:
-----&gt; 7         assert type(i) == int or type(i) == float, "This function requires numerics"
-      8     return(arg1 + arg2)
-      9
-
-
-AssertionError: This function requires numerics
+NameError: name 'myfirstfun' is not defined
 </code></pre>
 </div>
 
-<h3 id="passing-multiple-arguments-and-default-values">Passing Multiple Arguments and Default Values</h3>
-
-<p>Some functions will need to take an unknown number of arguments, or a default
-value:</p>
-
-<p><strong>In [38]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfirstfun</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="o">*</span><span class="n">moreargs</span><span class="p">):</span>
-    <span class="s">'''
-    This function takes two arguments, and returns the sum of them
-    any extra arguments are printed to the screen
-    '''</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span> <span class="ow">or</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="nb">float</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"here are the extra arguments {x}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">moreargs</span><span class="p">)))</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">arg1</span> <span class="o">+</span> <span class="n">arg2</span><span class="p">)</span>
-
-<span class="n">myfirstfun</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>here are the extra arguments [3, 4, 5, 6]
-
-
-
-
-
-3
-</code></pre>
-</div>
-
-<p><strong>In [39]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">myfirstfun</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>here are the extra arguments []
-
-
-
-
-
-12
-</code></pre>
-</div>
-
-<h3 id="warning">Warning</h3>
-
-<p>For default values, we evaluate them at function definition - this saves time
-but can lead to error when using mutable defaults</p>
-
-<p><strong>In [40]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="o">^</span><span class="mi">45</span><span class="p">):</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">())</span>
-<span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>48
-6
-no
-</code></pre>
-</div>
-
-<p><strong>In [41]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">item</span> <span class="o">=</span> <span class="s">"apples"</span><span class="p">,</span> <span class="n">basket</span> <span class="o">=</span> <span class="p">[]):</span>
-    <span class="n">basket</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">basket</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">(</span><span class="s">"apples"</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">(</span><span class="s">"bananas"</span><span class="p">))</span>
-<span class="c">#extremely weird behaviour for anyone coming from R!</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>['apples']
-['apples', 'bananas']
-</code></pre>
-</div>
-
-<p><strong>In [42]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">item</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">basket</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">basket</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">basket</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">basket</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">basket</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">(</span><span class="s">"apples"</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">(</span><span class="s">"bananas"</span><span class="p">))</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>['apples']
-['bananas']
-</code></pre>
-</div>
-
-<h3 id="closures">Closures</h3>
-
-<p>We can do almost anything we’d like inside a function, including defining other
-functions:</p>
-
-<p><strong>In [43]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">internaldef</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
-        <span class="k">return</span><span class="p">(</span><span class="n">c</span> <span class="o">**</span> <span class="mi">5</span><span class="p">)</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">helper</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
-<span class="n">internaldef</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>64
-</code></pre>
-</div>
-
-<p>Internal functions have access to the enclosing variables:</p>
-
-<p><strong>In [44]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">internaldef</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
-        <span class="k">return</span><span class="p">(</span><span class="n">c</span> <span class="o">**</span> <span class="n">b</span><span class="p">)</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">helper</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="n">helper</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
-<span class="n">internaldef</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>8
-</code></pre>
-</div>
-
-<p>And we can even return them (a function generating function is technically a
-‘closure’):</p>
-
-<p><strong>In [45]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">makepow</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">pown</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
-        <span class="k">return</span><span class="p">(</span><span class="n">num</span> <span class="o">**</span> <span class="n">a</span><span class="p">)</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">pown</span><span class="p">)</span>
-<span class="n">pow4</span> <span class="o">=</span> <span class="n">makepow</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="n">pow4</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>81
-</code></pre>
-</div>
-
-<h3 id="lambda-functions-and-map">Lambda Functions and map</h3>
-
-<p>Lambda functions are functions which are defined and used in the same place -
-they are ‘anonymous’ (see Rs version <code class="highlighter-rouge">lapply(x, function(z) z^2</code>)). They are
-generally used inside another statement, where defining a function is not worth
-the time.</p>
-
-<p>We can also use the lamdba to define a function:</p>
-
-<p><strong>In [46]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">myfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
-<span class="n">myfun</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>3
-</code></pre>
-</div>
-
-<p><strong>In [47]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]]</span>
-<span class="p">[</span><span class="n">myfun</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">l</span><span class="p">]</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[3, 7, 11]
-</code></pre>
-</div>
-
-<p><code class="highlighter-rouge">map</code> takes two arguments - a function (often a lambda function) and a sequence
-(or sequences) to iterate over</p>
-
-<p><strong>In [48]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
-<span class="n">x</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">x</span> <span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[1, 4, 3, 16, 5, 36]
-</code></pre>
-</div>
-
-<p><strong>In [49]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-<span class="n">k</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[0, 7, 16, 27, 40, 55]
-</code></pre>
-</div>
-
-<p><strong>In [50]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">y</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>[6, 1, 8, 3, 10, 5]
-</code></pre>
-</div>
-
-<h2 id="functional-programming--filter-any-all">Functional Programming : Filter, Any, All</h2>
-
-<p>In addition to map, several other built in functions use lambda functions, or
-take functions as arguments. Python purists might say to use the more explicit
-loops, but functional programming is highly optimized.</p>
-
-<h3 id="filter">Filter</h3>
-
-<p>Filter is used to remove certain items from a sequence:</p>
-
-<p><strong>In [51]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">basket</span> <span class="o">=</span> <span class="p">[</span><span class="s">'oranges'</span><span class="p">,</span><span class="s">'bread'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">,</span><span class="s">'milk'</span><span class="p">]</span>
-<span class="n">fruits</span> <span class="o">=</span> <span class="p">[</span><span class="s">'oranges'</span><span class="p">,</span><span class="s">'apples'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">,</span><span class="s">'kiwis'</span><span class="p">,</span><span class="s">'strawberries'</span><span class="p">,</span> <span class="s">'pears'</span><span class="p">]</span>
-<span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">basket</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">fruits</span><span class="p">:</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-<span class="n">out</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>['oranges', 'bananas']
-</code></pre>
-</div>
-
-<p><strong>In [52]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">fruits</span><span class="p">,</span> <span class="n">basket</span><span class="p">)</span>
-<span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>['oranges', 'bananas']
-</code></pre>
-</div>
-
-<h3 id="any-and-all">Any and all</h3>
-
-<p>any and all are functions which check if every (or any) member or an iterable
-are True:</p>
-
-<p><strong>In [53]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="bp">True</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">True</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">l</span><span class="p">))</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>True
-True
-</code></pre>
-</div>
-
-<p>We can use them similar to generators however:</p>
-
-<p><strong>In [54]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">basket</span> <span class="o">=</span> <span class="p">[</span><span class="s">'oranges'</span><span class="p">,</span><span class="s">'bread'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">,</span><span class="s">'milk'</span><span class="p">]</span>
-<span class="n">fruits</span> <span class="o">=</span> <span class="p">[</span><span class="s">'oranges'</span><span class="p">,</span><span class="s">'apples'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">,</span><span class="s">'kiwis'</span><span class="p">,</span><span class="s">'strawberries'</span><span class="p">,</span> <span class="s">'pears'</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">item</span> <span class="ow">in</span> <span class="n">fruits</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">basket</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">item</span> <span class="ow">in</span> <span class="n">fruits</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">basket</span><span class="p">))</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>True
-False
-</code></pre>
-</div>
-
-<p><strong>In [55]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#empty lists have differing behaviour</span>
-<span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">all</span><span class="p">(</span><span class="n">l</span><span class="p">))</span></code></pre></figure>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>False
-True
-</code></pre>
-</div>
+<h2 id="exercises">Exercises</h2>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">in</code> can generalise to strings - <code class="highlighter-rouge">'im' in 'Precima'</code> will give True. Can you
+think of a way to test if letters are in a string in any order? For now, ignore
+any duplicates. ‘imP’ should resolve to True if compared to ‘Precima’</p>
+  </li>
+  <li>
+    <p>Rewrite your answer above using <code class="highlighter-rouge">all</code>, a for loop, and a comprehension (if you
+didn’t use these). Which one feels the most natural to you?</p>
+  </li>
+  <li>
+    <p>We have a nested dictionary of transactions - dict =
+{‘user1’:{1:345,2:546.5,3:987}, ‘user2’:{1:546, 2:744.4, 3:454.4}}. Use a nested
+list comprehension to get out a list of the values:[[345, 546.5, 987], [546,
+744.4, 454.4]]. Can you think of a better way? Can you zip this list to [(345,
+546), (546.5, 744.4), (987, 454.4)]?</p>
+  </li>
+  <li>
+    <p>Why does range not enumerate to a list all at once? How can you force it to?</p>
+  </li>
+  <li>
+    <p>How does zip behave on lists of different sizes? (l = [1,2,3], k =
+[1,2,3,4,5]). Make a loop that works until the longest list ends. What should
+the output look like and why?</p>
+  </li>
+  <li>
+    <p>We can index previous members of a sequence in a for loop, using a number of
+methods. Use <code class="highlighter-rouge">enumerate</code> and a for loop to test whether each member of list l =
+[1,1,2,3,5,8,13,21,34,55,88,143] is the sum of the previous two objects of the
+list. Think about how to treat the first two values. The output should be a list
+of booleans</p>
+  </li>
+  <li>
+    <p>Rewrite the previous loop using range. How will you treat the first two values
+now? Can you think of a way to do this using only for i in l (nb off the top of
+my head, I can’t)?</p>
+  </li>
+  <li>
+    <p>Write a list comprehension giving True for only those values which are perfect
+cubes - ie x**1/3 gives an integer. Think about how to avoid floating point
+errors: use google, or use a function I briefly introduced today. l =
+[1,8,16,27,64] will give [True, True, False, True, True]</p>
+  </li>
+  <li>
+    <p>Write the above as a for loop.</p>
+  </li>
+</ul>
 
   </div>
   
