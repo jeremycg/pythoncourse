@@ -16,7 +16,7 @@ Today we go over a quick review and some extensions of last lesson, then dive
 into Python statements and functions.
 
 Grab todays lesson from [this
-link!](/pythoncourse/assets/notebooks/applied/lesson 01.ipynb).
+link!](/pythoncourse/assets/notebooks/applied/lesson 01 - applied.ipynb).
 
 ### Statements
 
