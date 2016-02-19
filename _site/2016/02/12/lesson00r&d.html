@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Lesson 00 - R&D Stream</title>
+  <meta name="description" content="Welcome to the Python course @ Precima">
+
+  <link rel="stylesheet" href="/pythoncourse/css/main.css">
+  <link rel="canonical" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/02/12/lesson00r&d.html">
+  <link rel="alternate" type="application/rss+xml" title="Python @ Precima" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/pythoncourse/">Python @ Precima</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/Applied%20Statistics%20stream/">Applied Statistics stream</a>
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/R&D%20stream/">R&D stream</a>
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-73837623-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Lesson 00 - R&D Stream</h1>
+    <p class="post-meta"><time datetime="2016-02-12T00:00:00-05:00" itemprop="datePublished">Feb 12, 2016</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Jeremy</span></span></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h2 id="welcome-to-the-python-course--precima">Welcome to the Python course @ Precima</h2>
+
+<p>Hopefully, by now, everyone has read the syllabus, cheat sheets and course
+outline on the
+<a href="/pythoncourse">main website</a>.</p>
+
+<p>Moreover, in this lesson, it’s assumed you either attended the Applied Stream
+intro to data
+types lecture, and/or have read through <a href="/pythoncourse/2016/02/09/lesson00applied.html">Lesson 00 - Applied
+Section</a>.</p>
+
+<p>Today we will briefly go over the Anaconda environment and
+then dive into Python statements and functions.</p>
+
+<p>All lessons are made as iPython/Jupyter notebooks and will be available on this
+site to
+download. Grab todays lesson from <a href="/pythoncourse/assets/notebooks/r&amp;d/lesson 00.ipynb">this
+link!</a>.</p>
+
+<h3 id="python">Python</h3>
+
+<p>Python is a programming language first released in 1991 by Guido van Rossum and
+one of the most popular languages used in computing today. Python currently
+ranks as the <a href="https://github.com/blog/2047-language-trends-on-github">5th most common language used on
+github</a>.</p>
+
+<p>Python is used as a scripting language, as well as in web development and to
+create applications - some of the more popular websites and applications running
+at least partially on Python include: Google, Youtube, Facebook, Instagram,
+Reddit, Dropbox, Civilization IV, EVE Online and BitTorrent.</p>
+
+<p>Python as a language is based on readability, flexibility, simplicity and
+extensibility.</p>
+
+<p>The extensibility of Python has caused it to be adopted, along with R, as one of
+the premier data science programming languages.</p>
+
+<p>Python has had many added on modules (or libraries) added to it, to allow data
+science work which we will cover in this course.</p>
+
+<p>In general compared to R, Python is faster, more programmer focussed and less
+restrictive in licensing. The downside is new statistical methods tend to appear
+in R before Python, although as the community grows, this has become less of a
+problem.</p>
+
+<h3 id="vs-3">2.7 vs 3</h3>
+
+<p>In 2008, Python version 3.0 was released. Due to the number and nature of
+changes, Python 2.6 and Python 3.0 were not compatible. This has lead to a split
+in the Python community, as many users were unwilling to fix existing code to 3
+compatibility, and have since continued to develop Python 2.6 into 2.7, while
+3.0 has been developed in parallel and currently stands at version 3.5.</p>
+
+<p>In this course, we will use Python 3. This is due to the majority of users
+having no legacy code to worry about, the better memory management, and the
+availability of the data science stack in Python 3. If you are a die hard Python
+2.7 user, feel free to continue using it, although you will need to fix the code
+yourself.</p>
+
+<p>In the level we will be coding at the changes are not too big, the largest
+differences we will see are <code class="highlighter-rouge">print()</code> vs <code class="highlighter-rouge">print</code>, <code class="highlighter-rouge">xrange</code> vs <code class="highlighter-rouge">range</code> and other
+generators. Python code found online will often be 2.7, but should be readable
+by a 3 trained user.</p>
+
+<h3 id="anaconda-spyder-and-ipythonjupyter">Anaconda, Spyder and iPython/Jupyter</h3>
+
+<p>We will use Anaconda, a distribution of Python by Continuum Analytics, put
+together for use in data science.</p>
+
+<p>Anaconda comes with most of the modules we need for data analysis. The Anaconda
+launcher
+updates and launches these apps, and includes:</p>
+
+<p>(i) Spyder, which is the IDE we will use for the first few lessons. It allows
+coding and
+running scripts in an integrated environment.</p>
+
+<p>(ii) The iPython/Jupyter notebook, which is a platform for developing interative
+code-driven
+documents (like these lessons!) in a browser. (iPython notebooks
+are currently in the process of being rebranded into Jupyter
+notebooks. The launcher and documentation - and we - will refer to them
+interchangeably).</p>
+
+<p>(ii)  The iPython-QT console, which is an advanced console allowing
+inline graphing</p>
+
+<p>These programs all run Python on the backend - the difference is in how you
+interact with the environment, the possibilities that the environment provides,
+and how
+the input and output of your code is displayed and documented.</p>
+
+<h3 id="course-logistics">Course Logistics</h3>
+
+<p>We will start the first part of the course by covering the data types and
+structures,
+before move on to loops and statements, then functions and classes. After that,
+we will
+introduce the standard data modules, Pandas and NumPy. Then, we will move onto
+graphing,
+optimization, machine learning and other fun topics.</p>
+
+<p>Please note that the topics for the second half of the R&amp;D class can be somewhat
+flexible - they
+can be adapted to suit the common interests of the class. So please let me know
+if you are working
+on something particular, or would like to look at a specific application or
+problem, and we can
+try and address these in the later classes.</p>
+
+<p>Finally, note that we are tracking both group and individual progress, to make
+sure this course is
+giving value for your time. In this light, all attendees are required to
+complete all quizzes and assessments
+we will send out during the course. The time committment for this section is, at
+minimum, 5 hours a week (though
+a few more hours is strongly recommended).</p>
+
+<p>One last thing: coding along with the lesson is encouraged!</p>
+
+<h3 id="outside-resources">Outside Resources</h3>
+
+<p>A number of people have asked about text books or online resources for the
+course. Most Python tutorials online will assume a knowledge at around the level
+we will reach after a few lessons. I’m using <a href="http://shop.oreilly.com/product/0636920023784.do">Python for Data
+Analysis</a> for the Numpy and
+Pandas section - it won’t be necessary to purchase but is a good book (if a
+little outdated). For the other lessons, links will be provided to the relevant
+docs.</p>
+
+<h3 id="basic-data-types-review">Basic Data Types Review</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Example</th>
+      <th>Mutable</th>
+      <th>Ordered</th>
+      <th>Duplicates</th>
+      <th>Subsetting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>int</td>
+      <td>2</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <td>float</td>
+      <td>2.5</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <td>complex</td>
+      <td>2.5 + 0.6J</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <td>boolean</td>
+      <td>True</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+      <td>NA</td>
+    </tr>
+    <tr>
+      <td>string</td>
+      <td>‘abcd’</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>x[1]</td>
+    </tr>
+    <tr>
+      <td>list</td>
+      <td>[1,2,3,’a’]</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>x[1]</td>
+    </tr>
+    <tr>
+      <td>tuple</td>
+      <td>(1,2,3,’a’)</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>x[1]</td>
+    </tr>
+    <tr>
+      <td>set</td>
+      <td>{1,2,3,4}</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>frozenset</td>
+      <td>{1,2,3,4}</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>dictionary</td>
+      <td>{1:1,2:2}</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>x[‘key’]</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="numbers---advanced">Numbers - Advanced</h3>
+
+<p>Internally, floats are stored as double in <code class="highlighter-rouge">C</code> - use sys.float_info for more
+information about tolerances etc.</p>
+
+<p><strong>In [1]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">float_info</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sys.float_info(max=1.7976931348623157e+308, max_exp=1024, max_10_exp=308, min=2.2250738585072014e-308, min_exp=-1021, min_10_exp=-307, dig=15, mant_dig=53, epsilon=2.220446049250313e-16, radix=2, rounds=1)
+</code></pre>
+</div>
+
+<p>Integers have unlimited precision</p>
+
+<p><strong>In [2]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">1000000</span> <span class="o">+</span><span class="mi">1</span>
+<span class="n">z</span> <span class="o">%</span> <span class="mi">10</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1
+</code></pre>
+</div>
+
+<p>Python 2.7 has another class, <code class="highlighter-rouge">large</code> for large numbers, Python 3 makes the
+conversion implicilty and keeps type <code class="highlighter-rouge">int</code>:</p>
+
+<p><strong>In [3]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+<span class="k">del</span><span class="p">(</span><span class="n">z</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;class 'int'&gt;
+</code></pre>
+</div>
+
+<h3 id="booleans---advanced">Booleans - Advanced</h3>
+
+<p>In addition to the standard boolean operators (&lt;,&gt;,==,!=,) mentioned in the
+intro
+class, there are five others: <code class="highlighter-rouge">in</code>,<code class="highlighter-rouge">is</code>,<code class="highlighter-rouge">not</code>, <code class="highlighter-rouge">any</code> and <code class="highlighter-rouge">all</code>. Any and all will
+be introduced in the functional programming section.</p>
+
+<p><strong>In [4]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="s">'oranges'</span><span class="p">,</span><span class="s">'apples'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">,</span><span class="s">'kiwis'</span><span class="p">]</span>
+<span class="s">'oranges'</span> <span class="ow">in</span> <span class="n">l</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>True
+</code></pre>
+</div>
+
+<p><strong>In [5]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="mi">5</span> <span class="ow">is</span> <span class="n">l</span>
+<span class="c">##very similar to ==</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>True
+</code></pre>
+</div>
+
+<p><strong>In [6]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#we are checking identity, not equality</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="s">'oranges'</span><span class="p">,</span><span class="s">'apples'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">]</span>
+<span class="n">k</span> <span class="o">=</span> <span class="p">[</span><span class="s">'oranges'</span><span class="p">,</span><span class="s">'apples'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">l</span> <span class="ow">is</span> <span class="n">k</span><span class="p">)</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">l</span>
+<span class="k">print</span><span class="p">(</span><span class="n">l</span> <span class="ow">is</span> <span class="n">k</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>False
+True
+</code></pre>
+</div>
+
+<p><strong>In [7]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="ow">not</span> <span class="bp">True</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>False
+</code></pre>
+</div>
+
+<p>In Python (and most sensible languages), boolean comparisons are short circuit
+operators - once one conditon is impossible we stop evaluating. This can get a
+good speed up on code if you have one expensive comparison and one that is not -
+Therefore, put the cheap calculation first!</p>
+
+<p><strong>In [8]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#del(l)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="s">"bananas"</span>
+<span class="c">#l is not defined! This would give and error if it hits l</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="s">"bananas"</span> <span class="ow">or</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="s">"bananas"</span> <span class="ow">and</span> <span class="n">l</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>True
+False
+</code></pre>
+</div>
+
+<h3 id="data-structures-review">Data Structures Review</h3>
+
+<p><strong>In [9]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">customer_1</span> <span class="o">=</span> <span class="p">{</span><span class="s">'loyaltyids'</span><span class="p">:(</span><span class="mi">1234</span><span class="p">,</span> <span class="mi">3456</span><span class="p">),</span>
+              <span class="s">'transactions'</span><span class="p">:{</span><span class="mi">1</span><span class="p">:[</span><span class="s">'oranges'</span><span class="p">,</span><span class="s">'apples'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">,</span><span class="s">'pears'</span><span class="p">,</span><span class="s">'kiwis'</span><span class="p">],</span>
+                              <span class="mi">2</span><span class="p">:[</span><span class="s">'bread'</span><span class="p">,</span> <span class="s">'milk'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">]},</span>
+              <span class="s">'postalcodes'</span><span class="p">:{</span><span class="s">'M5T1V1'</span><span class="p">,</span> <span class="s">'M5S3B2'</span><span class="p">},</span>
+              <span class="s">'transactionspends'</span><span class="p">:[</span><span class="mf">100.46</span><span class="p">,</span> <span class="mf">34.55</span><span class="p">],</span>
+              <span class="s">'usedcoupons'</span><span class="p">:[</span><span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">]}</span></code></pre></figure>
+
+<p><strong>In [10]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#subsetting here</span></code></pre></figure>
+
+<h2 id="python-statements">Python Statements</h2>
+
+<p>Python uses indentation, rather than braces, as its primary way of parsing loops
+and statements. This was originally to force some degree of readability on code.</p>
+
+<h3 id="if-else-elif">If, Else, Elif</h3>
+
+<p>We can do if and else statements</p>
+
+<p><strong>In [11]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="mf">4.99</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'on sale'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'regular price'</span><span class="p">)</span>
+
+
+<span class="c">#if True:</span>
+<span class="c">#print(x)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>on sale
+</code></pre>
+</div>
+
+<p>and nest them as deep as we would like:</p>
+
+<p><strong>In [12]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pricehistory</span> <span class="o">=</span> <span class="p">[</span><span class="mi">11</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="n">pricehistory</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">pricehistory</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">pricehistory</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">12</span><span class="p">:</span>
+        <span class="n">pricehistory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pricehistory</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'new price is '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pricehistory</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">pricehistory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pricehistory</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.10</span> <span class="o">*</span> <span class="n">pricehistory</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'new price is '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pricehistory</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">pricehistory</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">pricehistory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">pricehistory</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'new price is '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pricehistory</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">pricehistory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pricehistory</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mf">0.9</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'new price is '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pricehistory</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="n">pricehistory</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>new price is 9.9
+
+
+
+
+
+[11, 9.9]
+</code></pre>
+</div>
+
+<h3 id="for-loops">For loops</h3>
+
+<p>For loops work similarly in syntax to if and else. We can use them on any of the
+major data structures we just introduced</p>
+
+<p><strong>In [13]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="s">'oranges'</span><span class="p">,</span><span class="s">'bread'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">,</span><span class="s">'milk'</span><span class="p">]</span>
+<span class="n">fruits</span> <span class="o">=</span> <span class="p">[</span><span class="s">'oranges'</span><span class="p">,</span><span class="s">'apples'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">,</span><span class="s">'kiwis'</span><span class="p">,</span><span class="s">'strawberries'</span><span class="p">,</span> <span class="s">'pears'</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">fruits</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"fruit"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"other"</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="s">'oranges'</span><span class="p">,</span><span class="s">'bread'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">,</span><span class="s">'milk'</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">fruits</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"fruit"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"other"</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>fruit
+other
+fruit
+other
+
+
+fruit
+other
+fruit
+other
+</code></pre>
+</div>
+
+<p>On dictionaries, we have to do it a little differently</p>
+
+<p><strong>In [14]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">'produce'</span><span class="p">:</span><span class="s">'banana'</span><span class="p">,</span> <span class="s">'dairy'</span><span class="p">:</span><span class="s">'milk'</span><span class="p">,</span> <span class="s">'canned'</span><span class="p">:</span><span class="s">'chickpeas'</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="s">": "</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span>
+<span class="c">#unordered!</span>
+
+<span class="c">#similar for nested lists:</span>
+
+<span class="n">l</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]]</span>
+
+<span class="k">for</span> <span class="n">one</span><span class="p">,</span> <span class="n">two</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">one</span> <span class="o">*</span> <span class="n">two</span><span class="p">)</span>
+    <span class="c">#no modifying!</span>
+    <span class="n">one</span> <span class="o">=</span> <span class="n">one</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="n">l</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>canned: chickpeas
+dairy: milk
+produce: banana
+2
+12
+30
+56
+
+
+
+
+
+[[1, 2], [3, 4], [5, 6], [7, 8]]
+</code></pre>
+</div>
+
+<h3 id="while-loops">While loops</h3>
+
+<p>Similarly, we can use while loops, and run a loop until a condition is met</p>
+
+<p><strong>In [15]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="k">while</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">-=</span> <span class="mi">1</span>
+<span class="c">#also +=, *=, /=</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>5
+4
+3
+2
+</code></pre>
+</div>
+
+<h3 id="break-pass-continue">Break, Pass, Continue</h3>
+
+<p>We can skip, break or pass elements in our loops</p>
+
+<p><strong>In [16]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="s">"oranges"</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">num</span> <span class="o">+</span> <span class="s">" is not a number"</span><span class="p">)</span>
+        <span class="k">break</span>
+
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">num</span> <span class="o">+</span> <span class="s">" is not a number"</span><span class="p">)</span>
+        <span class="k">continue</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"how did you get here?"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">num</span> <span class="o">+</span> <span class="s">" is not a number"</span><span class="p">)</span>
+        <span class="k">pass</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"how did you get here?"</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1
+2
+3
+4
+oranges is not a number
+1
+2
+3
+4
+oranges is not a number
+6
+1
+2
+3
+4
+oranges is not a number
+how did you get here?
+6
+</code></pre>
+</div>
+
+<p><strong>In [17]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#example</span>
+<span class="n">basket</span> <span class="o">=</span> <span class="p">[[</span><span class="s">'apples'</span><span class="p">,</span> <span class="mf">2.50</span><span class="p">],</span> <span class="p">[</span><span class="s">"oranges"</span><span class="p">,</span> <span class="mf">3.00</span><span class="p">],</span> <span class="p">[</span><span class="s">'razors'</span><span class="p">,</span> <span class="mf">10.99</span><span class="p">],</span> <span class="p">[</span><span class="s">'potatoes'</span><span class="p">,</span> <span class="mf">4.99</span><span class="p">],</span> <span class="p">[</span><span class="s">'toothbrush'</span><span class="p">,</span> <span class="mf">2.99</span><span class="p">],</span> <span class="p">[</span><span class="s">'pumpkin'</span><span class="p">,</span> <span class="mf">2.98</span><span class="p">],</span>
+          <span class="p">[</span><span class="mf">9.99</span><span class="p">,</span> <span class="s">"strawberries"</span><span class="p">]]</span>
+<span class="n">fruits</span> <span class="o">=</span> <span class="p">[</span><span class="s">'oranges'</span><span class="p">,</span><span class="s">'apples'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">,</span><span class="s">'kiwis'</span><span class="p">,</span><span class="s">'strawberries'</span><span class="p">,</span> <span class="s">'pears'</span><span class="p">]</span>
+<span class="n">veges</span> <span class="o">=</span> <span class="p">[</span><span class="s">'potatoes'</span><span class="p">,</span> <span class="s">'parsnips'</span><span class="p">,</span> <span class="s">'cabbage'</span><span class="p">,</span> <span class="s">'pumpkins'</span><span class="p">]</span>
+
+<span class="n">fruit</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">veg</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">other</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">basket</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">basket</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">fruits</span><span class="p">:</span>
+        <span class="n">fruit</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">veges</span><span class="p">:</span>
+        <span class="n">veg</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">float</span><span class="p">):</span>
+            <span class="n">other</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">"not proper item"</span><span class="p">)</span>
+            <span class="k">pass</span>
+
+<span class="c">#print(fruit, veg, other)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[9.99, 'strawberries'] not proper item
+</code></pre>
+</div>
+
+<h3 id="range">Range</h3>
+
+<p>We saw earlier, we cannot modify in place using a loop. We can instead use
+<code class="highlighter-rouge">range</code> to generate indices and use these (NB range in Python 3 is similar to
+xrange in Python 2.7, not <code class="highlighter-rouge">range</code>). Range objects are not instantly enumerated -
+we dont have to hold them in memory.</p>
+
+<p><strong>In [18]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#similar to the subset from:to:by</span>
+<span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">type</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>range
+</code></pre>
+</div>
+
+<p><strong>In [19]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#not instantly enumerated! this would fill the memory of nearly all computers</span>
+<span class="nb">range</span><span class="p">(</span><span class="mi">100000000000000000</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>range(0, 100000000000000000)
+</code></pre>
+</div>
+
+<p><strong>In [20]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>range(0, 6)
+</code></pre>
+</div>
+
+<p><strong>In [21]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)):</span>
+    <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span>
+<span class="n">l</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[2, 4, 6, 8, 10, 12]
+</code></pre>
+</div>
+
+<p><strong>In [22]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#also useful for generating simple lists:</span>
+<span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+</code></pre>
+</div>
+
+<p>We also have the built in function, <code class="highlighter-rouge">enumerate</code> which can give us a tuple of the
+index and value at each position in a sequence:</p>
+
+<p><strong>In [23]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">cheese</span> <span class="o">=</span> <span class="p">[</span><span class="s">'gouda'</span><span class="p">,</span><span class="s">'cheddar'</span><span class="p">,</span><span class="s">'edam'</span><span class="p">,</span><span class="s">'brie'</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">cheese</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cheese</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'item {i} is {j}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[(0, 'gouda'), (1, 'cheddar'), (2, 'edam'), (3, 'brie')]
+item 0 is gouda
+item 1 is cheddar
+item 2 is edam
+item 3 is brie
+</code></pre>
+</div>
+
+<h3 id="zip">Zip</h3>
+
+<p>zip is a built in python function, that ‘zips’ sequences into tuples:</p>
+
+<p><strong>In [24]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">item</span> <span class="o">=</span> <span class="p">[</span><span class="s">'oranges'</span><span class="p">,</span><span class="s">'apples'</span><span class="p">,</span><span class="s">'bananas'</span><span class="p">,</span><span class="s">'kiwis'</span><span class="p">,</span><span class="s">'strawberries'</span><span class="p">]</span>
+<span class="n">cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">]</span>
+<span class="n">units</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">]</span>
+<span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="n">cost</span><span class="p">,</span><span class="n">units</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[('oranges', 7, 12),
+ ('apples', 8, 13),
+ ('bananas', 9, 14),
+ ('kiwis', 10, 15),
+ ('strawberries', 11, 16)]
+</code></pre>
+</div>
+
+<h3 id="comprehensions">Comprehensions</h3>
+
+<p>Comprehensions are are syntactic sugar for for loops. We can make lists (or set
+or dicts) using this method. Tuples might seem like they should also have a
+method, but this is reserved for generators, which will discuss later on in the
+course.</p>
+
+<p><strong>In [25]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#for loop</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">l</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[0, 5, 10, 15, 20, 25, 30, 35, 40, 45]
+</code></pre>
+</div>
+
+<p><strong>In [26]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#comprehension</span>
+<span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">5</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[0, 5, 10, 15, 20, 25, 30, 35, 40, 45]
+</code></pre>
+</div>
+
+<p><strong>In [27]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#dict comprehension</span>
+<span class="p">{</span><span class="n">i</span> <span class="o">*</span> <span class="mi">10</span> <span class="p">:</span> <span class="n">j</span> <span class="o">*</span> <span class="mi">2</span>  <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s">'a'</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s">'b'</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">10:</span><span class="w"> </span><span class="err">'aa',</span><span class="w"> </span><span class="err">20:</span><span class="w"> </span><span class="err">'bb'</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><strong>In [28]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">celsius</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">37</span><span class="p">]</span>
+<span class="p">[((</span><span class="mi">9</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span><span class="o">*</span><span class="n">temp</span> <span class="o">+</span> <span class="mi">32</span><span class="p">)</span> <span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="n">celsius</span><span class="p">]</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[32.0, 212.0, 77.0, 98.60000000000001]
+</code></pre>
+</div>
+
+<p><strong>In [29]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#nested</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]]</span>
+<span class="p">[[</span><span class="n">el</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">]</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[2, 4, 6], [8, 10, 12], [14, 16, 18]]
+</code></pre>
+</div>
+
+<h3 id="ternary-expressions">Ternary expressions</h3>
+
+<p>Ternary expressions are a fancy way of doing <code class="highlighter-rouge">if</code> <code class="highlighter-rouge">else</code> and are very pythonic:</p>
+
+<p><strong>In [30]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">a</span> <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="mi">11</span> <span class="k">else</span> <span class="n">b</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>12
+</code></pre>
+</div>
+
+<p><strong>In [31]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">b</span> <span class="o">=</span> <span class="s">"no"</span>
+<span class="n">a</span> <span class="k">if</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="mi">11</span> <span class="k">else</span> <span class="n">b</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>'no'
+</code></pre>
+</div>
+
+<p>we can chain this with our comprehensions</p>
+
+<p><strong>In [32]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">[</span><span class="n">a</span> <span class="k">if</span> <span class="n">a</span> <span class="k">else</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[2, 1, 2, 3]
+</code></pre>
+</div>
+
+<p>or our nested comprehensions</p>
+
+<p><strong>In [33]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]]</span>
+<span class="p">[[</span><span class="n">el</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">if</span> <span class="n">el</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">el</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">]</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[1, 4, 3], [8, 5, 12], [7, 16, 9]]
+</code></pre>
+</div>
+
+<p>As these comprehensions are not faster than a for loop, it is worth using for
+loops once you can’t follow clearly what the comprehension is doing (I would
+almost never use a nested comprehension)!</p>
+
+<p><strong>In [34]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">cheese</span> <span class="o">=</span> <span class="p">{</span><span class="s">'gouda'</span><span class="p">:</span> <span class="mf">9.99</span><span class="p">,</span> <span class="s">'cheddar'</span><span class="p">:</span> <span class="mf">8.99</span><span class="p">,</span> <span class="s">'edam'</span><span class="p">:</span> <span class="mf">6.99</span><span class="p">,</span> <span class="s">'brie'</span><span class="p">:</span> <span class="mf">10.99</span><span class="p">}</span>
+<span class="n">cheese</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">i</span> <span class="o">+</span> <span class="s">' sale'</span> <span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">j</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">cheese</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span></code></pre></figure>
+
+<h2 id="motivation">Motivation</h2>
+
+<p>How much can we actually learn and predict from Data Science using Python?</p>
+
+<p>Recently, a match fixing ring in professional tennis was alleged by a joint
+investigation between <a href="http://www.bbc.com/sport/tennis/35319202">BBC news</a> and
+<a href="http://www.buzzfeed.com/heidiblake/the-tennis-racket#.eplO3d4px">Buzzfeed</a>,
+resulting in a large amount of news coverage.</p>
+
+<p>The data analysis carried out was done in Python, and released online as an
+<a href="https://github.com/BuzzFeedNews/2016-01-tennis-betting-
+analysis/blob/master/notebooks/tennis-analysis.ipynb">iPython Notebook</a>. This story, and its
+continued fall out, was <a href="http://www.theguardian.com/sport/2016/feb/09/revealed-tennis-umpires-
+secretly-banned-gambling-scam">front page news on the
+Guardian</a> last week (9-Feb-2016).</p>
+
+<p>Have a read through the notebook, take note of the functions and methods used on
+the data, and see if you believe the analysis.</p>
+
+<h2 id="exercises">Exercises</h2>
+
+<p>First, run through the exercises from the applied streams lesson 1 if you have
+not already done this.</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">in</code> can generalise to strings - <code class="highlighter-rouge">'im' in 'Precima'</code> will give True. Can you
+think of a way to test if letters are in a string in any order? For now, ignore
+any duplicates. ‘imP’ should resolve to True if compared to ‘Precima’</p>
+  </li>
+  <li>
+    <p>Rewrite your answer above using <code class="highlighter-rouge">all</code>, a for loop, and a comprehension (if you
+didn’t use these). Which one feels the most natural to you?</p>
+  </li>
+  <li>
+    <p>We have a nested dictionary of transactions - dict =
+{‘user1’:{1:345,2:546.5,3:987}, ‘user2’:{1:546, 2:744.4, 3:454.4}}. Use a nested
+list comprehension to get out a list of the values:[[345, 546.5, 987], [546,
+744.4, 454.4]]. Can you think of a better way? Can you zip this list to [(345,
+546), (546.5, 744.4), (987, 454.4)]?</p>
+  </li>
+  <li>
+    <p>Why does range not enumerate to a list all at once? How can you force it to?</p>
+  </li>
+  <li>
+    <p>How does zip behave on lists of different sizes? (l = [1,2,3], k =
+[1,2,3,4,5]). Make a loop that works until the longest list ends. What should
+the output look like and why?</p>
+  </li>
+  <li>
+    <p>We can index previous members of a sequence in a for loop, using a number of
+methods. Use <code class="highlighter-rouge">enumerate</code> and a for loop to test whether each member of list l =
+[1,1,2,3,5,8,13,21,34,55,88,143] is the sum of the previous two objects of the
+list. Think about how to treat the first two values. The output should look be a
+list of booleans</p>
+  </li>
+  <li>
+    <p>Rewrite the previous loop using range. How will you treat the first two values
+now? Can you think of a way to do this using only for i in l (nb off the top of
+my head, I can’t)?</p>
+  </li>
+  <li>
+    <p>Write a list comprehension giving True for only those values which are perfect
+cubes - ie x**1/3 gives an integer. Think about how to avoid floating point
+errors: use google, or use a function I briefly introduced today. l =
+[1,8,16,27,64] will give [True, True, False, True, True]</p>
+  </li>
+  <li>
+    <p>Write the above as a for loop.</p>
+  </li>
+  <li>
+    <p>Can your solution handle negative values? If not, modify it so that it can.</p>
+  </li>
+</ul>
+
+  </div>
+  
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'jeremycg';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Python @ Precima</h2>
+
+
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
