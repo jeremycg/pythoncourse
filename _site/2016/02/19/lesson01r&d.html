@@ -79,11 +79,18 @@
     <h2 id="welcome-to-lesson-01">Welcome to Lesson 01</h2>
 
 <p>Everyone should have covered the previous lesson, and the exercises. If there
-are any problems with any of the exercises, please post on the forum - if they
+are any problems with any of the exercises, please post on the forum - if there
 is enough interest, we can cover a question or two in the next class.</p>
 
-<p>Today we will cover functions, functional programming, scoping in Python,
-dynamic programming and decorators. Download the notebook <a href="/pythoncourse/assets/notebooks/r&amp;d/lesson 01 - r&amp;d.ipynb">here</a></p>
+<p>Today we will cover functions, lambda functions, functional programming, scoping
+in Python, dynamic programming and decorators. Download the <a href="/pythoncourse/assets/notebooks/r&amp;d/lesson%2001%20-%20r&amp;d.ipynb">notebook
+here</a>.</p>
+
+<p>As an aside, this course is being developed and hosted using github - if you
+want access to all the notebooks, you can find <a href="https://github.com/jeremycg/pythoncourse/tree/raw/assets/notebooks">them
+here</a>. If
+you know how to use git and github feel free to file an issue or pull request if
+you spot a typo. If not, we will cover git later in the course.</p>
 
 <h3 id="intro-to-functions">Intro to Functions</h3>
 
@@ -231,7 +238,7 @@ myfirstfun(arg1, arg2)
 </code></pre>
 </div>
 
-<p>We might not want our function to work on strings! We can Raise an error if the
+<p>We might not want our function to work on strings! We can raise an error if the
 arguments are not numeric:</p>
 
 <p><strong>In [41]:</strong></p>
@@ -322,15 +329,15 @@ value:</p>
 
 <p>Python supports named arguments, unlike most languages, but similar to R:</p>
 
-<p><strong>In [45]:</strong></p>
+<p><strong>In [3]:</strong></p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">a</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
-<span class="n">myfunction</span><span class="p">(</span><span class="n">b</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
-<span class="c">#by position, expect 29</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">customer</span><span class="p">,</span> <span class="n">basket</span><span class="p">):</span>
+    <span class="k">return</span><span class="p">({</span><span class="n">customer</span><span class="p">:</span> <span class="n">basket</span><span class="p">})</span>
+<span class="n">myfunction</span><span class="p">(</span><span class="n">basket</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="n">customer</span> <span class="o">=</span> <span class="s">"customer1"</span><span class="p">)</span>
+<span class="c">#by position, expect error</span></code></pre></figure>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>11
-</code></pre>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">'customer1':</span><span class="w"> </span><span class="err">[1,</span><span class="w"> </span><span class="err">2,</span><span class="w"> </span><span class="err">3,</span><span class="w"> </span><span class="err">4]</span><span class="p">}</span><span class="w">
+</span></code></pre>
 </div>
 
 <p>We go by name, then order</p>
@@ -359,7 +366,9 @@ oranges
 
 <p>We can combine named and unnamed values. Any positional arguments are passed as
 a tuple, any named arguments are passed as a dictionary. We add a * to
-positional, and ** to keyword arguments.</p>
+positional, and ** to keyword arguments. Very often, we will see this
+arguments denoted as *args and **kwargs, but we can name them whatever we’d
+like.</p>
 
 <p>Named arguments must go last:</p>
 
@@ -395,16 +404,16 @@ SyntaxError: positional argument follows keyword argument
 <p>For default values, we evaluate them at function definition - this saves time
 but can lead to error when using mutable defaults</p>
 
-<p><strong>In [16]:</strong></p>
+<p><strong>In [10]:</strong></p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="o">^</span><span class="mi">45</span><span class="p">):</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfunction</span><span class="p">(</span><span class="n">customer</span> <span class="o">=</span> <span class="s">"1"</span><span class="p">,</span> <span class="n">spend</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">45</span><span class="p">):</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">customer</span> <span class="o">+</span> <span class="s">": "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">spend</span><span class="p">))</span>
 <span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">())</span>
-<span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span></code></pre></figure>
+<span class="k">print</span><span class="p">(</span><span class="n">myfunction</span><span class="p">(</span><span class="s">"2"</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="c">#only locally defined</span></code></pre></figure>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>48
-6
+<div class="highlighter-rouge"><pre class="highlight"><code>1: 35184372088832
+2: 4
 
 
 
@@ -412,10 +421,10 @@ but can lead to error when using mutable defaults</p>
 
 NameError                                 Traceback (most recent call last)
 
-&lt;ipython-input-16-ec15857dd71f&gt; in &lt;module&gt;()
+&lt;ipython-input-10-77c7705ebe6e&gt; in &lt;module&gt;()
       3 print(myfunction())
-      4 print(myfunction(2,4))
-----&gt; 5 print(b)
+      4 print(myfunction("2",4))
+----&gt; 5 print(b) #only locally defined
 
 
 NameError: name 'b' is not defined
@@ -483,10 +492,9 @@ functions:</p>
 </code></pre>
 </div>
 
-<p>And we can even return them (a function generating function is technically a
-‘closure’):</p>
+<p>And we can even return them.</p>
 
-<p><strong>In [21]:</strong></p>
+<p><strong>In [23]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">makepow</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">pown</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
@@ -498,6 +506,33 @@ functions:</p>
 <div class="highlighter-rouge"><pre class="highlight"><code>81
 </code></pre>
 </div>
+
+<p>A function defined in this manner comes with its own enclosing environment and
+is termed a closure</p>
+
+<p><strong>In [27]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">dis</span>
+<span class="n">dis</span><span class="o">.</span><span class="n">dis</span><span class="p">(</span><span class="n">pow4</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>  3           0 LOAD_FAST                0 (num)
+              3 LOAD_DEREF               0 (a)
+              6 BINARY_POWER
+              7 RETURN_VALUE
+</code></pre>
+</div>
+
+<p><strong>In [40]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pow4</span><span class="o">.</span><span class="n">__closure__</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cell_contents</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>4
+</code></pre>
+</div>
+
+<p>More about this once we begin object orientated programming! For now, know that
+everything in Python is an object, and we have called the _<em>closure_</em> method
+on our function object to get out its values</p>
 
 <h3 id="lambda-functions-and-map">Lambda Functions and map</h3>
 
@@ -640,7 +675,7 @@ True
 controversy, as it is a key function in higher level programming languages. The
 official advice is to use a loop:</p>
 
-<p><strong>In [57]:</strong></p>
+<p><strong>In [11]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -655,7 +690,7 @@ official advice is to use a loop:</p>
 
 <p>We can import reduce from functools:</p>
 
-<p><strong>In [58]:</strong></p>
+<p><strong>In [12]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="nb">reduce</span>
 
@@ -665,6 +700,12 @@ official advice is to use a loop:</p>
 <div class="highlighter-rouge"><pre class="highlight"><code>1152921504606846976
 </code></pre>
 </div>
+
+<p>If you can’t figure out what we’ve done, that’s one of the reasons why reduce
+was removed. It works by taking a list of arguments, applying the first function
+to the first two members, then to the output of that, and the next variable….</p>
+
+<p>(((2 ** 3) ** 4) ** 5)</p>
 
 <h3 id="call-by-reference-and-side-effects">Call by reference and side effects</h3>
 
@@ -835,16 +876,20 @@ command:</p>
 <p>Again, this is causing side effects, which may or may not be desirable. Use
 <code class="highlighter-rouge">global</code> with care.</p>
 
+<p>If we are bugfixing, we can use the <code class="highlighter-rouge">globals()</code> and <code class="highlighter-rouge">locals()</code> functions to
+print all the variables we can see in an environment.</p>
+
 <h3 id="dynamic-programming-and-caching">Dynamic programming and caching</h3>
 
 <p>Dynamic programming is a method of optimizing functions by cutting the problem
 into small pieces. Here we will run through a recursive example, however many
-other methods exist.</p>
+other methods exist. I’d love to teach you guys some examples of where they
+might help - however algorithms is outside the scope of the course.</p>
 
 <p>You might recall from the initial pre test, we can create the fibonacci sequence
 in a couple of ways:</p>
 
-<p><strong>In [6]:</strong></p>
+<p><strong>In [14]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">fibo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
@@ -853,13 +898,15 @@ in a couple of ways:</p>
     <span class="k">while</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">:</span>
         <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">counter</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">,</span><span class="n">counter</span><span class="o">+</span><span class="mi">1</span>
     <span class="k">return</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-<span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">fibo</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)))</span></code></pre></figure>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">fibo</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">))))</span>
+<span class="k">print</span><span class="p">([</span><span class="n">fibo</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)])</span></code></pre></figure>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>[1, 1, 2, 3, 5, 8, 13, 21, 34]
+[1, 1, 2, 3, 5, 8, 13, 21, 34]
 </code></pre>
 </div>
 
-<p><strong>In [7]:</strong></p>
+<p><strong>In [19]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">fiborecur</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
@@ -872,7 +919,7 @@ in a couple of ways:</p>
 </div>
 
 <p>The second of these is dynamic! We have made a recursive function, to do a very
-simple task multipl times</p>
+simple task multiple times</p>
 
 <p>However, let’s check the performance using %timeit</p>
 
@@ -896,7 +943,7 @@ offspring calls.</p>
 
 <p>Can we make it better? One way is to use a dictionary to remember our outputs.</p>
 
-<p><strong>In [4]:</strong></p>
+<p><strong>In [17]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">fib_cache</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">def</span> <span class="nf">fiborecur2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -904,9 +951,11 @@ offspring calls.</p>
         <span class="k">return</span> <span class="n">fib_cache</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
     <span class="n">fib_cache</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">fiborecur2</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fiborecur2</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fib_cache</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="n">fiborecur2</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span></code></pre></figure>
+<span class="k">print</span><span class="p">(</span><span class="n">fiborecur2</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">fib_cache</span><span class="p">)</span></code></pre></figure>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>55
+{0: 0, 1: 1, 2: 1, 3: 2, 4: 3, 5: 5, 6: 8, 7: 13, 8: 21, 9: 34, 10: 55}
 </code></pre>
 </div>
 
@@ -922,10 +971,9 @@ offspring calls.</p>
 </code></pre>
 </div>
 
-<p>Great! Can we generalise this method? We could use a closure to modify any
-function:</p>
+<p>Great! Can we generalise this method? We could create a closure:</p>
 
-<p><strong>In [14]:</strong></p>
+<p><strong>In [22]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">memoize</span><span class="p">(</span><span class="n">myfunction</span><span class="p">):</span>
     <span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>
