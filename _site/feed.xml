@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 19 Feb 2016 14:19:28 -0500</pubDate>
-    <lastBuildDate>Fri, 19 Feb 2016 14:19:28 -0500</lastBuildDate>
+    <pubDate>Mon, 22 Feb 2016 11:12:42 -0500</pubDate>
+    <lastBuildDate>Mon, 22 Feb 2016 11:12:42 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -989,6 +989,66 @@ That&#39;s the end of class two
 &lt;/div&gt;
 
 &lt;p&gt;We will cover in more detail how decorators work towards the end of the course&lt;/p&gt;
+
+&lt;h2 id=&quot;exercises&quot;&gt;Exercises&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Rewrite your loop from last lessons exercises to find if all the letter in a
+string are in another string as a function. Can you think of a dynamic
+programming way to remove duplicates?&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Rewrite your zip loop from last lesson exercises as a function (Write a
+modification of the current zip function, to work until the longest of the
+inputs)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Make your own function for converting fahrenheit to celsius&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Update the above function to have a docstring, explaining what it does&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Update the function to only take int or floats - use an assertion&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Write a function to take an arbitrary number of unnamed arguments, and return
+their sum. Make sure you have a docstring, and test for numerics.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Modify the above argument to use &lt;code class=&quot;highlighter-rouge&quot;&gt;reduce&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Write a function that takes an arbitrary number of named arguments, and
+returns the key of those that had even numbers as their input. myfunc(a = 1, b =
+2, c = 3, d = 4) should return [‘b’, ‘d’]&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Write a function to make a function to check if an item is in a list: myfruits
+= myfunc(fruits), myfruits([“apple”, ‘banana’, ‘potato’, ‘cauliflower’]) should
+return [True, True, False, False]. fruits =
+[‘oranges’,’apples’,’bananas’,’kiwis’,’strawberries’, ‘pears’].&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Update the above function, to generate a function which will return a single
+True or False if any members of the list are present.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Update the above function to return as above, but with a return of True when
+called on an empty list: myfruits([]) will give True&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;(Advanced) Write a function to find the xth prime number: myprime(x)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Modify the above function to be recursive&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Modify this function to be cached - does it help with performance? Why/Why
+not?&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Fri, 19 Feb 2016 00:00:00 -0500</pubDate>
         <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/02/19/lesson01r&d.html</link>
