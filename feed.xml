@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 26 Feb 2016 08:33:21 -0500</pubDate>
-    <lastBuildDate>Fri, 26 Feb 2016 08:33:21 -0500</lastBuildDate>
+    <pubDate>Fri, 26 Feb 2016 20:13:45 -0500</pubDate>
+    <lastBuildDate>Fri, 26 Feb 2016 20:13:45 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -1603,10 +1603,21 @@ That&#39;s the end of class two
 
 &lt;h2 id=&quot;exercises&quot;&gt;Exercises&lt;/h2&gt;
 
+&lt;p&gt;The exercises are designed to be difficult - evidence shows that leaners learn by coding,
+in combination with lectures. You should be using google, stackoverflow and your colleagues
+ to help with your work, and you are allocated a good amount fo time to do them.&lt;/p&gt;
+
+&lt;p&gt;With that said, if you run out of time, feel free to skip the remaining exercises,
+and I will split out the advanced questions into an optional section.&lt;/p&gt;
+
 &lt;ul&gt;
   &lt;li&gt;
+    &lt;p&gt;Read through the dynamic programming section that we skipped in class. Don’t worry
+ too much about specifics, the main take home message is that we can return the output of the same function.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
     &lt;p&gt;Rewrite your loop from last lessons exercises to find if all the letter in a
-string are in another string as a function. Can you think of a dynamic
+string are in another string as a function. (Advance, optional) Can you think of a dynamic
 programming way to remove duplicates?&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
@@ -1628,7 +1639,7 @@ inputs)&lt;/p&gt;
 their sum. Make sure you have a docstring, and test for numerics.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Modify the above argument to use &lt;code class=&quot;highlighter-rouge&quot;&gt;reduce&lt;/code&gt;&lt;/p&gt;
+    &lt;p&gt;Modify the above argument to use &lt;code class=&quot;highlighter-rouge&quot;&gt;reduce&lt;/code&gt;, Remember you need to import reduce.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Write a function that takes an arbitrary number of named arguments, and
@@ -1636,8 +1647,8 @@ returns the key of those that had even numbers as their input. myfunc(a = 1, b =
 2, c = 3, d = 4) should return [‘b’, ‘d’]&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Write a function to make a function to check if an item is in a list: myfruits
-= myfunc(fruits), myfruits([“apple”, ‘banana’, ‘potato’, ‘cauliflower’]) should
+    &lt;p&gt;Write a function to make a function to check if an item is in a list: def myfruits(fruits):
+, myfruits([“apple”, ‘banana’, ‘potato’, ‘cauliflower’]) should
 return [True, True, False, False]. fruits =
 [‘oranges’,’apples’,’bananas’,’kiwis’,’strawberries’, ‘pears’].&lt;/p&gt;
   &lt;/li&gt;
@@ -1650,13 +1661,13 @@ True or False if any members of the list are present.&lt;/p&gt;
 called on an empty list: myfruits([]) will give True&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;(Advanced) Write a function to find the xth prime number: myprime(x)&lt;/p&gt;
+    &lt;p&gt;(Advanced, optional) Write a function to find the xth prime number: myprime(x)&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Modify the above function to be recursive&lt;/p&gt;
+    &lt;p&gt;(Advanced, optional) Modify the above function to be recursive&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Modify this function to be cached - does it help with performance? Why/Why
+    &lt;p&gt;(Advanced, optional) Modify this function to be cached - does it help with performance? Why/Why
 not?&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
