@@ -1021,8 +1021,18 @@ We will cover in more detail how decorators work towards the end of the course
 
 ## Exercises
 
+The exercises are designed to be difficult - evidence shows that leaners learn by coding,
+in combination with lectures. You should be using google, stackoverflow and your colleagues
+ to help with your work, and you are allocated a good amount fo time to do them.
+
+With that said, if you run out of time, feel free to skip the remaining exercises,
+and I will split out the advanced questions into an optional section.
+
+* Read through the dynamic programming section that we skipped in class. Don't worry
+ too much about specifics, the main take home message is that we can return the output of the same function.
+
 * Rewrite your loop from last lessons exercises to find if all the letter in a
-string are in another string as a function. Can you think of a dynamic
+string are in another string as a function. (Advance, optional) Can you think of a dynamic
 programming way to remove duplicates?
 
 * Rewrite your zip loop from last lesson exercises as a function (Write a
@@ -1038,14 +1048,14 @@ inputs)
 * Write a function to take an arbitrary number of unnamed arguments, and return
 their sum. Make sure you have a docstring, and test for numerics.
 
-* Modify the above argument to use `reduce`
+* Modify the above argument to use `reduce`, Remember you need to import reduce.
 
 * Write a function that takes an arbitrary number of named arguments, and
 returns the key of those that had even numbers as their input. myfunc(a = 1, b =
 2, c = 3, d = 4) should return ['b', 'd']
 
-* Write a function to make a function to check if an item is in a list: myfruits
-= myfunc(fruits), myfruits(["apple", 'banana', 'potato', 'cauliflower']) should
+* Write a function to make a function to check if an item is in a list: def myfruits(fruits):
+, myfruits(["apple", 'banana', 'potato', 'cauliflower']) should
 return [True, True, False, False]. fruits =
 ['oranges','apples','bananas','kiwis','strawberries', 'pears'].
 
@@ -1055,9 +1065,9 @@ True or False if any members of the list are present.
 * Update the above function to return as above, but with a return of True when
 called on an empty list: myfruits([]) will give True
 
-* (Advanced) Write a function to find the xth prime number: myprime(x)
+* (Advanced, optional) Write a function to find the xth prime number: myprime(x)
 
-* Modify the above function to be recursive
+* (Advanced, optional) Modify the above function to be recursive
 
-* Modify this function to be cached - does it help with performance? Why/Why
+* (Advanced, optional) Modify this function to be cached - does it help with performance? Why/Why
 not?
