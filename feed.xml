@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 29 Feb 2016 11:43:53 -0500</pubDate>
-    <lastBuildDate>Mon, 29 Feb 2016 11:43:53 -0500</lastBuildDate>
+    <pubDate>Mon, 29 Feb 2016 11:47:11 -0500</pubDate>
+    <lastBuildDate>Mon, 29 Feb 2016 11:47:11 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -1376,7 +1376,7 @@ colleagues - we want to know where everyone is up to.&lt;/p&gt;
     &lt;p&gt;Find a Python module which has pi, import it and use pi instead of 3.14&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;Create a new class, Triangle, which has 3 lines lengths, atob, btoc and celcius_to_fahr&lt;/p&gt;
+    &lt;p&gt;Create a new class, Triangle, which has 3 lines lengths, atob, btoc and ctoa&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
     &lt;p&gt;Create a subclass that inherits from triangle, RightTriangle, that uses __new__
