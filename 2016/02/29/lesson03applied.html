@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Lesson 03 Classes and Modules</title>
+  <meta name="description" content="Lesson 03 - Classes and Modules">
+
+  <link rel="stylesheet" href="/pythoncourse/css/main.css">
+  <link rel="canonical" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/02/29/lesson03applied.html">
+  <link rel="alternate" type="application/rss+xml" title="Python @ Precima" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/pythoncourse/">Python @ Precima</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/Applied%20Statistics%20stream/">Applied Statistics stream</a>
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/R&D%20stream/">R&D stream</a>
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-73837623-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Lesson 03 Classes and Modules</h1>
+    <p class="post-meta"><time datetime="2016-02-29T00:00:00-05:00" itemprop="datePublished">Feb 29, 2016</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Jeremy</span></span></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h2 id="lesson-03---classes-and-modules">Lesson 03 - Classes and Modules</h2>
+
+<p>Welcome to lesson 03 or 4 - You are nearly Python programmers, from which point
+we can jump into the data science and stats extensions to Python.</p>
+
+<p>Again, please download this notebook from :
+<a href="/pythoncourse/assets/notebooks/applied/lesson 03.ipynb">here</a>.</p>
+
+<p>Today we will cover object orientated programming, the way we represent
+everything in Python. Then we will finish with modules, how to import and write
+extensions to base Python. After this we are more or less done with base Python
+- you are ready to jump into the data science stack.</p>
+
+<h3 id="object-orientated-programming">Object Orientated Programming</h3>
+
+<p>OOP is a paradigm in programming. Python is OO, SQL is declarative, R is
+functional.</p>
+
+<p>When we use OOP, we talk about Classes which are types of things and Objects,
+which are instances of classes, rather than being limited to built in data
+types.</p>
+
+<p>A helpful metaphor is to think of Pac-Man: The Ghosts all belong to the Ghost
+class, whereas each individual ghost (inky, blinky, pinky and clyde) are objects
+- instances of the ghost type, with their own behaviour. They can vary in their
+attributes (colour, speed, eatability, behaviour…). OOP allows us to take a
+more ‘object orientated’ approach - we can talk about the ghosts behaving in an
+easy to understand manner!</p>
+
+<p>By it’s nature, OOP doesnt play nicely with tabular databases. Depending on our
+classes and implementations, SQL is not a good match - we can use noSQL or ODB,
+or use a more tabular friendly class.</p>
+
+<p>So far, everything we have seen in Python is a Class (lists, strings, dicts, etc
+etc.). One of the great flexibilities in Python is an ability to make our own
+Classes.</p>
+
+<h3 id="classes">Classes</h3>
+
+<p>Recall we have methods, which are specific to certain data types:</p>
+
+<p><strong>In [1]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s">'abc'</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;class 'list'&gt;
+3
+&lt;class 'str'&gt;
+
+
+
+---------------------------------------------------------------------------
+
+AttributeError                            Traceback (most recent call last)
+
+&lt;ipython-input-1-ada37cb1e2ab&gt; in &lt;module&gt;()
+      4 s = 'abc'
+      5 print(type(s))
+----&gt; 6 print(s.pop())
+
+
+AttributeError: 'str' object has no attribute 'pop'
+</code></pre>
+</div>
+
+<p>How is this implemented? Python has a Class called list, and a Class called
+string. Inside these classes, we have built in functions that only work on
+objects of that class.</p>
+
+<p>Let’s start by defining our own (basic and for now empty) class, Customer
+(convention says to use a capital):</p>
+
+<p><strong>In [6]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Customer</span><span class="p">:</span>
+    <span class="k">pass</span></code></pre></figure>
+
+<p><strong>In [7]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="n">Customer</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;class '__main__.Customer'&gt;
+</code></pre>
+</div>
+
+<p>We will talk about the __main__ part in the second half of the lesson, but
+for now we can see we just made a new data type! Technically, we made a new
+class, Customer, and a new instance, x.</p>
+
+<p>How can we make it useful? We can add attributes. Attributes can take any value,
+we can imagine them as ‘slots’ available in an object:</p>
+
+<p><strong>In [1]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Customer</span><span class="p">:</span> <span class="c">#no need for (object) like in python 2</span>
+    <span class="s">'''
+    classes have docstrings too!
+    '''</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">'buyer'</span> <span class="c">#don't use a list!</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">Customer</span><span class="p">()</span>
+<span class="n">help</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="nb">type</span><span class="p">)</span>
+<span class="c">#we can add outside, if we really want:</span>
+<span class="n">x</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="s">'spam'</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">foo</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Help on Customer in module __main__ object:
+
+class Customer(builtins.object)
+ |  classes have docstrings too!
+ |  
+ |  Data descriptors defined here:
+ |  
+ |  __dict__
+ |      dictionary for instance variables (if defined)
+ |  
+ |  __weakref__
+ |      list of weak references to the object (if defined)
+ |  
+ |  ----------------------------------------------------------------------
+ |  Data and other attributes defined here:
+ |  
+ |  type = 'buyer'
+
+buyer
+spam
+&lt;__main__.Customer object at 0x7f61c185ca58&gt;
+</code></pre>
+</div>
+
+<p>Once we have an attribute, we can access it using x.attribute.</p>
+
+<p>However, a hard coded attribute is not super useful: So we can use functions as
+attributes (to make methods).
+This explains why we need to use the () on methods - they are functions, but not
+on other attributes.</p>
+
+<p>The most important method, is a special method, called __init__:</p>
+
+<p><strong>In [9]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Customer</span><span class="p">:</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">'buyer'</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">customerid</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custid</span> <span class="o">=</span> <span class="n">customerid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">Customer</span><span class="p">(</span><span class="s">'ACME co.'</span><span class="p">,</span> <span class="s">'bankrupt'</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">custid</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>'ACME co.'
+</code></pre>
+</div>
+
+<p>__init__ is the function called when we create a new object of our class.</p>
+
+<p>We can add on as many attributes as we like, and use *, **, default values as
+required. This works just like other functions (the scope is local to the object
+- the class works like an enclosing function).</p>
+
+<p>Functions always have the object itself as the first argument. It is convention
+to write ‘self’ first, but Python will use whatever you put first - so be
+careful to include it.</p>
+
+<p><strong>In [10]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Customer</span><span class="p">:</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">'buyer'</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">customerid</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custid</span> <span class="o">=</span> <span class="n">customerid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">address</span>
+
+    <span class="k">def</span> <span class="nf">addtrans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">Customer</span><span class="p">(</span><span class="s">'ACME co.'</span><span class="p">,</span> <span class="s">'current'</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">addtrans</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span> <span class="p">[</span><span class="s">"toothpaste"</span><span class="p">,</span> <span class="s">"bananas"</span><span class="p">,</span> <span class="s">"oranges"</span><span class="p">]})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">transactions</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">transactions</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">1:</span><span class="w"> </span><span class="err">['toothpaste',</span><span class="w"> </span><span class="err">'bananas',</span><span class="w"> </span><span class="err">'oranges']</span><span class="p">}</span><span class="w">
+</span><span class="p">[</span><span class="err">'toothpaste'</span><span class="p">,</span><span class="w"> </span><span class="err">'bananas'</span><span class="p">,</span><span class="w"> </span><span class="err">'oranges'</span><span class="p">]</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>We can use Classes inside other classes.</p>
+
+<p>Let’s create a basket class:</p>
+
+<p><strong>In [11]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">basket</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">quantities</span><span class="p">,</span> <span class="n">costs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="n">items</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">quantities</span> <span class="o">=</span> <span class="n">quantities</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">costs</span> <span class="o">=</span> <span class="n">costs</span>
+    <span class="k">def</span> <span class="nf">basketprice</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="n">x</span><span class="o">*</span><span class="n">y</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">quantities</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">costs</span><span class="p">)]),</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">basket</span><span class="p">([</span><span class="s">"toothpaste"</span><span class="p">,</span> <span class="s">"bananas"</span><span class="p">,</span> <span class="s">"oranges"</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.99</span><span class="p">,</span> <span class="mf">3.49</span><span class="p">])</span>
+<span class="n">x</span><span class="o">.</span><span class="n">basketprice</span><span class="p">()</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>29.91
+</code></pre>
+</div>
+
+<p>Now we can add this into our Customer objects:</p>
+
+<p><strong>In [12]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="n">Customer</span><span class="p">(</span><span class="s">'ACME co.'</span><span class="p">,</span> <span class="s">'current'</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">addtrans</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span> <span class="n">basket</span><span class="p">([</span><span class="s">"toothpaste"</span><span class="p">,</span> <span class="s">"bananas"</span><span class="p">,</span> <span class="s">"oranges"</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.99</span><span class="p">,</span> <span class="mf">3.49</span><span class="p">])})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">transactions</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">transactions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">basketprice</span><span class="p">())</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="err">1:</span><span class="w"> </span><span class="err">&lt;__main__.basket</span><span class="w"> </span><span class="err">object</span><span class="w"> </span><span class="err">at</span><span class="w"> </span><span class="err">0x7f03981975c0&gt;</span><span class="p">}</span><span class="w">
+</span><span class="mf">29.91</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>We can continue on adding and adding to our classes. Here is one last function -
+what is it doing?</p>
+
+<p><strong>In [13]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Customer</span><span class="p">:</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">'buyer'</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">customerid</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custid</span> <span class="o">=</span> <span class="n">customerid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">address</span>
+
+    <span class="k">def</span> <span class="nf">addtrans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">mysteryfunction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">y</span><span class="o">.</span><span class="n">basketprice</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">Customer</span><span class="p">(</span><span class="s">'ACME co.'</span><span class="p">,</span> <span class="s">'current'</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">addtrans</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span> <span class="n">basket</span><span class="p">([</span><span class="s">"toothpaste"</span><span class="p">,</span> <span class="s">"bananas"</span><span class="p">,</span> <span class="s">"oranges"</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.99</span><span class="p">,</span> <span class="mf">3.49</span><span class="p">])})</span>
+<span class="n">x</span><span class="o">.</span><span class="n">addtrans</span><span class="p">({</span><span class="mi">2</span><span class="p">:</span> <span class="n">basket</span><span class="p">([</span><span class="s">'apples'</span><span class="p">,</span> <span class="s">'peanut butter'</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.27</span><span class="p">,</span> <span class="mf">7.99</span><span class="p">])})</span>
+<span class="n">x</span><span class="o">.</span><span class="n">mysteryfunction</span><span class="p">()</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>65.51
+</code></pre>
+</div>
+
+<h3 id="special-methods">Special Methods</h3>
+
+<p>There are a number of special methods we can use, as they are commonly used
+functions which we can run differently based on how we define them (R users may
+take note of how plot(lm(x~y)), or just print(lm(x~y)) work). Here are some of
+the more useful ones - you can find the <a href="https://docs.python.org/3/reference/datamodel.html">whole list
+here</a>.</p>
+
+<p><strong>In [14]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Customer</span><span class="p">:</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">'buyer'</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">customerid</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">transactions</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custid</span> <span class="o">=</span> <span class="n">customerid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">transactions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">addtrans</span><span class="p">(</span><span class="n">transactions</span><span class="p">)</span> <span class="c">#can call methods within init</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">address</span>
+
+    <span class="k">def</span> <span class="nf">addtrans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transaction</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">transaction</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">mysteryfunction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">y</span><span class="o">.</span><span class="n">basketprice</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="s">"Customer: {x} Status: {y} Total Transactions: {z}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">custid</span><span class="p">,</span>
+                                                                          <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">,</span>
+                                                                          <span class="n">z</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="p">)))</span>
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transactions</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"You just deleted Customer: {x}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">custid</span><span class="p">))</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">Customer</span><span class="p">(</span><span class="s">'ACME co.'</span><span class="p">,</span> <span class="s">'current'</span><span class="p">,</span> <span class="n">transactions</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">:</span><span class="n">basket</span><span class="p">([</span><span class="s">"dynamite"</span><span class="p">],[</span><span class="mi">1</span><span class="p">],[</span><span class="mf">99.95</span><span class="p">])})</span>
+<span class="n">x</span><span class="o">.</span><span class="n">addtrans</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span> <span class="n">basket</span><span class="p">([</span><span class="s">"toothpaste"</span><span class="p">,</span> <span class="s">"bananas"</span><span class="p">,</span> <span class="s">"oranges"</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.99</span><span class="p">,</span> <span class="mf">3.49</span><span class="p">])})</span>
+<span class="n">x</span><span class="o">.</span><span class="n">addtrans</span><span class="p">({</span><span class="mi">2</span><span class="p">:</span> <span class="n">basket</span><span class="p">([</span><span class="s">'apples'</span><span class="p">,</span> <span class="s">'peanut butter'</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.27</span><span class="p">,</span> <span class="mf">7.99</span><span class="p">])})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="k">del</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Customer: ACME co. Status: current Total Transactions: 3
+3
+You just deleted Customer: ACME co.
+</code></pre>
+</div>
+
+<h3 id="inheritance">Inheritance</h3>
+
+<p>We can create subclasses, which inherit from their parents.</p>
+
+<p>In this case, imagine we want a new class, Restuarants, which are similar to
+other clients, but have additional data we want to store:</p>
+
+<p><strong>In [15]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Restuarant</span><span class="p">(</span><span class="n">Customer</span><span class="p">):</span>
+    <span class="nb">type</span> <span class="o">=</span> <span class="s">'Restuarant'</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">customerid</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">tags</span><span class="p">,</span> <span class="n">address</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custid</span> <span class="o">=</span> <span class="n">customerid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transactions</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">address</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tags</span> <span class="o">=</span> <span class="n">tags</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">Restuarant</span><span class="p">(</span><span class="s">"Canoe"</span><span class="p">,</span> <span class="s">"open"</span><span class="p">,</span> <span class="p">[</span><span class="s">"fancy"</span><span class="p">,</span> <span class="s">"gourmet"</span><span class="p">,</span> <span class="s">"canadian"</span><span class="p">])</span>
+<span class="n">x</span><span class="o">.</span><span class="n">addtrans</span><span class="p">({</span><span class="mi">2</span><span class="p">:</span> <span class="n">basket</span><span class="p">([</span><span class="s">'salmon roe'</span><span class="p">,</span> <span class="s">'elder flowers'</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.27</span><span class="p">,</span> <span class="mf">7.99</span><span class="p">])})</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="nb">type</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">tags</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Customer: Canoe Status: open Total Transactions: 1
+Restuarant
+['fancy', 'gourmet', 'canadian']
+</code></pre>
+</div>
+
+<p>We can check what type x is, but also see how isinstance is a little different:</p>
+
+<p><strong>In [16]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Restuarant</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Customer</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;class '__main__.Restuarant'&gt;
+True
+True
+</code></pre>
+</div>
+
+<p>Using this behaviour, we can see some interesting stuff:</p>
+
+<p><strong>In [17]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>True
+</code></pre>
+</div>
+
+<p>Huh! Turns out, when Booleans were introduced into Python, they copied the C89
+implementation, which simply used 1 for True, and 0 for False. So that code
+didn’t break, they implemented booleans as a subclass of integers and never
+changed it, to avoid broken code. Maybe now int(True) and int(False) make more
+sense.</p>
+
+<p>Why would we want to use objects? For most day to day uses, we might not….</p>
+
+<p>But, some of the most useful Python extensions make extensive use of new object
+types.</p>
+
+<p>The most useful for us will be DataFrames in Pandas, but almost every useful
+Python package comes with classes. It provides a level of abstraction that is
+hard to beat with lists, dicts tuples and sets.</p>
+
+<h2 id="modules">Modules</h2>
+
+<p>Which moves us nicely into modules. As mentioned throughout the course, Python
+was built with extensibility in mind, and thus people and companies have
+extended it.</p>
+
+<p>Popular Python modules have been developed for almost anything you can think of.
+<a href="https://pypi.python.org/pypi">PyPI</a> hold over 70,000 packages in their database
+and there are many more available on github and other websites. They range from
+webscraping (eg beautiful soup), web development (eg django, flask), game
+development (eg pygame), to our focus, data science.</p>
+
+<p>We are using Anaconda, which comes with the most popular data science modules
+built in, so we will cover module loading first, before moving on to
+installation and development.</p>
+
+<h3 id="importing-modules">Importing Modules</h3>
+
+<p>Say we want to have Python generate a random number from a normal distribution.
+We could write our own function, but this is almost certainly already written by
+someone.</p>
+
+<p>We can google for a method - and we quickly find <a href="https://docs.python.org/3.5/library/random.html">this
+page</a>. It is the description of
+a whole library (aka module aka package) devoted to random number generation.
+Great! But how can we use the functions?</p>
+
+<p><strong>In [19]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">random</span><span class="o">.</span><span class="n">normalvariate</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>---------------------------------------------------------------------------
+
+NameError                                 Traceback (most recent call last)
+
+&lt;ipython-input-19-341ba4b07659&gt; in &lt;module&gt;()
+----&gt; 1 random.normalvariate(1, 1)
+
+
+NameError: name 'random' is not defined
+</code></pre>
+</div>
+
+<p>We have to first import the library!</p>
+
+<p>We can do this in multiple ways:</p>
+
+<p><strong>In [20]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">random</span> <span class="c">#we can import the whole random package</span>
+<span class="n">random</span><span class="o">.</span><span class="n">normalvariate</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c"># we have to use random.function to call functions</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>0.1952982613761589
+</code></pre>
+</div>
+
+<p><strong>In [21]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">random</span> <span class="kn">as</span> <span class="nn">rd</span> <span class="c"># we can rename the package on importation so we dont have to type it</span>
+<span class="n">rd</span><span class="o">.</span><span class="n">normalvariate</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c"># we have to use rd.function to call functions</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>0.4454923168029481
+</code></pre>
+</div>
+
+<p><strong>In [22]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">normalvariate</span> <span class="c"># we can import only one function</span>
+<span class="n">normalvariate</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="c">#now we just use the function</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>0.7398876099155046
+</code></pre>
+</div>
+
+<p><strong>In [23]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="o">*</span> <span class="c">#if the package supports it, we can import everythin (not recommended!)</span>
+<span class="n">normalvariate</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="c">#now we can use any function</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-0.07930331195414042
+</code></pre>
+</div>
+
+<p>We can import multiple packages and functions at once using tuples (without
+brackets too):</p>
+
+<p><strong>In [24]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">normalvariate</span><span class="p">,</span> <span class="n">gauss</span></code></pre></figure>
+
+<p><strong>In [25]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">random</span><span class="o">,</span> <span class="nn">sys</span></code></pre></figure>
+
+<p>The exact imports depend on your need. If you can, only import one or two
+functions to keep the namespace clean. Some packages have their own idiomatic
+import names - pandas is almost always import as pd, seaborn as sns. You will
+pick these up by reading other peoples code online.</p>
+
+<p>By convention, modules are imported at the top of a script or notebook - this
+helps to let people know what the dependencies are.</p>
+
+<h3 id="installing-packages">Installing Packages</h3>
+
+<p>Sometimes the package you would like does not come installed on the system. In
+this case you can install it either using conda, or pip.</p>
+
+<p>As we are using Anaconda, we will use the conda installer first, and pip as a
+backup. Both are equivalent, the conda version will work a little nicer with our
+existing set up. Briefly, conda includes a virtual env, while pip does not.</p>
+
+<p>Conda and pip work at the command line, not in Python. Linux users will be
+familiar with yum or apt-get - these are similar repositories. R users will know
+CRAN - again a similar idea, but CRAN is much more picky about what can be
+hosted. Think of pip and PyPI as an uncurated CRAN - install packages at your
+own risk.</p>
+
+<p>Conda syntax is:</p>
+
+<p><code class="highlighter-rouge">conda update conda</code> to update conda (or other packages)</p>
+
+<p><code class="highlighter-rouge">conda install seaborn</code> to install (in this case seaborn)</p>
+
+<p>At which point you will be asked some questions, and prompted to install or
+upgrade.</p>
+
+<p>pip stands for pip installs packages, and has become the default Python
+module/library/package repo.</p>
+
+<p>Pip syntax is:</p>
+
+<p><code class="highlighter-rouge">pip install --upgrade pip</code> to update pip (or other packages)</p>
+
+<p><code class="highlighter-rouge">pip install seaborn</code> to install</p>
+
+<h3 id="making-our-own-modules">Making our own modules</h3>
+
+<p>Making our Python scripts into modules is the easiest way to have scripts work
+with each other. Let’s write a script and save it as example.py:</p>
+
+<p><strong>In [26]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">myfun</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">myfun</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-f/run/user/1000/jupyter/kernel-393275c7-f9da-4664-9b41-58323359f987.json
+</code></pre>
+</div>
+
+<p>We can save it in a lot of locations - Python looks in the directory we are
+currently in, and the system path for python. We can find the system path, using
+the system module, sys. We search in order from the first dir to the last.</p>
+
+<p><strong>In [27]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>['', '/home/jeremy/anaconda3/lib/python35.zip', '/home/jeremy/anaconda3/lib/python3.5', '/home/jeremy/anaconda3/lib/python3.5/plat-linux', '/home/jeremy/anaconda3/lib/python3.5/lib-dynload', '/home/jeremy/anaconda3/lib/python3.5/site-packages/Sphinx-1.3.1-py3.5.egg', '/home/jeremy/anaconda3/lib/python3.5/site-packages/setuptools-18.5-py3.5.egg', '/home/jeremy/anaconda3/lib/python3.5/site-packages', '/home/jeremy/anaconda3/lib/python3.5/site-packages/cryptography-1.0.2-py3.5-linux-x86_64.egg', '/home/jeremy/anaconda3/lib/python3.5/site-packages/IPython/extensions', '/home/jeremy/.ipython']
+</code></pre>
+</div>
+
+<p>we can run from the command line, or use %run to run our script:</p>
+
+<p><strong>In [28]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">%</span><span class="n">run</span> <span class="s">'/home/jeremy/.ipython/example.py'</span> <span class="mi">1</span> <span class="mi">2</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>12
+</code></pre>
+</div>
+
+<p>Ouch - everything gets passed in as strings from sys.argv. Can you remember how
+to fix this?</p>
+
+<p>What if we don’t want to run it, but to have access to the function?</p>
+
+<p>We can import!</p>
+
+<p><strong>In [29]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">example</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-f/run/user/1000/jupyter/kernel-393275c7-f9da-4664-9b41-58323359f987.json
+</code></pre>
+</div>
+
+<p><strong>In [30]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">myfun</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">example</span><span class="o">.</span><span class="n">a</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>3
+-f/run/user/1000/jupyter/kernel-393275c7-f9da-4664-9b41-58323359f987.json
+</code></pre>
+</div>
+
+<p>We can see that the code in our function was executed when we imported, which we
+might not want.</p>
+
+<p>To fix this we can use a couple of tricks.</p>
+
+<p>When we work in Python, the global environment is stored as a massive dict, with
+items as the values, and their names as keys:</p>
+
+<p><strong>In [31]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dict_keys(['_i19', '_i22', '_i15', 'expovariate', 'total_ordering', '_i', 'basket', '__builtins__', 'y', 'shuffle', 'gammavariate', 'triangular', 'SystemRandom', 'random', '_i11', '_i10', '_i20', 'randrange', '__doc__', '_i21', '_i16', '__builtin__', '_22', 'getstate', '_i14', '__package__', 'betavariate', '_', '_sh', 'Random', '_i25', 'setstate', 'x', '_i5', 'seed', 'get_ipython', 'rd', 'l', 'Mystr', '_i6', '_i27', '_i1', '_20', '_iii', 'paretovariate', 'example', 'sample', 'exit', 'Out', '_i7', '_dh', 'myfun', '_i26', '_i28', 'In', '_9', '_ii', '___', 's', '_i8', 'choice', '_i2', '_23', 'weibullvariate', '_ih', '_i18', '_11', 'uniform', '_i30', '_i12', 'quit', '__spec__', 'normalvariate', '_i3', 'randint', 'Customer', '_13', 'sys', 'getrandbits', 'gauss', '_i23', '_i17', '__loader__', '_oh', '_i24', 'lognormvariate', '_i9', '__name__', 'Restuarant', '__nonzero__', '_i31', '_i29', '_i4', 'a', '_21', '_i13', 'vonmisesvariate', '__'])
+</code></pre>
+</div>
+
+<p>You can see random, and example in there. Where is our main script?</p>
+
+<p>It is called __main__. Using this knowledge, we can edit our script, to only
+run if name is __main__:</p>
+
+<p><strong>In [32]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">myfun</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">myfun</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-f/run/user/1000/jupyter/kernel-393275c7-f9da-4664-9b41-58323359f987.json
+</code></pre>
+</div>
+
+<p><strong>In [33]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">%</span><span class="n">run</span> <span class="s">'/home/jeremy/.ipython/example2.py'</span> <span class="mi">1</span> <span class="mi">2</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>12
+</code></pre>
+</div>
+
+<p>But importing no longer causes execution:</p>
+
+<p><strong>In [34]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">example2</span></code></pre></figure>
+
+<p>More on script layout, module organisation and scoping in lesson 7, but for now,
+know that checking for name is the standard way of creating modules which can
+both be run, and imported.</p>
+
+<h2 id="summary">Summary</h2>
+
+<p>You now know basic python data types, statements, functions, classes and
+modules. We will now move onto the application of this knowledge to data
+science. If you’d like, this is a great stepping stone to start learning Python
+web development, game development, app development etc etc too. BTW the <a href="http://flask.pocoo.org/">initial
+hello world for flask</a> uses a decorator!</p>
+
+<p>We now have to test you! The test is a formative assesment - I’m more interested
+in how well you are learning than giving a grade. To these ends, please treat it
+as open book (and open internet). Google, stackoverflow, and the official Python
+docs are all useful and usable. Please though, do not give answers to your
+colleagues - we want to know where everyone is up to.</p>
+
+  </div>
+  
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'jeremycg';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Python @ Precima</h2>
+
+
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
