@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 29 Feb 2016 09:50:46 -0500</pubDate>
-    <lastBuildDate>Mon, 29 Feb 2016 09:50:46 -0500</lastBuildDate>
+    <pubDate>Mon, 29 Feb 2016 11:43:53 -0500</pubDate>
+    <lastBuildDate>Mon, 29 Feb 2016 11:43:53 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -1359,6 +1359,37 @@ in how well you are learning than giving a grade. To these ends, please treat it
 as open book (and open internet). Google, stackoverflow, and the official Python
 docs are all useful and usable. Please though, do not give answers to your
 colleagues - we want to know where everyone is up to.&lt;/p&gt;
+
+&lt;h2 id=&quot;exercises&quot;&gt;Exercises&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Create a class, Circle, that has a radius attribute given to it in __init__&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Modify this class to have an attribute, pi = 3.14&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Add methods to Circle to calculate diameter, area and cicumference&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Find a Python module which has pi, import it and use pi instead of 3.14&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Create a new class, Triangle, which has 3 lines lengths, atob, btoc and celcius_to_fahr&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Create a subclass that inherits from triangle, RightTriangle, that uses __new__
+to ensure the triangle is right angled (you might need to use google to figure out the test)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Give RightTriangle methods for finding the angles at a, b and c. You will need to import an external library
+with trig functions.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Add a method to calculate the area of the RightTriangle&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Fri, 26 Feb 2016 00:00:00 -0500</pubDate>
         <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/02/26/lesson-02-r&d.html</link>
