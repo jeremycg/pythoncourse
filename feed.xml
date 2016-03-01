@@ -5,19 +5,19 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 29 Feb 2016 11:47:11 -0500</pubDate>
-    <lastBuildDate>Mon, 29 Feb 2016 11:47:11 -0500</lastBuildDate>
+    <pubDate>Tue, 01 Mar 2016 13:46:02 -0500</pubDate>
+    <lastBuildDate>Tue, 01 Mar 2016 13:46:02 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
         <title>Lesson 03 Classes and Modules</title>
-        <description>&lt;h2 id=&quot;lesson-03---classes-and-modules&quot;&gt;Lesson 03 - Classes and Modules&lt;/h2&gt;
+        <description>&lt;h2 id=&quot;lesson-02---classes-and-modules&quot;&gt;Lesson 02 - Classes and Modules&lt;/h2&gt;
 
-&lt;p&gt;Welcome to lesson 03 or 4 - You are nearly Python programmers, from which point
+&lt;p&gt;Welcome to lesson 02 or 3 - You are nearly Python programmers, from which point
 we can jump into the data science and stats extensions to Python.&lt;/p&gt;
 
 &lt;p&gt;Again, please download this notebook from :
-&lt;a href=&quot;/pythoncourse/assets/notebooks/applied/lesson 03.ipynb&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;a href=&quot;/pythoncourse/assets/notebooks/r&amp;amp;d/lesson 02.ipynb&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Today we will cover object orientated programming, the way we represent
 everything in Python. Then we will finish with modules, how to import and write
@@ -102,14 +102,14 @@ objects of that class.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;We will talk about the __main__ part in the second half of the lesson, but
+&lt;p&gt;We will talk about the __main__ part in the seond half of the lesson, but
 for now we can see we just made a new data type! Technically, we made a new
 class, Customer, and a new instance, x.&lt;/p&gt;
 
 &lt;p&gt;How can we make it useful? We can add attributes. Attributes can take any value,
 we can imagine them as ‘slots’ available in an object:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [1]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [8]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Customer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#no need for (object) like in python 2&lt;/span&gt;
     &lt;span class=&quot;s&quot;&gt;&#39;&#39;&#39;
@@ -122,8 +122,7 @@ we can imagine them as ‘slots’ available in an object:&lt;/p&gt;
 &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#we can add outside, if we really want:&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;spam&#39;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Help on Customer in module __main__ object:
 
@@ -145,7 +144,6 @@ class Customer(builtins.object)
 
 buyer
 spam
-&amp;lt;__main__.Customer object at 0x7f61c185ca58&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -179,7 +177,7 @@ on other attributes.&lt;/p&gt;
 required. This works just like other functions (the scope is local to the object
 - the class works like an enclosing function).&lt;/p&gt;
 
-&lt;p&gt;Functions always have the object itself as the first argument. It is convention
+&lt;p&gt;Functions always have the object itself as tghe first argument. It is convention
 to write ‘self’ first, but Python will use whatever you put first - so be
 careful to include it.&lt;/p&gt;
 
@@ -378,6 +376,46 @@ didn’t break, they implemented booleans as a subclass of integers and never
 changed it, to avoid broken code. Maybe now int(True) and int(False) make more
 sense.&lt;/p&gt;
 
+&lt;h3 id=&quot;advanced-classes&quot;&gt;Advanced classes&lt;/h3&gt;
+
+&lt;p&gt;Now we know that - we can inherit from built in classes, use decorators, and
+expand our knowedge of special methods&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [1]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;functools&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;total_ordering&lt;/span&gt;
+
+&lt;span class=&quot;nd&quot;&gt;@total_ordering&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Mydict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__new__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cls&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mydict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#works before init, useful for mutable!&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;mydict1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mydict&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#copy so we don&#39;t modify the initial dict&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39; &#39;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mydict1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;removing spaces&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;del&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mydict1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39; &#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__new__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cls&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mydict1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__eq__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__lt__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;other&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Mydict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Mydict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Mydict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;isinstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Mydict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Mydict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;isinstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Mydict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}),&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Mydict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#dict methods still work!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;removing spaces
+{}
+False
+True
+True
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Recall I talked about closures as objects - it turns out functions have their
+own special methods, including __closure__, which holds a tuple of the
+enclosing environment.&lt;/p&gt;
+
 &lt;p&gt;Why would we want to use objects? For most day to day uses, we might not….&lt;/p&gt;
 
 &lt;p&gt;But, some of the most useful Python extensions make extensive use of new object
@@ -482,7 +520,7 @@ brackets too):&lt;/p&gt;
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sys&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;The exact imports depend on your need. If you can, only import one or two
-functions to keep the namespace clean. Some packages have their own idiomatic
+functions to keep the namespace clean. Some packages have their own idiomatice
 import names - pandas is almost always import as pd, seaborn as sns. You will
 pick these up by reading other peoples code online.&lt;/p&gt;
 
@@ -495,12 +533,12 @@ helps to let people know what the dependencies are.&lt;/p&gt;
 this case you can install it either using conda, or pip.&lt;/p&gt;
 
 &lt;p&gt;As we are using Anaconda, we will use the conda installer first, and pip as a
-backup. Both are equivalent, the conda version will work a little nicer with our
+backup. Noth are equivalent, the conda version will work a little nicer with our
 existing set up. Briefly, conda includes a virtual env, while pip does not.&lt;/p&gt;
 
 &lt;p&gt;Conda and pip work at the command line, not in Python. Linux users will be
 familiar with yum or apt-get - these are similar repositories. R users will know
-CRAN - again a similar idea, but CRAN is much more picky about what can be
+CRAN - again a similar idea, but CRAN is much more pciky about what can be
 hosted. Think of pip and PyPI as an uncurated CRAN - install packages at your
 own risk.&lt;/p&gt;
 
@@ -607,7 +645,7 @@ items as the values, and their names as keys:&lt;/p&gt;
 
 &lt;p&gt;You can see random, and example in there. Where is our main script?&lt;/p&gt;
 
-&lt;p&gt;It is called __main__. Using this knowledge, we can edit our script, to only
+&lt;p&gt;It is called __main__. Using this knowledge, we can edit our scipt, to only
 run if name is __main__:&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;In [32]:&lt;/strong&gt;&lt;/p&gt;
@@ -639,7 +677,7 @@ run if name is __main__:&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;example2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;More on script layout, module organisation and scoping in lesson 7, but for now,
+&lt;p&gt;More on script layout, module organisation and scoping in lesson 6, but for now,
 know that checking for name is the standard way of creating modules which can
 both be run, and imported.&lt;/p&gt;
 
@@ -647,15 +685,47 @@ both be run, and imported.&lt;/p&gt;
 
 &lt;p&gt;You now know basic python data types, statements, functions, classes and
 modules. We will now move onto the application of this knowledge to data
-science. If you’d like, this is a great stepping stone to start learning Python
-web development, game development, app development etc etc too. BTW the &lt;a href=&quot;http://flask.pocoo.org/&quot;&gt;initial
-hello world for flask&lt;/a&gt; uses a decorator!&lt;/p&gt;
+science. If you’d like, this is a great steppign stone to start learnign Python
+web development, game development, app development etc etc too.&lt;/p&gt;
 
 &lt;p&gt;We now have to test you! The test is a formative assesment - I’m more interested
 in how well you are learning than giving a grade. To these ends, please treat it
 as open book (and open internet). Google, stackoverflow, and the official Python
 docs are all useful and usable. Please though, do not give answers to your
 colleagues - we want to know where everyone is up to.&lt;/p&gt;
+
+&lt;h2 id=&quot;exercises&quot;&gt;Exercises&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Create a class, Circle, that has a radius attribute given to it in
+__init__&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Modify this class to have an attribute, pi = 3.14&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Add methods to Circle to calculate diameter, area and cicumference&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Find a Python module which has pi, import it and use pi instead of 3.14&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Create a new class, Triangle, which has 3 lines lengths, atob, btoc and ctoa&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Create a subclass that inherits from triangle, RightTriangle, that uses
+__new__ to ensure the triangle is right angled (you might need to use google
+to figure out the test)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Give RightTriangle methods for finding the angles at a, b and c. You will need
+to import an external library with trig functions.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Add a method to calculate the area of the RightTriangle&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Mon, 29 Feb 2016 00:00:00 -0500</pubDate>
         <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/02/29/lesson03applied.html</link>
