@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Lesson 03 Classes and Modules</title>
-  <meta name="description" content="Lesson 03 - Classes and Modules">
+  <meta name="description" content="Lesson 02 - Classes and Modules">
 
   <link rel="stylesheet" href="/pythoncourse/css/main.css">
   <link rel="canonical" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/02/29/lesson03applied.html">
@@ -76,13 +76,13 @@
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <h2 id="lesson-03---classes-and-modules">Lesson 03 - Classes and Modules</h2>
+    <h2 id="lesson-02---classes-and-modules">Lesson 02 - Classes and Modules</h2>
 
-<p>Welcome to lesson 03 or 4 - You are nearly Python programmers, from which point
+<p>Welcome to lesson 02 or 3 - You are nearly Python programmers, from which point
 we can jump into the data science and stats extensions to Python.</p>
 
 <p>Again, please download this notebook from :
-<a href="/pythoncourse/assets/notebooks/applied/lesson 03.ipynb">here</a>.</p>
+<a href="/pythoncourse/assets/notebooks/r&amp;d/lesson 02.ipynb">here</a>.</p>
 
 <p>Today we will cover object orientated programming, the way we represent
 everything in Python. Then we will finish with modules, how to import and write
@@ -167,14 +167,14 @@ objects of that class.</p>
 </code></pre>
 </div>
 
-<p>We will talk about the __main__ part in the second half of the lesson, but
+<p>We will talk about the __main__ part in the seond half of the lesson, but
 for now we can see we just made a new data type! Technically, we made a new
 class, Customer, and a new instance, x.</p>
 
 <p>How can we make it useful? We can add attributes. Attributes can take any value,
 we can imagine them as ‘slots’ available in an object:</p>
 
-<p><strong>In [1]:</strong></p>
+<p><strong>In [8]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Customer</span><span class="p">:</span> <span class="c">#no need for (object) like in python 2</span>
     <span class="s">'''
@@ -187,8 +187,7 @@ we can imagine them as ‘slots’ available in an object:</p>
 <span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="nb">type</span><span class="p">)</span>
 <span class="c">#we can add outside, if we really want:</span>
 <span class="n">x</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="s">'spam'</span>
-<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">foo</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></pre></figure>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">foo</span><span class="p">)</span></code></pre></figure>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>Help on Customer in module __main__ object:
 
@@ -210,7 +209,6 @@ class Customer(builtins.object)
 
 buyer
 spam
-&lt;__main__.Customer object at 0x7f61c185ca58&gt;
 </code></pre>
 </div>
 
@@ -244,7 +242,7 @@ on other attributes.</p>
 required. This works just like other functions (the scope is local to the object
 - the class works like an enclosing function).</p>
 
-<p>Functions always have the object itself as the first argument. It is convention
+<p>Functions always have the object itself as tghe first argument. It is convention
 to write ‘self’ first, but Python will use whatever you put first - so be
 careful to include it.</p>
 
@@ -443,6 +441,46 @@ didn’t break, they implemented booleans as a subclass of integers and never
 changed it, to avoid broken code. Maybe now int(True) and int(False) make more
 sense.</p>
 
+<h3 id="advanced-classes">Advanced classes</h3>
+
+<p>Now we know that - we can inherit from built in classes, use decorators, and
+expand our knowedge of special methods</p>
+
+<p><strong>In [1]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">total_ordering</span>
+
+<span class="nd">@total_ordering</span>
+<span class="k">class</span> <span class="nc">Mydict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">mydict</span><span class="p">):</span> <span class="c">#works before init, useful for mutable!</span>
+        <span class="n">mydict1</span> <span class="o">=</span> <span class="n">mydict</span> <span class="c">#copy so we don't modify the initial dict</span>
+        <span class="k">if</span> <span class="s">' '</span> <span class="ow">in</span> <span class="n">mydict1</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"removing spaces"</span><span class="p">)</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">mydict1</span><span class="p">[</span><span class="s">' '</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">mydict1</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">Mydict</span><span class="p">({</span><span class="s">" "</span><span class="p">:</span><span class="mi">3</span><span class="p">}))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Mydict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">})</span> <span class="o">&gt;</span> <span class="n">Mydict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">}))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">Mydict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">}),</span> <span class="n">Mydict</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">Mydict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">}),</span> <span class="nb">dict</span><span class="p">))</span>
+<span class="n">Mydict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">})</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">})</span> <span class="c">#dict methods still work!</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>removing spaces
+{}
+False
+True
+True
+</code></pre>
+</div>
+
+<p>Recall I talked about closures as objects - it turns out functions have their
+own special methods, including __closure__, which holds a tuple of the
+enclosing environment.</p>
+
 <p>Why would we want to use objects? For most day to day uses, we might not….</p>
 
 <p>But, some of the most useful Python extensions make extensive use of new object
@@ -547,7 +585,7 @@ brackets too):</p>
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">random</span><span class="o">,</span> <span class="nn">sys</span></code></pre></figure>
 
 <p>The exact imports depend on your need. If you can, only import one or two
-functions to keep the namespace clean. Some packages have their own idiomatic
+functions to keep the namespace clean. Some packages have their own idiomatice
 import names - pandas is almost always import as pd, seaborn as sns. You will
 pick these up by reading other peoples code online.</p>
 
@@ -560,12 +598,12 @@ helps to let people know what the dependencies are.</p>
 this case you can install it either using conda, or pip.</p>
 
 <p>As we are using Anaconda, we will use the conda installer first, and pip as a
-backup. Both are equivalent, the conda version will work a little nicer with our
+backup. Noth are equivalent, the conda version will work a little nicer with our
 existing set up. Briefly, conda includes a virtual env, while pip does not.</p>
 
 <p>Conda and pip work at the command line, not in Python. Linux users will be
 familiar with yum or apt-get - these are similar repositories. R users will know
-CRAN - again a similar idea, but CRAN is much more picky about what can be
+CRAN - again a similar idea, but CRAN is much more pciky about what can be
 hosted. Think of pip and PyPI as an uncurated CRAN - install packages at your
 own risk.</p>
 
@@ -672,7 +710,7 @@ items as the values, and their names as keys:</p>
 
 <p>You can see random, and example in there. Where is our main script?</p>
 
-<p>It is called __main__. Using this knowledge, we can edit our script, to only
+<p>It is called __main__. Using this knowledge, we can edit our scipt, to only
 run if name is __main__:</p>
 
 <p><strong>In [32]:</strong></p>
@@ -704,7 +742,7 @@ run if name is __main__:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">example2</span></code></pre></figure>
 
-<p>More on script layout, module organisation and scoping in lesson 7, but for now,
+<p>More on script layout, module organisation and scoping in lesson 6, but for now,
 know that checking for name is the standard way of creating modules which can
 both be run, and imported.</p>
 
@@ -712,15 +750,47 @@ both be run, and imported.</p>
 
 <p>You now know basic python data types, statements, functions, classes and
 modules. We will now move onto the application of this knowledge to data
-science. If you’d like, this is a great stepping stone to start learning Python
-web development, game development, app development etc etc too. BTW the <a href="http://flask.pocoo.org/">initial
-hello world for flask</a> uses a decorator!</p>
+science. If you’d like, this is a great steppign stone to start learnign Python
+web development, game development, app development etc etc too.</p>
 
 <p>We now have to test you! The test is a formative assesment - I’m more interested
 in how well you are learning than giving a grade. To these ends, please treat it
 as open book (and open internet). Google, stackoverflow, and the official Python
 docs are all useful and usable. Please though, do not give answers to your
 colleagues - we want to know where everyone is up to.</p>
+
+<h2 id="exercises">Exercises</h2>
+
+<ul>
+  <li>
+    <p>Create a class, Circle, that has a radius attribute given to it in
+__init__</p>
+  </li>
+  <li>
+    <p>Modify this class to have an attribute, pi = 3.14</p>
+  </li>
+  <li>
+    <p>Add methods to Circle to calculate diameter, area and cicumference</p>
+  </li>
+  <li>
+    <p>Find a Python module which has pi, import it and use pi instead of 3.14</p>
+  </li>
+  <li>
+    <p>Create a new class, Triangle, which has 3 lines lengths, atob, btoc and ctoa</p>
+  </li>
+  <li>
+    <p>Create a subclass that inherits from triangle, RightTriangle, that uses
+__new__ to ensure the triangle is right angled (you might need to use google
+to figure out the test)</p>
+  </li>
+  <li>
+    <p>Give RightTriangle methods for finding the angles at a, b and c. You will need
+to import an external library with trig functions.</p>
+  </li>
+  <li>
+    <p>Add a method to calculate the area of the RightTriangle</p>
+  </li>
+</ul>
 
   </div>
   

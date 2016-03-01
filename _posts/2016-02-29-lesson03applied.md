@@ -6,13 +6,13 @@ tags:
  - Applied Statistics stream
 comments: true
 ---
-## Lesson 03 - Classes and Modules
+## Lesson 02 - Classes and Modules
 
-Welcome to lesson 03 or 4 - You are nearly Python programmers, from which point
+Welcome to lesson 02 or 3 - You are nearly Python programmers, from which point
 we can jump into the data science and stats extensions to Python.
 
 Again, please download this notebook from :
-[here](/pythoncourse/assets/notebooks/applied/lesson 03.ipynb).
+[here](/pythoncourse/assets/notebooks/r&d/lesson 02.ipynb).
 
 Today we will cover object orientated programming, the way we represent
 everything in Python. Then we will finish with modules, how to import and write
@@ -101,14 +101,14 @@ print(type(x))
     <class '__main__.Customer'>
 
 
-We will talk about the \_\_main\_\_ part in the second half of the lesson, but
+We will talk about the \_\_main\_\_ part in the seond half of the lesson, but
 for now we can see we just made a new data type! Technically, we made a new
 class, Customer, and a new instance, x.
 
 How can we make it useful? We can add attributes. Attributes can take any value,
 we can imagine them as 'slots' available in an object:
 
-**In [1]:**
+**In [8]:**
 
 {% highlight python %}
 class Customer: #no need for (object) like in python 2
@@ -123,7 +123,6 @@ print(x.type)
 #we can add outside, if we really want:
 x.foo = 'spam'
 print(x.foo)
-print(x)
 {% endhighlight %}
 
     Help on Customer in module __main__ object:
@@ -146,7 +145,6 @@ print(x)
 
     buyer
     spam
-    <__main__.Customer object at 0x7f61c185ca58>
 
 
 Once we have an attribute, we can access it using x.attribute.
@@ -184,7 +182,7 @@ We can add on as many attributes as we like, and use \*, \*\*, default values as
 required. This works just like other functions (the scope is local to the object
 - the class works like an enclosing function).
 
-Functions always have the object itself as the first argument. It is convention
+Functions always have the object itself as tghe first argument. It is convention
 to write 'self' first, but Python will use whatever you put first - so be
 careful to include it.
 
@@ -399,6 +397,47 @@ didn't break, they implemented booleans as a subclass of integers and never
 changed it, to avoid broken code. Maybe now int(True) and int(False) make more
 sense.
 
+### Advanced classes
+
+Now we know that - we can inherit from built in classes, use decorators, and
+expand our knowedge of special methods
+
+**In [1]:**
+
+{% highlight python %}
+from functools import total_ordering
+
+@total_ordering
+class Mydict(dict):
+    def __new__(cls, mydict): #works before init, useful for mutable!
+        mydict1 = mydict #copy so we don't modify the initial dict
+        if ' ' in mydict1.keys():
+            print("removing spaces")
+            del(mydict1[' '])
+        return dict.__new__(cls, mydict1)
+    def __eq__(self, other):
+        return len(self) == len(other)
+    def __lt__(self, other):
+        return (len(self) < len(other))
+
+print(Mydict({" ":3}))
+print(Mydict({1:2}) > Mydict({1:2,2:3}))
+print(isinstance(Mydict({1:2}), Mydict))
+print(isinstance(Mydict({1:2}), dict))
+Mydict({1:2}).update({2:3}) #dict methods still work!
+{% endhighlight %}
+
+    removing spaces
+    {}
+    False
+    True
+    True
+
+
+Recall I talked about closures as objects - it turns out functions have their
+own special methods, including \_\_closure\_\_, which holds a tuple of the
+enclosing environment.
+
 
 Why would we want to use objects? For most day to day uses, we might not....
 
@@ -531,7 +570,7 @@ import random, sys
 {% endhighlight %}
 
 The exact imports depend on your need. If you can, only import one or two
-functions to keep the namespace clean. Some packages have their own idiomatic
+functions to keep the namespace clean. Some packages have their own idiomatice
 import names - pandas is almost always import as pd, seaborn as sns. You will
 pick these up by reading other peoples code online.
 
@@ -544,12 +583,12 @@ Sometimes the package you would like does not come installed on the system. In
 this case you can install it either using conda, or pip.
 
 As we are using Anaconda, we will use the conda installer first, and pip as a
-backup. Both are equivalent, the conda version will work a little nicer with our
+backup. Noth are equivalent, the conda version will work a little nicer with our
 existing set up. Briefly, conda includes a virtual env, while pip does not.
 
 Conda and pip work at the command line, not in Python. Linux users will be
 familiar with yum or apt-get - these are similar repositories. R users will know
-CRAN - again a similar idea, but CRAN is much more picky about what can be
+CRAN - again a similar idea, but CRAN is much more pciky about what can be
 hosted. Think of pip and PyPI as an uncurated CRAN - install packages at your
 own risk.
 
@@ -663,7 +702,7 @@ print(globals().keys())
 
 You can see random, and example in there. Where is our main script?
 
-It is called \_\_main\_\_. Using this knowledge, we can edit our script, to only
+It is called \_\_main\_\_. Using this knowledge, we can edit our scipt, to only
 run if name is \_\_main\_\_:
 
 **In [32]:**
@@ -699,7 +738,7 @@ But importing no longer causes execution:
 import example2
 {% endhighlight %}
 
-More on script layout, module organisation and scoping in lesson 7, but for now,
+More on script layout, module organisation and scoping in lesson 6, but for now,
 know that checking for name is the standard way of creating modules which can
 both be run, and imported.
 
@@ -707,12 +746,33 @@ both be run, and imported.
 
 You now know basic python data types, statements, functions, classes and
 modules. We will now move onto the application of this knowledge to data
-science. If you'd like, this is a great stepping stone to start learning Python
-web development, game development, app development etc etc too. BTW the [initial
-hello world for flask](http://flask.pocoo.org/) uses a decorator!
+science. If you'd like, this is a great steppign stone to start learnign Python
+web development, game development, app development etc etc too.
 
 We now have to test you! The test is a formative assesment - I'm more interested
 in how well you are learning than giving a grade. To these ends, please treat it
 as open book (and open internet). Google, stackoverflow, and the official Python
 docs are all useful and usable. Please though, do not give answers to your
 colleagues - we want to know where everyone is up to.
+
+## Exercises
+
+* Create a class, Circle, that has a radius attribute given to it in
+\_\_init\_\_
+
+* Modify this class to have an attribute, pi = 3.14
+
+* Add methods to Circle to calculate diameter, area and cicumference
+
+* Find a Python module which has pi, import it and use pi instead of 3.14
+
+* Create a new class, Triangle, which has 3 lines lengths, atob, btoc and ctoa
+
+* Create a subclass that inherits from triangle, RightTriangle, that uses
+\_\_new\_\_ to ensure the triangle is right angled (you might need to use google
+to figure out the test)
+
+* Give RightTriangle methods for finding the angles at a, b and c. You will need
+to import an external library with trig functions.
+
+* Add a method to calculate the area of the RightTriangle
