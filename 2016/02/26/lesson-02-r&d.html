@@ -446,43 +446,34 @@ sense.</p>
 <p>Now we know that - we can inherit from built in classes, use decorators, and
 expand our knowedge of special methods</p>
 
-<p><strong>In [18]:</strong></p>
+<p><strong>In [1]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">total_ordering</span>
 
 <span class="nd">@total_ordering</span>
-<span class="k">class</span> <span class="nc">Mystr</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span> <span class="c">#works before init, useful for mutable!</span>
-        <span class="k">if</span> <span class="s">' '</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">Mydict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">mydict</span><span class="p">):</span> <span class="c">#works before init, useful for mutable!</span>
+        <span class="n">mydict1</span> <span class="o">=</span> <span class="n">mydict</span> <span class="c">#copy so we don't modify the initial dict</span>
+        <span class="k">if</span> <span class="s">' '</span> <span class="ow">in</span> <span class="n">mydict1</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">print</span><span class="p">(</span><span class="s">"removing spaces"</span><span class="p">)</span>
-            <span class="n">word</span> <span class="o">=</span> <span class="n">word</span><span class="p">[:</span><span class="n">word</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">' '</span><span class="p">)]</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">mydict1</span><span class="p">[</span><span class="s">' '</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="o">.</span><span class="n">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">mydict1</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_valid_operand</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">NotImplemented</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_valid_operand</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">NotImplemented</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
 
-<span class="n">x</span> <span class="o">=</span> <span class="n">Mystr</span><span class="p">(</span><span class="s">'abcd     '</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">Mystr</span><span class="p">(</span><span class="s">'abcde'</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Mystr</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">'c'</span><span class="p">))</span> <span class="c">#by inheritance, all our str methods still work</span></code></pre></figure>
+<span class="k">print</span><span class="p">(</span><span class="n">Mydict</span><span class="p">({</span><span class="s">" "</span><span class="p">:</span><span class="mi">3</span><span class="p">}))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">Mydict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">})</span> <span class="o">&gt;</span> <span class="n">Mydict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">}))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">Mydict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">}),</span> <span class="n">Mydict</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">Mydict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">}),</span> <span class="nb">dict</span><span class="p">))</span>
+<span class="n">Mydict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">})</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">})</span> <span class="c">#dict methods still work!</span></code></pre></figure>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>removing spaces
-You just deleted Customer: Canoe
-abcd
-abcde
-True
-True
+{}
 False
-2
+True
+True
 </code></pre>
 </div>
 
@@ -772,7 +763,8 @@ colleagues - we want to know where everyone is up to.</p>
 
 <ul>
   <li>
-    <p>Create a class, Circle, that has a radius attribute given to it in __init__</p>
+    <p>Create a class, Circle, that has a radius attribute given to it in
+__init__</p>
   </li>
   <li>
     <p>Modify this class to have an attribute, pi = 3.14</p>
@@ -787,12 +779,13 @@ colleagues - we want to know where everyone is up to.</p>
     <p>Create a new class, Triangle, which has 3 lines lengths, atob, btoc and ctoa</p>
   </li>
   <li>
-    <p>Create a subclass that inherits from triangle, RightTriangle, that uses __new__
-to ensure the triangle is right angled (you might need to use google to figure out the test)</p>
+    <p>Create a subclass that inherits from triangle, RightTriangle, that uses
+__new__ to ensure the triangle is right angled (you might need to use google
+to figure out the test)</p>
   </li>
   <li>
-    <p>Give RightTriangle methods for finding the angles at a, b and c. You will need to import an external library
-with trig functions.</p>
+    <p>Give RightTriangle methods for finding the angles at a, b and c. You will need
+to import an external library with trig functions.</p>
   </li>
   <li>
     <p>Add a method to calculate the area of the RightTriangle</p>
