@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Lesson 03 - NumPy and pandas"
+title: "Lesson 04 - NumPy and pandas"
 author: Jeremy
 tags:
- - R&D stream
+ - Applied Statistics stream
 comments: true
 ---
-## Lesson 03 - NumPy and pandas
+## Lesson 04 - NumPy and pandas
 
 So far we have covered the base Python environment - built in data types and
 structures, and looked at how we can use Python as a general purpose programming
@@ -14,7 +14,7 @@ language.
 
 Now we will hone in on our goal of data science - using the data science modules
 developed by the data science community. Download todays [notebook
-here](/pythoncourse/assets/r&d/Lesson - 03.ipynb).
+here](/pythoncourse/assets/applied/Lesson - 04.ipynb).
 
 This lesson and the next lesson are based on the book [Python for data
 analysis](http://shop.oreilly.com/product/0636920023784.do), by Wes McKinney,
