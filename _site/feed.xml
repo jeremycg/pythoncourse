@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 07 Mar 2016 10:52:14 -0500</pubDate>
-    <lastBuildDate>Mon, 07 Mar 2016 10:52:14 -0500</lastBuildDate>
+    <pubDate>Mon, 07 Mar 2016 10:54:08 -0500</pubDate>
+    <lastBuildDate>Mon, 07 Mar 2016 10:54:08 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -1714,7 +1714,7 @@ structures, and looked at how we can use Python as a general purpose programming
 language.&lt;/p&gt;
 
 &lt;p&gt;Now we will hone in on our goal of data science - using the data science modules
-developed by the data science community. Download todays &lt;a href=&quot;/pythoncourse/assets/r&amp;amp;d/Lesson - 03.ipynb&quot;&gt;notebook
+developed by the data science community. Download todays &lt;a href=&quot;/pythoncourse/assets/notebooks/r&amp;amp;d/Lesson - 03.ipynb&quot;&gt;notebook
 here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;This lesson and the next lesson are based on the book &lt;a href=&quot;http://shop.oreilly.com/product/0636920023784.do&quot;&gt;Python for data
