@@ -83,7 +83,16 @@ structures, and looked at how we can use Python as a general purpose programming
 language.</p>
 
 <p>Now we will hone in on our goal of data science - using the data science modules
-developed by the data science community</p>
+developed by the data science community. Download todays <a href="/pythoncourse/assets/r&amp;d/Lesson - 03.ipynb">notebook
+here</a>.</p>
+
+<p>This lesson and the next lesson are based on the book <a href="http://shop.oreilly.com/product/0636920023784.do">Python for data
+analysis</a>, by Wes McKinney,
+the primary developer of pandas. Feel free to go without the book - we will
+cover much of its content in the class, and it is a little outdated.</p>
+
+<p>The first module we will examine is NumPy and we will the move onto pandas.
+NumPy provides arrays, while pandas provides DataFrames.</p>
 
 <h3 id="numpy">NumPy</h3>
 
@@ -93,7 +102,7 @@ worked, but have not been tailored for large scale data analysis.</p>
 <p>Think of how Python works under the hood when multiplying every element of a
 list by 2:</p>
 
-<p><strong>In [194]:</strong></p>
+<p><strong>In [1]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
 <span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
@@ -116,7 +125,7 @@ dealing with millions of rows, it quickly adds up.</p>
 <p>To work better with numeric (or other large scale data), numpy introduces the
 array, a data structure which may only contain one type of data:</p>
 
-<p><strong>In [196]:</strong></p>
+<p><strong>In [2]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
@@ -129,15 +138,15 @@ array, a data structure which may only contain one type of data:</p>
 
 <p>It is also much faster (by a process called vectorisation):</p>
 
-<p><strong>In [199]:</strong></p>
+<p><strong>In [3]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
 <span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
 <span class="o">%</span><span class="n">timeit</span> <span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">]</span>
 <span class="o">%</span><span class="n">timeit</span> <span class="n">k</span> <span class="o">*</span> <span class="mi">2</span></code></pre></figure>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>1000 loops, best of 3: 1.18 ms per loop
-100000 loops, best of 3: 12.4 µs per loop
+<div class="highlighter-rouge"><pre class="highlight"><code>100 loops, best of 3: 2.1 ms per loop
+10000 loops, best of 3: 57.6 µs per loop
 </code></pre>
 </div>
 
@@ -156,20 +165,20 @@ refer to them as arrays in this lesson.</p>
 
 <p>We can access the type of data contained in an array:</p>
 
-<p><strong>In [202]:</strong></p>
+<p><strong>In [4]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
 <span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sctypes</span><span class="p">)</span></code></pre></figure>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>int32
-{'uint': [&lt;class 'numpy.uint8'&gt;, &lt;class 'numpy.uint16'&gt;, &lt;class 'numpy.uint32'&gt;, &lt;class 'numpy.uint64'&gt;], 'others': [&lt;class 'bool'&gt;, &lt;class 'object'&gt;, &lt;class 'str'&gt;, &lt;class 'str'&gt;, &lt;class 'numpy.void'&gt;], 'int': [&lt;class 'numpy.int8'&gt;, &lt;class 'numpy.int16'&gt;, &lt;class 'numpy.int32'&gt;, &lt;class 'numpy.int64'&gt;], 'complex': [&lt;class 'numpy.complex64'&gt;, &lt;class 'numpy.complex128'&gt;], 'float': [&lt;class 'numpy.float16'&gt;, &lt;class 'numpy.float32'&gt;, &lt;class 'numpy.float64'&gt;]}
+<div class="highlighter-rouge"><pre class="highlight"><code>int64
+{'float': [&lt;class 'numpy.float16'&gt;, &lt;class 'numpy.float32'&gt;, &lt;class 'numpy.float64'&gt;, &lt;class 'numpy.float128'&gt;], 'others': [&lt;class 'bool'&gt;, &lt;class 'object'&gt;, &lt;class 'str'&gt;, &lt;class 'str'&gt;, &lt;class 'numpy.void'&gt;], 'complex': [&lt;class 'numpy.complex64'&gt;, &lt;class 'numpy.complex128'&gt;, &lt;class 'numpy.complex256'&gt;], 'int': [&lt;class 'numpy.int8'&gt;, &lt;class 'numpy.int16'&gt;, &lt;class 'numpy.int32'&gt;, &lt;class 'numpy.int64'&gt;], 'uint': [&lt;class 'numpy.uint8'&gt;, &lt;class 'numpy.uint16'&gt;, &lt;class 'numpy.uint32'&gt;, &lt;class 'numpy.uint64'&gt;]}
 </code></pre>
 </div>
 
 <p>We can initialise arrays in a number of ways</p>
 
-<p><strong>In [203]:</strong></p>
+<p><strong>In [8]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#empty - uninitialised, random numbers!</span>
 <span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
@@ -180,13 +189,13 @@ refer to them as arrays in this lesson.</p>
 <span class="c">#arange is the numpy version of range - gives an array</span>
 <span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span></code></pre></figure>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>[[[ 1.  0.]
-  [ 0.  0.]
-  [ 1.  0.]]
+<div class="highlighter-rouge"><pre class="highlight"><code>[[[  6.90469329e-310   2.13249800e-316]
+  [  0.00000000e+000   0.00000000e+000]
+  [  0.00000000e+000   8.60952352e-072]]
 
- [[ 1.  0.]
-  [ 1.  0.]
-  [ 1.  0.]]]
+ [[  4.46535817e-090   1.39938874e-076]
+  [  1.55075695e+184   1.43927482e+160]
+  [  3.99910963e+252   2.32204073e-056]]]
 [[ 0.  0.  0.  0.  0.  0.]
  [ 0.  0.  0.  0.  0.  0.]
  [ 0.  0.  0.  0.  0.  0.]]
@@ -219,13 +228,16 @@ refer to them as arrays in this lesson.</p>
 </code></pre>
 </div>
 
-<p><strong>In [206]:</strong></p>
+<p><strong>In [10]:</strong></p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]))</span>
 <span class="c">#times, / etc</span>
-<span class="c">#this is not matrix multiplication!!</span></code></pre></figure>
+<span class="c">#this is not matrix multiplication!!</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">]])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">]]))</span></code></pre></figure>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>array([ 1,  4,  9, 16])
+<div class="highlighter-rouge"><pre class="highlight"><code>[ 1  4  9 16]
+[[ 1  4]
+ [ 9 25]]
 </code></pre>
 </div>
 
@@ -277,23 +289,43 @@ TypeError: can only assign an iterable
 <p>We can make 2d and 3,4,5… matrices using nested lists, and subset them
 appropriately:</p>
 
-<p><strong>In [219]:</strong></p>
+<p><strong>In [26]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#nested lists are made to be 2d</span>
 <span class="n">arr2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">arr2d</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">arr2d</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
 <span class="n">arr2d</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">arr2d</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
 
 <span class="n">arr2d</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span><span class="mi">2</span><span class="p">:]</span>
-<span class="n">arr2d</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:]</span></code></pre></figure>
+<span class="n">arr2d</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:]</span>
+<span class="c">#multid</span>
+<span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]],[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]]])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span></code></pre></figure>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>array([6])
+<div class="highlighter-rouge"><pre class="highlight"><code>(3, 3)
+2
+(2, 3, 3)
+3
+</code></pre>
+</div>
+
+<p><strong>In [30]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#on multi dimensional arrays, we can use axis calls to do things by rows or columns:</span>
+<span class="n">arr2d</span><span class="o">.</span><span class="nb">sum</span><span class="p">()</span>
+<span class="n">arr2d</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">arr2d</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>array([ 6, 15, 24])
 </code></pre>
 </div>
 
 <p>We don’t need filter: We can subset with booleans much like R:</p>
 
-<p><strong>In [220]:</strong></p>
+<p><strong>In [17]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#no filter, just use booleans</span>
 <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -302,6 +334,8 @@ appropriately:</p>
 <span class="n">k</span><span class="p">[</span><span class="n">l</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="c">#arbitrary computation!</span>
 <span class="c">#works on 2d</span>
 <span class="n">arr2d</span><span class="p">[</span><span class="n">arr2d</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">]</span>
+<span class="c">#or just get the booleans:</span>
+<span class="n">arr2d</span> <span class="o">&gt;</span> <span class="mi">3</span>
 <span class="c">#and by assignment</span>
 <span class="n">arr2d</span><span class="p">[</span><span class="n">arr2d</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">arr2d</span></code></pre></figure>
@@ -389,6 +423,9 @@ appropriately:</p>
 <p>Using the built in linear algebra methods, we can carry out matrix operations
 easily.</p>
 
+<p>We will endeavour to cover more matrix algebra in a lesson including sympy,
+sciPy and linear optimization.</p>
+
 <p>Reshape allows us to reshape our matrices:</p>
 
 <p><strong>In [61]:</strong></p>
@@ -444,7 +481,7 @@ fortran code. See the <a href="https://docs.scipy.org/doc/numpy/reference/routin
 documentation</a>
 for examples. Some of the functions are in the linalg submodule:</p>
 
-<p><strong>In [231]:</strong></p>
+<p><strong>In [18]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">LA</span>
 <span class="n">w</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">LA</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
@@ -461,6 +498,20 @@ for examples. Some of the functions are in the linalg submodule:</p>
  [ 0.  0.  1.]]
 </code></pre>
 </div>
+
+<p><strong>In [20]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#solving:</span>
+<span class="c">#5 * x + y = 91 and x + 20 * y = 80</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">91</span><span class="p">,</span><span class="mi">80</span><span class="p">])</span>
+<span class="n">LA</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>array([ 17.57575758,   3.12121212])
+</code></pre>
+</div>
+
+<p>More on linear algebra later in the course</p>
 
 <h3 id="numpy-universal-functions">NumPy universal functions</h3>
 
@@ -486,7 +537,7 @@ docs</a></p>
 <p>We have two main classes of ufuncs, unary, which operate on once array, and
 binary which operate on two:</p>
 
-<p><strong>In [254]:</strong></p>
+<p><strong>In [21]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#binary ufuncs:</span>
 <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mi">30</span><span class="p">,</span>  <span class="mi">80</span><span class="p">,</span> <span class="mi">130</span><span class="p">],</span>
@@ -500,6 +551,27 @@ binary which operate on two:</p>
 <div class="highlighter-rouge"><pre class="highlight"><code>array([[ 50,  90, 130],
        [ 80, 255, 430],
        [130, 490, 730]])
+</code></pre>
+</div>
+
+<h3 id="reading-in-data">Reading in data</h3>
+
+<p>pandas <code class="highlighter-rouge">read_csv</code> function is much easier, but as a stop gap, and to keep the
+number in NumPy, we can use NumPys built in csv reader. You can see the <a href="https://docs.scipy.org/doc/numpy/user/basics.io.genfromtxt.html">offical
+docs here</a></p>
+
+<p><strong>In [25]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s">'http://www.jeremy.kiwi.nz/pythoncourse/assets/data/data.txt'</span><span class="p">,</span>
+              <span class="n">skip_header</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+              <span class="n">missing_values</span><span class="o">=</span><span class="p">(</span><span class="s">'MISSING'</span><span class="p">,</span><span class="s">'MISSING'</span><span class="p">,</span><span class="s">'MISSING'</span><span class="p">),</span>
+              <span class="n">filling_values</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">999</span><span class="p">,</span><span class="o">-</span><span class="mi">999</span><span class="p">,</span><span class="o">-</span><span class="mi">999</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>array([[  4.83900000e-01,   4.53600000e-01,   3.56100000e-01],
+       [  1.29200000e-01,   6.87500000e-01,  -9.99000000e+02],
+       [  1.78100000e-01,   3.04900000e-01,   8.92800000e-01],
+       [ -9.99000000e+02,   5.80100000e-01,   2.03800000e-01],
+       [  5.99300000e-01,   4.35700000e-01,   7.41000000e-01]])
 </code></pre>
 </div>
 
@@ -523,19 +595,21 @@ will continue to cover it’s functionality here.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'time'</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'position'</span><span class="p">);</span></code></pre></figure>
 
-<p><img src="/images/lesson-04_40_0.png" alt="png" /></p>
+<p>![png](<img src="/pythoncourse/assets/images/lesson---03_45_0.png" alt="png" /></p>
 
 <h2 id="pandas">pandas</h2>
 
 <p>pandas, short for Python and data analysis (or panel datasets) was created by
-Wes McKinney, while he was working as a financial analyst. He intially began it
-as a port of R into Python for speed, but quickly diverged into a slightly
-different model.</p>
+Wes McKinney, while he was working as a financial analyst (amongst other
+projects, he is currently working for Apache to get <a href="http://wesmckinney.com/blog/pandas-and-apache-arrow/">pandas to work with the
+Apache Arrow standard</a>).
+He intially began it as a port of R into Python for speed, but quickly diverged
+into a slightly different model.</p>
 
 <p>It is primarily made for time series and tabular data, and its main point of use
 are the new classes, DataFrame and Series, modelled on Rs dataframe.</p>
 
-<p><strong>In [255]:</strong></p>
+<p><strong>In [32]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">Series</span><span class="p">,</span> <span class="n">DataFrame</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span></code></pre></figure>
@@ -621,7 +695,8 @@ dtype: int64
 
 <p><strong>In [118]:</strong></p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span><span class="p">[</span><span class="s">'Ohio'</span><span class="p">]</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#subsetting by index</span>
+<span class="n">l</span><span class="p">[</span><span class="s">'Ohio'</span><span class="p">]</span></code></pre></figure>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>35000
 </code></pre>
@@ -686,7 +761,7 @@ with some linking between levels.</p>
 
 <p>However, the row/column mapping is not as strictly enforced as R.</p>
 
-<p><strong>In [262]:</strong></p>
+<p><strong>In [35]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">dat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"http://jeremy.kiwi.nz/pythoncourse/assets/tests/r&amp;d/test1data.csv"</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="mi">20</span><span class="p">]</span>
 <span class="n">dat</span></code></pre></figure>
@@ -900,7 +975,7 @@ with some linking between levels.</p>
 </table>
 </div>
 
-<p><strong>In [263]:</strong></p>
+<p><strong>In [36]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># get the column names</span>
 <span class="n">dat</span><span class="o">.</span><span class="n">columns</span>
@@ -916,7 +991,9 @@ with some linking between levels.</p>
 <span class="n">dat</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span>
 <span class="c">#add a new column</span>
 <span class="n">dat</span><span class="p">[</span><span class="s">'foo'</span><span class="p">]</span><span class="o">=</span><span class="s">"spam"</span>
-<span class="c">#add a new column with specific values</span>
+<span class="c">#using other columns:</span>
+<span class="n">dat</span><span class="p">[</span><span class="s">'foo'</span><span class="p">]</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="s">'VisitNumber'</span><span class="p">]</span> <span class="o">+</span> <span class="n">dat</span><span class="p">[</span><span class="s">'ScanCount'</span><span class="p">]</span>
+<span class="c">#add a new column with spdatecific values</span>
 <span class="n">dat</span><span class="p">[</span><span class="s">'foo'</span><span class="p">]</span><span class="o">=</span><span class="n">Series</span><span class="p">([</span><span class="s">'spam'</span><span class="p">,</span> <span class="s">'more spam'</span><span class="p">],</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span></code></pre></figure>
 
 <p><strong>In [159]:</strong></p>
@@ -925,7 +1002,7 @@ with some linking between levels.</p>
 <span class="k">del</span> <span class="n">dat</span><span class="p">[</span><span class="s">'foo'</span><span class="p">]</span>
 <span class="c">#'http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html'</span></code></pre></figure>
 
-<p><strong>In [166]:</strong></p>
+<p><strong>In [43]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#recall, indexes are immutable?</span>
 <span class="c">#how to reindex?</span>
@@ -944,11 +1021,13 @@ with some linking between levels.</p>
       <th>ScanCount</th>
       <th>DepartmentDescription</th>
       <th>FinelineNumber</th>
+      <th>foo</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
+      <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -966,6 +1045,7 @@ with some linking between levels.</p>
       <td>1</td>
       <td>SHOES</td>
       <td>8931</td>
+      <td>8</td>
     </tr>
     <tr>
       <th>2</th>
@@ -976,6 +1056,7 @@ with some linking between levels.</p>
       <td>1</td>
       <td>PERSONAL CARE</td>
       <td>4504</td>
+      <td>8</td>
     </tr>
     <tr>
       <th>3</th>
@@ -986,6 +1067,7 @@ with some linking between levels.</p>
       <td>2</td>
       <td>PAINT AND ACCESSORIES</td>
       <td>3565</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>4</th>
@@ -996,12 +1078,13 @@ with some linking between levels.</p>
       <td>2</td>
       <td>PAINT AND ACCESSORIES</td>
       <td>1017</td>
+      <td>10</td>
     </tr>
   </tbody>
 </table>
 </div>
 
-<p><strong>In [174]:</strong></p>
+<p><strong>In [41]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#can add defaults</span>
 <span class="n">dat</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span><span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -1043,7 +1126,7 @@ with some linking between levels.</p>
       <td>1</td>
       <td>SHOES</td>
       <td>8931</td>
-      <td>NaN</td>
+      <td>8</td>
     </tr>
     <tr>
       <th>2</th>
@@ -1054,7 +1137,7 @@ with some linking between levels.</p>
       <td>1</td>
       <td>PERSONAL CARE</td>
       <td>4504</td>
-      <td>NaN</td>
+      <td>8</td>
     </tr>
     <tr>
       <th>3</th>
@@ -1065,7 +1148,7 @@ with some linking between levels.</p>
       <td>2</td>
       <td>PAINT AND ACCESSORIES</td>
       <td>3565</td>
-      <td>NaN</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>4</th>
@@ -1076,62 +1159,62 @@ with some linking between levels.</p>
       <td>2</td>
       <td>PAINT AND ACCESSORIES</td>
       <td>1017</td>
-      <td>spam</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>5</th>
       <td>26</td>
       <td>8</td>
       <td>Friday</td>
-      <td>2006618783</td>
+      <td>2006613744</td>
       <td>2</td>
       <td>PAINT AND ACCESSORIES</td>
       <td>1017</td>
-      <td>NaN</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>6</th>
       <td>26</td>
       <td>8</td>
       <td>Friday</td>
-      <td>2006613743</td>
-      <td>1</td>
+      <td>2006613744</td>
+      <td>2</td>
       <td>PAINT AND ACCESSORIES</td>
       <td>1017</td>
-      <td>NaN</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>7</th>
       <td>26</td>
       <td>8</td>
       <td>Friday</td>
-      <td>7004802737</td>
-      <td>1</td>
+      <td>2006613744</td>
+      <td>2</td>
       <td>PAINT AND ACCESSORIES</td>
-      <td>2802</td>
-      <td>NaN</td>
+      <td>1017</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>8</th>
       <td>26</td>
       <td>8</td>
       <td>Friday</td>
-      <td>2238495318</td>
-      <td>1</td>
+      <td>2006613744</td>
+      <td>2</td>
       <td>PAINT AND ACCESSORIES</td>
-      <td>4501</td>
-      <td>NaN</td>
+      <td>1017</td>
+      <td>10</td>
     </tr>
     <tr>
       <th>9</th>
       <td>26</td>
       <td>8</td>
       <td>Friday</td>
-      <td>2238400200</td>
-      <td>-1</td>
+      <td>2006613744</td>
+      <td>2</td>
       <td>PAINT AND ACCESSORIES</td>
-      <td>3565</td>
-      <td>NaN</td>
+      <td>1017</td>
+      <td>10</td>
     </tr>
   </tbody>
 </table>
@@ -1444,9 +1527,10 @@ with some linking between levels.</p>
 </table>
 </div>
 
-<p><strong>In [264]:</strong></p>
+<p><strong>In [33]:</strong></p>
 
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span> <span class="o">=</span> <span class="n">Series</span><span class="p">([</span><span class="mi">35000</span><span class="p">,</span><span class="mi">71000</span><span class="p">,</span><span class="mi">16000</span><span class="p">,</span><span class="mi">5000</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'Ohio'</span><span class="p">,</span><span class="s">'Texas'</span><span class="p">,</span><span class="s">'Oregon'</span><span class="p">,</span><span class="s">'Utah'</span><span class="p">])</span>
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># as promised, .add with fill</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">Series</span><span class="p">([</span><span class="mi">35000</span><span class="p">,</span><span class="mi">71000</span><span class="p">,</span><span class="mi">16000</span><span class="p">,</span><span class="mi">5000</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'Ohio'</span><span class="p">,</span><span class="s">'Texas'</span><span class="p">,</span><span class="s">'Oregon'</span><span class="p">,</span><span class="s">'Utah'</span><span class="p">])</span>
 <span class="n">k</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'Ohio'</span><span class="p">,</span><span class="s">'Texas'</span><span class="p">,</span><span class="s">'Oregon'</span><span class="p">,</span><span class="s">'Ontario'</span><span class="p">])</span>
 <span class="n">l</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">"pop"</span><span class="p">])</span>
 <span class="n">k</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">"pop"</span><span class="p">])</span>
@@ -1491,7 +1575,28 @@ with some linking between levels.</p>
 <p>That’s it for today.</p>
 
 <p>Next lesson we will cover in more detail how to read in and clean data, as well
-as the split,apply, combine methods on DataFrames.</p>
+as merging, and the split, apply, combine methods on DataFrames.</p>
+
+<h3 id="exercises">Exercises</h3>
+
+<p>1/. Create an array of size 10, with all 0s</p>
+
+<p>2/. Reshape the above vector to have dims of (5,2)</p>
+
+<p>3/. Create a 4*4 identity matrix in NumPy (use google or the docs for a
+function)</p>
+
+<p>4/. Create a 10 by 10 matrix or random values (randn, mean = 3), and find the
+minimum and maximum values. Find the index of these values</p>
+
+<p>5/. Normalise the above matrix to have a mean of 0</p>
+
+<p>6/. Create a Series, which has an index of NY, SF, TO, and CH, and the values
+0.2, 0.9, 3.5 and 2.4</p>
+
+<p>7/. Reindex this series to include VA with NA</p>
+
+<p>8/. Add the two above Series, correcting for NaN</p>
 
   </div>
   
