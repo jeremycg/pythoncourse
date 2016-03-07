@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 06 Mar 2016 21:15:32 -0500</pubDate>
-    <lastBuildDate>Sun, 06 Mar 2016 21:15:32 -0500</lastBuildDate>
+    <pubDate>Sun, 06 Mar 2016 21:57:56 -0500</pubDate>
+    <lastBuildDate>Sun, 06 Mar 2016 21:57:56 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -100,7 +100,16 @@ structures, and looked at how we can use Python as a general purpose programming
 language.&lt;/p&gt;
 
 &lt;p&gt;Now we will hone in on our goal of data science - using the data science modules
-developed by the data science community&lt;/p&gt;
+developed by the data science community. Download todays &lt;a href=&quot;/pythoncourse/assets/r&amp;amp;d/Lesson - 03.ipynb&quot;&gt;notebook
+here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;This lesson and the next lesson are based on the book &lt;a href=&quot;http://shop.oreilly.com/product/0636920023784.do&quot;&gt;Python for data
+analysis&lt;/a&gt;, by Wes McKinney,
+the primary developer of pandas. Feel free to go without the book - we will
+cover much of its content in the class, and it is a little outdated.&lt;/p&gt;
+
+&lt;p&gt;The first module we will examine is NumPy and we will the move onto pandas.
+NumPy provides arrays, while pandas provides DataFrames.&lt;/p&gt;
 
 &lt;h3 id=&quot;numpy&quot;&gt;NumPy&lt;/h3&gt;
 
@@ -110,7 +119,7 @@ worked, but have not been tailored for large scale data analysis.&lt;/p&gt;
 &lt;p&gt;Think of how Python works under the hood when multiplying every element of a
 list by 2:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [194]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [1]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -133,7 +142,7 @@ dealing with millions of rows, it quickly adds up.&lt;/p&gt;
 &lt;p&gt;To work better with numeric (or other large scale data), numpy introduces the
 array, a data structure which may only contain one type of data:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [196]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [2]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;np&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
@@ -146,15 +155,15 @@ array, a data structure which may only contain one type of data:&lt;/p&gt;
 
 &lt;p&gt;It is also much faster (by a process called vectorisation):&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [199]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [3]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timeit&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timeit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1000 loops, best of 3: 1.18 ms per loop
-100000 loops, best of 3: 12.4 µs per loop
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;100 loops, best of 3: 2.1 ms per loop
+10000 loops, best of 3: 57.6 µs per loop
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -173,20 +182,20 @@ refer to them as arrays in this lesson.&lt;/p&gt;
 
 &lt;p&gt;We can access the type of data contained in an array:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [202]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [4]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dtype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sctypes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int32
-{&#39;uint&#39;: [&amp;lt;class &#39;numpy.uint8&#39;&amp;gt;, &amp;lt;class &#39;numpy.uint16&#39;&amp;gt;, &amp;lt;class &#39;numpy.uint32&#39;&amp;gt;, &amp;lt;class &#39;numpy.uint64&#39;&amp;gt;], &#39;others&#39;: [&amp;lt;class &#39;bool&#39;&amp;gt;, &amp;lt;class &#39;object&#39;&amp;gt;, &amp;lt;class &#39;str&#39;&amp;gt;, &amp;lt;class &#39;str&#39;&amp;gt;, &amp;lt;class &#39;numpy.void&#39;&amp;gt;], &#39;int&#39;: [&amp;lt;class &#39;numpy.int8&#39;&amp;gt;, &amp;lt;class &#39;numpy.int16&#39;&amp;gt;, &amp;lt;class &#39;numpy.int32&#39;&amp;gt;, &amp;lt;class &#39;numpy.int64&#39;&amp;gt;], &#39;complex&#39;: [&amp;lt;class &#39;numpy.complex64&#39;&amp;gt;, &amp;lt;class &#39;numpy.complex128&#39;&amp;gt;], &#39;float&#39;: [&amp;lt;class &#39;numpy.float16&#39;&amp;gt;, &amp;lt;class &#39;numpy.float32&#39;&amp;gt;, &amp;lt;class &#39;numpy.float64&#39;&amp;gt;]}
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int64
+{&#39;float&#39;: [&amp;lt;class &#39;numpy.float16&#39;&amp;gt;, &amp;lt;class &#39;numpy.float32&#39;&amp;gt;, &amp;lt;class &#39;numpy.float64&#39;&amp;gt;, &amp;lt;class &#39;numpy.float128&#39;&amp;gt;], &#39;others&#39;: [&amp;lt;class &#39;bool&#39;&amp;gt;, &amp;lt;class &#39;object&#39;&amp;gt;, &amp;lt;class &#39;str&#39;&amp;gt;, &amp;lt;class &#39;str&#39;&amp;gt;, &amp;lt;class &#39;numpy.void&#39;&amp;gt;], &#39;complex&#39;: [&amp;lt;class &#39;numpy.complex64&#39;&amp;gt;, &amp;lt;class &#39;numpy.complex128&#39;&amp;gt;, &amp;lt;class &#39;numpy.complex256&#39;&amp;gt;], &#39;int&#39;: [&amp;lt;class &#39;numpy.int8&#39;&amp;gt;, &amp;lt;class &#39;numpy.int16&#39;&amp;gt;, &amp;lt;class &#39;numpy.int32&#39;&amp;gt;, &amp;lt;class &#39;numpy.int64&#39;&amp;gt;], &#39;uint&#39;: [&amp;lt;class &#39;numpy.uint8&#39;&amp;gt;, &amp;lt;class &#39;numpy.uint16&#39;&amp;gt;, &amp;lt;class &#39;numpy.uint32&#39;&amp;gt;, &amp;lt;class &#39;numpy.uint64&#39;&amp;gt;]}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;p&gt;We can initialise arrays in a number of ways&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [203]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [8]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#empty - uninitialised, random numbers!&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;empty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
@@ -197,13 +206,13 @@ refer to them as arrays in this lesson.&lt;/p&gt;
 &lt;span class=&quot;c&quot;&gt;#arange is the numpy version of range - gives an array&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[[[ 1.  0.]
-  [ 0.  0.]
-  [ 1.  0.]]
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[[[  6.90469329e-310   2.13249800e-316]
+  [  0.00000000e+000   0.00000000e+000]
+  [  0.00000000e+000   8.60952352e-072]]
 
- [[ 1.  0.]
-  [ 1.  0.]
-  [ 1.  0.]]]
+ [[  4.46535817e-090   1.39938874e-076]
+  [  1.55075695e+184   1.43927482e+160]
+  [  3.99910963e+252   2.32204073e-056]]]
 [[ 0.  0.  0.  0.  0.  0.]
  [ 0.  0.  0.  0.  0.  0.]
  [ 0.  0.  0.  0.  0.  0.]]
@@ -236,13 +245,16 @@ refer to them as arrays in this lesson.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;In [206]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [10]:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#times, / etc&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#this is not matrix multiplication!!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;c&quot;&gt;#this is not matrix multiplication!!&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;array([ 1,  4,  9, 16])
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[ 1  4  9 16]
+[[ 1  4]
+ [ 9 25]]
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -294,23 +306,43 @@ TypeError: can only assign an iterable
 &lt;p&gt;We can make 2d and 3,4,5… matrices using nested lists, and subset them
 appropriately:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [219]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [26]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#nested lists are made to be 2d&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ndim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#multid&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]],[[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]])&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ndim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;array([6])
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(3, 3)
+2
+(2, 3, 3)
+3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;In [30]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#on multi dimensional arrays, we can use axis calls to do things by rows or columns:&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;array([ 6, 15, 24])
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
 &lt;p&gt;We don’t need filter: We can subset with booleans much like R:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [220]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [17]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#no filter, just use booleans&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -319,6 +351,8 @@ appropriately:&lt;/p&gt;
 &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#arbitrary computation!&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#works on 2d&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#or just get the booleans:&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#and by assignment&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;arr2d&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -406,6 +440,9 @@ appropriately:&lt;/p&gt;
 &lt;p&gt;Using the built in linear algebra methods, we can carry out matrix operations
 easily.&lt;/p&gt;
 
+&lt;p&gt;We will endeavour to cover more matrix algebra in a lesson including sympy,
+sciPy and linear optimization.&lt;/p&gt;
+
 &lt;p&gt;Reshape allows us to reshape our matrices:&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;In [61]:&lt;/strong&gt;&lt;/p&gt;
@@ -461,7 +498,7 @@ fortran code. See the &lt;a href=&quot;https://docs.scipy.org/doc/numpy/referenc
 documentation&lt;/a&gt;
 for examples. Some of the functions are in the linalg submodule:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [231]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [18]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;linalg&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LA&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;eig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
@@ -478,6 +515,20 @@ for examples. Some of the functions are in the linalg submodule:&lt;/p&gt;
  [ 0.  0.  1.]]
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;In [20]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#solving:&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#5 * x + y = 91 and x + 20 * y = 80&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;91&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;LA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;solve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;array([ 17.57575758,   3.12121212])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;More on linear algebra later in the course&lt;/p&gt;
 
 &lt;h3 id=&quot;numpy-universal-functions&quot;&gt;NumPy universal functions&lt;/h3&gt;
 
@@ -503,7 +554,7 @@ docs&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;We have two main classes of ufuncs, unary, which operate on once array, and
 binary which operate on two:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [254]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [21]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#binary ufuncs:&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;130&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
@@ -517,6 +568,27 @@ binary which operate on two:&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;array([[ 50,  90, 130],
        [ 80, 255, 430],
        [130, 490, 730]])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;reading-in-data&quot;&gt;Reading in data&lt;/h3&gt;
+
+&lt;p&gt;pandas &lt;code class=&quot;highlighter-rouge&quot;&gt;read_csv&lt;/code&gt; function is much easier, but as a stop gap, and to keep the
+number in NumPy, we can use NumPys built in csv reader. You can see the &lt;a href=&quot;https://docs.scipy.org/doc/numpy/user/basics.io.genfromtxt.html&quot;&gt;offical
+docs here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [25]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;genfromtxt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;http://www.jeremy.kiwi.nz/pythoncourse/assets/data/data.txt&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;skip_header&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;missing_values&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;MISSING&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;MISSING&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;MISSING&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+              &lt;span class=&quot;n&quot;&gt;filling_values&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;999&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;999&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;999&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;array([[  4.83900000e-01,   4.53600000e-01,   3.56100000e-01],
+       [  1.29200000e-01,   6.87500000e-01,  -9.99000000e+02],
+       [  1.78100000e-01,   3.04900000e-01,   8.92800000e-01],
+       [ -9.99000000e+02,   5.80100000e-01,   2.03800000e-01],
+       [  5.99300000e-01,   4.35700000e-01,   7.41000000e-01]])
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -540,19 +612,21 @@ will continue to cover it’s functionality here.&lt;/p&gt;
 &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;time&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;position&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/lesson-04_40_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;![png](&lt;img src=&quot;/pythoncourse/assets/images/lesson---03_45_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;pandas&quot;&gt;pandas&lt;/h2&gt;
 
 &lt;p&gt;pandas, short for Python and data analysis (or panel datasets) was created by
-Wes McKinney, while he was working as a financial analyst. He intially began it
-as a port of R into Python for speed, but quickly diverged into a slightly
-different model.&lt;/p&gt;
+Wes McKinney, while he was working as a financial analyst (amongst other
+projects, he is currently working for Apache to get &lt;a href=&quot;http://wesmckinney.com/blog/pandas-and-apache-arrow/&quot;&gt;pandas to work with the
+Apache Arrow standard&lt;/a&gt;).
+He intially began it as a port of R into Python for speed, but quickly diverged
+into a slightly different model.&lt;/p&gt;
 
 &lt;p&gt;It is primarily made for time series and tabular data, and its main point of use
 are the new classes, DataFrame and Series, modelled on Rs dataframe.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [255]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [32]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Series&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pd&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -638,7 +712,8 @@ dtype: int64
 
 &lt;p&gt;&lt;strong&gt;In [118]:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Ohio&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#subsetting by index&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Ohio&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;35000
 &lt;/code&gt;&lt;/pre&gt;
@@ -703,7 +778,7 @@ with some linking between levels.&lt;/p&gt;
 
 &lt;p&gt;However, the row/column mapping is not as strictly enforced as R.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [262]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [35]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://jeremy.kiwi.nz/pythoncourse/assets/tests/r&amp;amp;d/test1data.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
@@ -917,7 +992,7 @@ with some linking between levels.&lt;/p&gt;
 &lt;/table&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;In [263]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [36]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# get the column names&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;
@@ -933,7 +1008,9 @@ with some linking between levels.&lt;/p&gt;
 &lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#add a new column&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;foo&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;spam&quot;&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#add a new column with specific values&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#using other columns:&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;foo&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;VisitNumber&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;ScanCount&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#add a new column with spdatecific values&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;foo&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Series&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;spam&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;more spam&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;&lt;strong&gt;In [159]:&lt;/strong&gt;&lt;/p&gt;
@@ -942,7 +1019,7 @@ with some linking between levels.&lt;/p&gt;
 &lt;span class=&quot;k&quot;&gt;del&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;foo&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#&#39;http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;&lt;strong&gt;In [166]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [43]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#recall, indexes are immutable?&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#how to reindex?&lt;/span&gt;
@@ -961,11 +1038,13 @@ with some linking between levels.&lt;/p&gt;
       &lt;th&gt;ScanCount&lt;/th&gt;
       &lt;th&gt;DepartmentDescription&lt;/th&gt;
       &lt;th&gt;FinelineNumber&lt;/th&gt;
+      &lt;th&gt;foo&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
       &lt;td&gt;NaN&lt;/td&gt;
       &lt;td&gt;NaN&lt;/td&gt;
       &lt;td&gt;NaN&lt;/td&gt;
@@ -983,6 +1062,7 @@ with some linking between levels.&lt;/p&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;SHOES&lt;/td&gt;
       &lt;td&gt;8931&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;2&lt;/th&gt;
@@ -993,6 +1073,7 @@ with some linking between levels.&lt;/p&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;PERSONAL CARE&lt;/td&gt;
       &lt;td&gt;4504&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;3&lt;/th&gt;
@@ -1003,6 +1084,7 @@ with some linking between levels.&lt;/p&gt;
       &lt;td&gt;2&lt;/td&gt;
       &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
       &lt;td&gt;3565&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;4&lt;/th&gt;
@@ -1013,12 +1095,13 @@ with some linking between levels.&lt;/p&gt;
       &lt;td&gt;2&lt;/td&gt;
       &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
       &lt;td&gt;1017&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;In [174]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [41]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#can add defaults&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reindex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fill_value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -1060,7 +1143,7 @@ with some linking between levels.&lt;/p&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;SHOES&lt;/td&gt;
       &lt;td&gt;8931&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;2&lt;/th&gt;
@@ -1071,7 +1154,7 @@ with some linking between levels.&lt;/p&gt;
       &lt;td&gt;1&lt;/td&gt;
       &lt;td&gt;PERSONAL CARE&lt;/td&gt;
       &lt;td&gt;4504&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;3&lt;/th&gt;
@@ -1082,7 +1165,7 @@ with some linking between levels.&lt;/p&gt;
       &lt;td&gt;2&lt;/td&gt;
       &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
       &lt;td&gt;3565&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;4&lt;/th&gt;
@@ -1093,62 +1176,62 @@ with some linking between levels.&lt;/p&gt;
       &lt;td&gt;2&lt;/td&gt;
       &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
       &lt;td&gt;1017&lt;/td&gt;
-      &lt;td&gt;spam&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;5&lt;/th&gt;
       &lt;td&gt;26&lt;/td&gt;
       &lt;td&gt;8&lt;/td&gt;
       &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2006618783&lt;/td&gt;
+      &lt;td&gt;2006613744&lt;/td&gt;
       &lt;td&gt;2&lt;/td&gt;
       &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
       &lt;td&gt;1017&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;6&lt;/th&gt;
       &lt;td&gt;26&lt;/td&gt;
       &lt;td&gt;8&lt;/td&gt;
       &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2006613743&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2006613744&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
       &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
       &lt;td&gt;1017&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;7&lt;/th&gt;
       &lt;td&gt;26&lt;/td&gt;
       &lt;td&gt;8&lt;/td&gt;
       &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;7004802737&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2006613744&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
       &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;2802&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;1017&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;8&lt;/th&gt;
       &lt;td&gt;26&lt;/td&gt;
       &lt;td&gt;8&lt;/td&gt;
       &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2238495318&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;2006613744&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
       &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;4501&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;1017&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;th&gt;9&lt;/th&gt;
       &lt;td&gt;26&lt;/td&gt;
       &lt;td&gt;8&lt;/td&gt;
       &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2238400200&lt;/td&gt;
-      &lt;td&gt;-1&lt;/td&gt;
+      &lt;td&gt;2006613744&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
       &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;3565&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;1017&lt;/td&gt;
+      &lt;td&gt;10&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1461,9 +1544,10 @@ with some linking between levels.&lt;/p&gt;
 &lt;/table&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;In [264]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [33]:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Series&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;35000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;71000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Ohio&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Texas&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Oregon&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Utah&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# as promised, .add with fill&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Series&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;35000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;71000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Ohio&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Texas&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Oregon&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Utah&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Series&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Ohio&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Texas&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Oregon&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Ontario&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pop&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pop&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
@@ -1508,7 +1592,28 @@ with some linking between levels.&lt;/p&gt;
 &lt;p&gt;That’s it for today.&lt;/p&gt;
 
 &lt;p&gt;Next lesson we will cover in more detail how to read in and clean data, as well
-as the split,apply, combine methods on DataFrames.&lt;/p&gt;
+as merging, and the split, apply, combine methods on DataFrames.&lt;/p&gt;
+
+&lt;h3 id=&quot;exercises&quot;&gt;Exercises&lt;/h3&gt;
+
+&lt;p&gt;1/. Create an array of size 10, with all 0s&lt;/p&gt;
+
+&lt;p&gt;2/. Reshape the above vector to have dims of (5,2)&lt;/p&gt;
+
+&lt;p&gt;3/. Create a 4*4 identity matrix in NumPy (use google or the docs for a
+function)&lt;/p&gt;
+
+&lt;p&gt;4/. Create a 10 by 10 matrix or random values (randn, mean = 3), and find the
+minimum and maximum values. Find the index of these values&lt;/p&gt;
+
+&lt;p&gt;5/. Normalise the above matrix to have a mean of 0&lt;/p&gt;
+
+&lt;p&gt;6/. Create a Series, which has an index of NY, SF, TO, and CH, and the values
+0.2, 0.9, 3.5 and 2.4&lt;/p&gt;
+
+&lt;p&gt;7/. Reindex this series to include VA with NA&lt;/p&gt;
+
+&lt;p&gt;8/. Add the two above Series, correcting for NaN&lt;/p&gt;
 </description>
         <pubDate>Fri, 04 Mar 2016 00:00:00 -0500</pubDate>
         <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/04/lesson03r&d.html</link>
