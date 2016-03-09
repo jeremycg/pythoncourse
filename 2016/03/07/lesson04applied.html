@@ -1608,49 +1608,6 @@ with some linking between levels.</p>
 </table>
 </div>
 
-<p><strong>In [33]:</strong></p>
-
-<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># as promised, .add with fill</span>
-<span class="n">l</span> <span class="o">=</span> <span class="n">Series</span><span class="p">([</span><span class="mi">35000</span><span class="p">,</span><span class="mi">71000</span><span class="p">,</span><span class="mi">16000</span><span class="p">,</span><span class="mi">5000</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'Ohio'</span><span class="p">,</span><span class="s">'Texas'</span><span class="p">,</span><span class="s">'Oregon'</span><span class="p">,</span><span class="s">'Utah'</span><span class="p">])</span>
-<span class="n">k</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'Ohio'</span><span class="p">,</span><span class="s">'Texas'</span><span class="p">,</span><span class="s">'Oregon'</span><span class="p">,</span><span class="s">'Ontario'</span><span class="p">])</span>
-<span class="n">l</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">"pop"</span><span class="p">])</span>
-<span class="n">k</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">"pop"</span><span class="p">])</span>
-<span class="n">l</span><span class="o">+</span><span class="n">k</span>
-<span class="n">l</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code></pre></figure>
-
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>pop</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Ohio</th>
-      <td>70000</td>
-    </tr>
-    <tr>
-      <th>Ontario</th>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Oregon</th>
-      <td>32000</td>
-    </tr>
-    <tr>
-      <th>Texas</th>
-      <td>142000</td>
-    </tr>
-    <tr>
-      <th>Utah</th>
-      <td>5000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
 <h3 id="summary">Summary</h3>
 
 <p>That’s it for today.</p>
