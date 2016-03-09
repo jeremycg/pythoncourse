@@ -14,7 +14,7 @@ language.
 
 Now we will hone in on our goal of data science - using the data science modules
 developed by the data science community. Download todays [notebook
-here](/pythoncourse/assets/applied/Lesson - 04.ipynb).
+here](/pythoncourse/assets/notebooks/applied/Lesson - 04.ipynb).
 
 This lesson and the next lesson are based on the book [Python for data
 analysis](http://shop.oreilly.com/product/0636920023784.do), by Wes McKinney,
