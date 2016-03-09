@@ -1725,57 +1725,6 @@ dat[dat['ScanCount']>1]
 </div>
 
 
-
-**In [33]:**
-
-{% highlight python %}
-# as promised, .add with fill
-l = Series([35000,71000,16000,5000], index=['Ohio','Texas','Oregon','Utah'])
-k = Series(l, index=['Ohio','Texas','Oregon','Ontario'])
-l = DataFrame(l, columns = ["pop"])
-k = DataFrame(k, columns = ["pop"])
-l+k
-l.add(k, fill_value=0)
-{% endhighlight %}
-
-
-
-
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>pop</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Ohio</th>
-      <td>70000</td>
-    </tr>
-    <tr>
-      <th>Ontario</th>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Oregon</th>
-      <td>32000</td>
-    </tr>
-    <tr>
-      <th>Texas</th>
-      <td>142000</td>
-    </tr>
-    <tr>
-      <th>Utah</th>
-      <td>5000</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
 ### Summary
 
 That's it for today.
