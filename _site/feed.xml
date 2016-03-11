@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 11 Mar 2016 11:10:13 -0500</pubDate>
-    <lastBuildDate>Fri, 11 Mar 2016 11:10:13 -0500</lastBuildDate>
+    <pubDate>Fri, 11 Mar 2016 11:12:36 -0500</pubDate>
+    <lastBuildDate>Fri, 11 Mar 2016 11:12:36 -0500</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -30,8 +30,7 @@ docs/version/0.17.1/comparison_with_sas.html&quot;&gt;SAS&lt;/a&gt;, and/or
 docs/version/0.17.1/comparison_with_sql.html&quot;&gt;SQL&lt;/a&gt;, click on the links to lead you to
 the intro to pandas for users of each language.&lt;/p&gt;
 
-&lt;p&gt;Please download todays notebook &lt;a href=&quot;/pythoncourse/assests/r&amp;amp;d/lesson
-04.ipynb&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Please download todays notebook &lt;a href=&quot;/pythoncourse/assests/r&amp;amp;d/lesson 04.ipynb&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;data-import&quot;&gt;Data Import&lt;/h3&gt;
 
