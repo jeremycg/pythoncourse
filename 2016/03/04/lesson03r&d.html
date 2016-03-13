@@ -83,7 +83,7 @@ structures, and looked at how we can use Python as a general purpose programming
 language.</p>
 
 <p>Now we will hone in on our goal of data science - using the data science modules
-developed by the data science community. Download todays <a href="/pythoncourse/assets/notebooks/r&amp;d/Lesson - 03.ipynb">notebook
+developed by the data science community. Download todays <a href="/pythoncourse/assets/r&amp;d/Lesson - 03.ipynb">notebook
 here</a>.</p>
 
 <p>This lesson and the next lesson are based on the book <a href="http://shop.oreilly.com/product/0636920023784.do">Python for data
@@ -1608,15 +1608,36 @@ with some linking between levels.</p>
 </table>
 </div>
 
-<p><strong>In [33]:</strong></p>
+<p><strong>In [3]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># as promised, .add with fill</span>
 <span class="n">l</span> <span class="o">=</span> <span class="n">Series</span><span class="p">([</span><span class="mi">35000</span><span class="p">,</span><span class="mi">71000</span><span class="p">,</span><span class="mi">16000</span><span class="p">,</span><span class="mi">5000</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'Ohio'</span><span class="p">,</span><span class="s">'Texas'</span><span class="p">,</span><span class="s">'Oregon'</span><span class="p">,</span><span class="s">'Utah'</span><span class="p">])</span>
 <span class="n">k</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s">'Ohio'</span><span class="p">,</span><span class="s">'Texas'</span><span class="p">,</span><span class="s">'Oregon'</span><span class="p">,</span><span class="s">'Ontario'</span><span class="p">])</span>
 <span class="n">l</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">"pop"</span><span class="p">])</span>
 <span class="n">k</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">"pop"</span><span class="p">])</span>
-<span class="n">l</span><span class="o">+</span><span class="n">k</span>
+<span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="o">+</span><span class="n">k</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
 <span class="n">l</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>            pop
+Ohio      70000
+Ontario     NaN
+Oregon    32000
+Texas    142000
+Utah        NaN
+          pop
+Ohio    35000
+Texas   71000
+Oregon  16000
+Utah     5000
+           pop
+Ohio     35000
+Texas    71000
+Oregon   16000
+Ontario    NaN
+</code></pre>
+</div>
 
 <div>
 <table border="1" class="dataframe">
