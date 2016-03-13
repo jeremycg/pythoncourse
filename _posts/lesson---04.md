@@ -1,11 +1,10 @@
 ---
 layout: post
-title: "Lesson 04 - NumPy and pandas"
-author: Jeremy
+title: "Lesson - 04"
 tags:
- - Applied Statistics stream
-comments: true
----
+    - python
+    - notebook
+--- 
 ## Lesson 04 - NumPy and pandas
 
 So far we have covered the base Python environment - built in data types and
@@ -30,7 +29,7 @@ NumPy stands for numerical Python. So far the Python data structures have
 worked, but have not been tailored for large scale data analysis.
 
 Think of how Python works under the hood when multiplying every element of a
-list by 2:
+list by 2: 
 
 **In [1]:**
 
@@ -39,7 +38,7 @@ l = [1,2,3,4,5]
 print(l*2)
 #probably not what we want as statisticians!
 print([i *2 for i in l])
-#this works, but what about -
+#this works, but what about - 
 l = [1,2,3,4,'a']
 print([i *2 for i in l])
 {% endhighlight %}
@@ -48,13 +47,13 @@ print([i *2 for i in l])
     [2, 4, 6, 8, 10]
     [2, 4, 6, 8, 'aa']
 
-
+ 
 Python needs to check each data type to find the times method associated with
 it. In small examples like this, the overhead is very low, but when we are
 dealing with millions of rows, it quickly adds up.
 
 To work better with numeric (or other large scale data), numpy introduces the
-array, a data structure which may only contain one type of data:
+array, a data structure which may only contain one type of data: 
 
 **In [9]:**
 
@@ -67,8 +66,8 @@ print(k * 2)
 
     [ 2  4  6  8 10]
 
-
-It is also much faster (by a process called vectorisation):
+ 
+It is also much faster (by a process called vectorisation): 
 
 **In [3]:**
 
@@ -82,11 +81,11 @@ k = np.array(l)
     100 loops, best of 3: 2.1 ms per loop
     10000 loops, best of 3: 57.6 µs per loop
 
-
+ 
 As well as the array data type, numpy contains broadcasting methods, built in
 functions utilising the array structure to work extremely fast (by going through
-C), linear algebra, random numbers and good integration into C and Fortran code
-
+C), linear algebra, random numbers and good integration into C and Fortran code 
+ 
 ### NumPy  basics
 
 The array is a new class, with a lot of its own methods. The exact
@@ -96,7 +95,7 @@ website](http://www.numpy.org/) for source code and official documentation.
 Technically, we use the np.array to create an instance of class ndarray. I'll
 refer to them as arrays in this lesson.
 
-We can access the type of data contained in an array:
+We can access the type of data contained in an array: 
 
 **In [4]:**
 
@@ -109,8 +108,8 @@ print(np.sctypes)
     int64
     {'float': [<class 'numpy.float16'>, <class 'numpy.float32'>, <class 'numpy.float64'>, <class 'numpy.float128'>], 'others': [<class 'bool'>, <class 'object'>, <class 'str'>, <class 'str'>, <class 'numpy.void'>], 'complex': [<class 'numpy.complex64'>, <class 'numpy.complex128'>, <class 'numpy.complex256'>], 'int': [<class 'numpy.int8'>, <class 'numpy.int16'>, <class 'numpy.int32'>, <class 'numpy.int64'>], 'uint': [<class 'numpy.uint8'>, <class 'numpy.uint16'>, <class 'numpy.uint32'>, <class 'numpy.uint64'>]}
 
-
-We can initialise arrays in a number of ways
+ 
+We can initialise arrays in a number of ways 
 
 **In [8]:**
 
@@ -128,7 +127,7 @@ print(np.arange(10))
     [[[  6.90469329e-310   2.13249800e-316]
       [  0.00000000e+000   0.00000000e+000]
       [  0.00000000e+000   8.60952352e-072]]
-
+    
      [[  4.46535817e-090   1.39938874e-076]
       [  1.55075695e+184   1.43927482e+160]
       [  3.99910963e+252   2.32204073e-056]]]
@@ -182,10 +181,10 @@ print(np.array([[1,2],[3,5]]) * np.array([[1,2],[3,5]]))
     [[ 1  4]
      [ 9 25]]
 
-
+ 
 ### Subsetting
 
-We can subset much like lists, with the addition of broadcasting for assignment
+We can subset much like lists, with the addition of broadcasting for assignment 
 
 **In [217]:**
 
@@ -214,8 +213,8 @@ print(l)
 
     TypeError: can only assign an iterable
 
-
-We need to be careful about assigning slices:
+ 
+We need to be careful about assigning slices: 
 
 **In [218]:**
 
@@ -230,9 +229,9 @@ print(l)
 
     [0 1 2 3 4 4 4 4 8 9]
 
-
+ 
 We can make 2d and 3,4,5... matrices using nested lists, and subset them
-appropriately:
+appropriately: 
 
 **In [13]:**
 
@@ -266,7 +265,7 @@ arr * np.array([[[1,2,3],[4,5,6],[7,8,9]]])
     array([[[ 1,  4,  9],
             [16, 25, 36],
             [49, 64, 81]],
-
+    
            [[ 1,  4,  9],
             [16, 25, 36],
             [49, 64, 81]]])
@@ -288,8 +287,8 @@ arr2d.sum(axis = 1)
     array([ 6, 15, 24])
 
 
-
-We don't need filter: We can subset with booleans much like R:
+ 
+We don't need filter: We can subset with booleans much like R: 
 
 **In [17]:**
 
@@ -317,8 +316,8 @@ arr2d
            [0, 0, 0]])
 
 
-
-We can subset to rearrange:
+ 
+We can subset to rearrange: 
 
 **In [53]:**
 
@@ -414,7 +413,7 @@ np.where(l > 0, l, 0)
            [ 0.62944507,  0.        ,  0.        ,  0.        ,  0.        ]])
 
 
-
+ 
 ### Reshape and Matrix methods
 
 Using the built in linear algebra methods, we can carry out matrix operations
@@ -423,7 +422,7 @@ easily.
 We will endeavour to cover more matrix algebra in a lesson including sympy,
 sciPy and linear optimization.
 
-Reshape allows us to reshape our matrices:
+Reshape allows us to reshape our matrices: 
 
 **In [61]:**
 
@@ -509,7 +508,7 @@ np.dot(x, x.T)
              -146026024,   860387672],
            [ 1743473240,  2022506968, -1993426600, ..., -1255026216,
              -975992488,  -696958760],
-           ...,
+           ..., 
            [-1049853224, -1152439720, -1255026216, ...,  1884158552,
              1781572056,  1678985560],
            [  683940440,  -146026024,  -975992488, ...,  1781572056,
@@ -518,11 +517,11 @@ np.dot(x, x.T)
               121639128, -1435707304]])
 
 
-
+ 
 NumPy has the expected array of matrix functions, implemented in standard C or
 fortran code. See the [website
 documentation](https://docs.scipy.org/doc/numpy/reference/routines.linalg.html)
-for examples. Some of the functions are in the linalg submodule:
+for examples. Some of the functions are in the linalg submodule: 
 
 **In [18]:**
 
@@ -559,15 +558,15 @@ LA.solve(a, b)
     array([ 17.57575758,   3.12121212])
 
 
-
-More on linear algebra later in the course
-
+ 
+More on linear algebra later in the course 
+ 
 ### NumPy universal functions
 
 NumPy has a number of 'ufuncs' built in. These are fast, as they are (mostly)
 implemented in C, and are a great choice for carrying out element wise
 operations. For the full list, see the [official
-docs](https://docs.scipy.org/doc/numpy/reference/ufuncs.html)
+docs](https://docs.scipy.org/doc/numpy/reference/ufuncs.html) 
 
 **In [253]:**
 
@@ -587,9 +586,9 @@ np.mean(l, axis = 0)
     array([  80.,  255.,  430.])
 
 
-
+ 
 We have two main classes of ufuncs, unary, which operate on one array, and
-binary which operate on two:
+binary which operate on two: 
 
 **In [19]:**
 
@@ -612,9 +611,9 @@ np.maximum(l,k)
            [130, 490, 730]])
 
 
-
+ 
 We can write our own ufuncs using `frompyfunc`. The main benefit of this is to
-allow broadcasting instead of having to use a loop:
+allow broadcasting instead of having to use a loop: 
 
 **In [27]:**
 
@@ -632,14 +631,14 @@ print(myfun(l))
 
     <ipython-input-27-423e7f25fa0f> in <module>()
           2     return(oct(x))
-          3
+          3 
     ----> 4 print(myfun(l))
-
+    
 
     <ipython-input-27-423e7f25fa0f> in myfun(x)
           1 def myfun(x):
     ----> 2     return(oct(x))
-          3
+          3 
           4 print(myfun(l))
 
 
@@ -661,13 +660,13 @@ myfun2(l)
            ['0o202', '0o656', '0o1332']], dtype=object)
 
 
-
+ 
 ### Reading in data
 
 pandas `read_csv` function is much easier, but as a stop gap, and to keep the
 numbers in NumPy, we can use NumPys built in csv reader. You can see the
 [offical docs
-here](https://docs.scipy.org/doc/numpy/user/basics.io.genfromtxt.html)
+here](https://docs.scipy.org/doc/numpy/user/basics.io.genfromtxt.html) 
 
 **In [25]:**
 
@@ -688,14 +687,14 @@ np.genfromtxt('http://www.jeremy.kiwi.nz/pythoncourse/assets/data/data.txt',
            [  5.99300000e-01,   4.35700000e-01,   7.41000000e-01]])
 
 
-
+ 
 ### NumPy Summary
 
 NumPy is a large library - we haven't touched on its sorting, sets, or random
 number generations capabilities. However, as pandas is based on NumPy arrays, we
 will continue to cover it's functionality here.
 
-Here is a quick overview of the example given in the install instructions:
+Here is a quick overview of the example given in the install instructions: 
 
 **In [104]:**
 
@@ -711,10 +710,10 @@ plt.xlabel('time');
 plt.ylabel('position');
 {% endhighlight %}
 
+ 
+![png]({{ BASE_PATH }}/images/lesson---04_49_0.png) 
 
-![png]({{ BASE_PATH }}/images/lesson---04_49_0.png)
-
-
+ 
 ## pandas
 
 pandas, short for Python and data analysis (or panel datasets) was created by
@@ -725,7 +724,7 @@ initially began it as a port of R into Python for speed, but quickly diverged
 into a slightly different model.
 
 It is primarily made for time series and tabular data, and its main point of use
-are the new classes, DataFrame and Series, modelled on Rs dataframe.
+are the new classes, DataFrame and Series, modelled on Rs dataframe. 
 
 **In [2]:**
 
@@ -733,11 +732,11 @@ are the new classes, DataFrame and Series, modelled on Rs dataframe.
 from pandas import Series, DataFrame
 import pandas as pd
 {% endhighlight %}
-
+ 
 ### Series
 
 Series are effectively NumPy arrays, but with an added index, which is retained
-through operations:
+through operations: 
 
 **In [107]:**
 
@@ -776,21 +775,21 @@ obj.index[1] = 5
           3 obj.index
           4 #indexes are immutable!
     ----> 5 obj.index[1] = 5
-
+    
 
     C:\Anaconda3\lib\site-packages\pandas\core\index.py in __setitem__(self, key, value)
-       1128
+       1128 
        1129     def __setitem__(self, key, value):
     -> 1130         raise TypeError("Index does not support mutable operations")
-       1131
+       1131 
        1132     def __getitem__(self, key):
 
 
     TypeError: Index does not support mutable operations
 
-
+ 
 You can think of a Series, as a fixed length, ordered dict, and we can easily
-convert a dict to a Series:
+convert a dict to a Series: 
 
 **In [111]:**
 
@@ -909,7 +908,7 @@ k + l
     dtype: float64
 
 
-
+ 
 ### Summary
 
 That's it for today.
@@ -935,3 +934,4 @@ minimum and maximum values. Find the index of these values
 0.2, 0.9, 3.5 and 2.4
 
 7\. Reindex this series to include VA with NA
+ 
