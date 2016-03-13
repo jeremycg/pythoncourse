@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 13 Mar 2016 17:21:54 -0400</pubDate>
-    <lastBuildDate>Sun, 13 Mar 2016 17:21:54 -0400</lastBuildDate>
+    <pubDate>Sun, 13 Mar 2016 17:23:49 -0400</pubDate>
+    <lastBuildDate>Sun, 13 Mar 2016 17:23:49 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -22,16 +22,12 @@ book - &lt;a href=&quot;http://shop.oreilly.com/product/0636920023784.do&quot;&g
 Analysis&lt;/a&gt; or the &lt;a href=&quot;http://pandas.pydata.org/pandas-docs/version/0.17.1/&quot;&gt;official
 pandas website&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;If you are familiar with &lt;a href=&quot;http://pandas.pydata.org/pandas-
-docs/version/0.17.1/comparison_with_r.html&quot;&gt;R&lt;/a&gt;,
-&lt;a href=&quot;http://pandas.pydata.org/pandas-
-docs/version/0.17.1/comparison_with_sas.html&quot;&gt;SAS&lt;/a&gt;, and/or
-&lt;a href=&quot;http://pandas.pydata.org/pandas-
-docs/version/0.17.1/comparison_with_sql.html&quot;&gt;SQL&lt;/a&gt;, click on the links to lead you to
+&lt;p&gt;If you are familiar with &lt;a href=&quot;http://pandas.pydata.org/pandas-docs/version/0.17.1/comparison_with_r.html&quot;&gt;R&lt;/a&gt;,
+&lt;a href=&quot;http://pandas.pydata.org/pandas-docs/version/0.17.1/comparison_with_sas.html&quot;&gt;SAS&lt;/a&gt;, and/or
+&lt;a href=&quot;http://pandas.pydata.org/pandas-docs/version/0.17.1/comparison_with_sql.html&quot;&gt;SQL&lt;/a&gt;, click on the links to lead you to
 the intro to pandas for users of each language.&lt;/p&gt;
 
-&lt;p&gt;Please download todays notebook &lt;a href=&quot;/pythoncourse/assests/applied/lesson 05
-applied.ipynb&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Please download todays notebook &lt;a href=&quot;/pythoncourse/assests/applied/lesson 05 applied.ipynb&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;data-import&quot;&gt;Data Import&lt;/h3&gt;
 

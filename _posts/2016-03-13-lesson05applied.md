@@ -17,16 +17,12 @@ book - [Python for Data
 Analysis](http://shop.oreilly.com/product/0636920023784.do) or the [official
 pandas website](http://pandas.pydata.org/pandas-docs/version/0.17.1/).
 
-If you are familiar with [R](http://pandas.pydata.org/pandas-
-docs/version/0.17.1/comparison_with_r.html),
-[SAS](http://pandas.pydata.org/pandas-
-docs/version/0.17.1/comparison_with_sas.html), and/or
-[SQL](http://pandas.pydata.org/pandas-
-docs/version/0.17.1/comparison_with_sql.html), click on the links to lead you to
+If you are familiar with [R](http://pandas.pydata.org/pandas-docs/version/0.17.1/comparison_with_r.html),
+[SAS](http://pandas.pydata.org/pandas-docs/version/0.17.1/comparison_with_sas.html), and/or
+[SQL](http://pandas.pydata.org/pandas-docs/version/0.17.1/comparison_with_sql.html), click on the links to lead you to
 the intro to pandas for users of each language.
 
-Please download todays notebook [here](/pythoncourse/assests/applied/lesson 05
-applied.ipynb).
+Please download todays notebook [here](/pythoncourse/assests/applied/lesson 05 applied.ipynb).
 
 ### Data Import
 
