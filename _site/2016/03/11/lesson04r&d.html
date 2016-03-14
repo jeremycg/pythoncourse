@@ -95,15 +95,16 @@ docs/version/0.17.1/comparison_with_sas.html">SAS</a>, and/or
 docs/version/0.17.1/comparison_with_sql.html">SQL</a>, click on the links to lead you to
 the intro to pandas for users of each language.</p>
 
-<p>Please download todays notebook <a href="/pythoncourse/assets/notebooks/r&amp;d/lesson 04.ipynb">here</a>.</p>
+<p>Please download todays notebook <a href="/pythoncourse/assets/notebooks/r&amp;d/lesson
+04.ipynb">here</a>.</p>
 
 <h3 id="data-import">Data Import</h3>
 
 <p>Importing data is the most important first step to get our data in. Today we
-will cover read_csv, next lesosn we will talk about how to connect to your
-netezza (and other SQL) databases</p>
+will cover read_csv, before the end of the course we will talk about how to
+connect to your netezza (and other SQL) databases</p>
 
-<p><strong>In [45]:</strong></p>
+<p><strong>In [1]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">Series</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
@@ -114,7 +115,7 @@ netezza (and other SQL) databases</p>
 the <a href="http://pandas.pydata.org/pandas-docs/stable/io.html">dataIO page</a> for more
 details.</p>
 
-<p><strong>In [31]:</strong></p>
+<p><strong>In [2]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#using a string as example</span>
 <span class="c">#we could refer to file names if we had the file saved</span>
@@ -133,10 +134,11 @@ date,A,B,C
 </code></pre>
 </div>
 
-<p><strong>In [36]:</strong></p>
+<p><strong>In [3]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#by default, the index is arange(nrows)</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></code></pre></figure>
+<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="c">#recall index objects: http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Index.html</span></code></pre></figure>
 
 <div>
 <table border="1" class="dataframe">
@@ -220,48 +222,22 @@ date,A,B,C
 </table>
 </div>
 
-<p><strong>In [40]:</strong></p>
+<p><strong>In [19]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#we can also use nested indices:</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">index_col</span><span class="o">=</span><span class="p">[</span><span class="s">'date'</span><span class="p">,</span><span class="s">'A'</span><span class="p">])</span></code></pre></figure>
+<span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">index_col</span><span class="o">=</span><span class="p">[</span><span class="s">'date'</span><span class="p">,</span><span class="s">'A'</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">20090101</span><span class="p">])</span></code></pre></figure>
 
-<div>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th></th>
-      <th>B</th>
-      <th>C</th>
-    </tr>
-    <tr>
-      <th>date</th>
-      <th>A</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>20090101</th>
-      <th>a</th>
-      <td>1</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>20090102</th>
-      <th>b</th>
-      <td>3</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>20090103</th>
-      <th>c</th>
-      <td>4</td>
-      <td>5</td>
-    </tr>
-  </tbody>
-</table>
+<div class="highlighter-rouge"><pre class="highlight"><code>            B  C
+date     A
+20090101 a  1  2
+20090102 b  3  4
+20090103 c  4  5
+   B  C
+A
+a  1  2
+</code></pre>
 </div>
 
 <p><strong>In [45]:</strong></p>
@@ -386,7 +362,7 @@ date,A,B,C
 </table>
 </div>
 
-<p><strong>In [3]:</strong></p>
+<p><strong>In [20]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#dates! more to come</span>
 <span class="n">dat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
@@ -395,19 +371,7 @@ date,A,B,C
            <span class="p">)</span>
 <span class="n">dat</span><span class="o">.</span><span class="n">index</span></code></pre></figure>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>---------------------------------------------------------------------------
-
-NameError                                 Traceback (most recent call last)
-
-&lt;ipython-input-3-3b09fe2cb912&gt; in &lt;module&gt;()
-      1 #dates! more to come
-----&gt; 2 dat = pd.read_csv(io.StringIO(data),
-      3            parse_dates = True,
-      4             index_col = [0]
-      5            )
-
-
-NameError: name 'data' is not defined
+<div class="highlighter-rouge"><pre class="highlight"><code>DatetimeIndex(['2009-01-01', '2009-01-02', '2009-01-03'], dtype='datetime64[ns]', name='date', freq=None)
 </code></pre>
 </div>
 
@@ -416,7 +380,7 @@ NameError: name 'data' is not defined
 <p>I mentioned in the previous lecture we can use all our base and NumPy methods on
 pandas DataFrames: Here is a quick review taken from the SQL lesson:</p>
 
-<p><strong>In [5]:</strong></p>
+<p><strong>In [21]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">tips</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'https://raw.github.com/pydata/pandas/master/pandas/tests/data/tips.csv'</span><span class="p">)</span>
 <span class="n">tips</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></figure>
@@ -649,12 +613,12 @@ combine paradigm, and we can of course do it in Python.</p>
 
 <p>Let’s continue on with our analysis of the tips data:</p>
 
-<p><strong>In [14]:</strong></p>
+<p><strong>In [22]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">tipsgroups</span> <span class="o">=</span> <span class="n">tips</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'sex'</span><span class="p">)</span>
 <span class="n">tipsgroups</span></code></pre></figure>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;pandas.core.groupby.DataFrameGroupBy object at 0x0000025689D17E10&gt;
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;pandas.core.groupby.DataFrameGroupBy object at 0x0000015E89FF2C88&gt;
 </code></pre>
 </div>
 
@@ -662,10 +626,11 @@ combine paradigm, and we can of course do it in Python.</p>
 We can access the attribute, groups. This is a dict, with each level as it’s own
 entry and the indices of the original data frame:</p>
 
-<p><strong>In [40]:</strong></p>
+<p><strong>In [23]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="n">tipsgroups</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></code></pre></figure>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="c">#print(tipsgroups.groups)</span></code></pre></figure>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>Female
 Male
@@ -690,7 +655,7 @@ pathological):</p>
 </span></code></pre>
 </div>
 
-<p>We can use tab completion to see all out methods and attributes:</p>
+<p>We can use tab completion to see all our methods and attributes:</p>
 
 <p><strong>In [43]:</strong></p>
 
@@ -843,7 +808,8 @@ Name: tip, dtype: float64
 <p><strong>In [58]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#we can also use a dict, to do different things to different rows:</span>
-<span class="n">tipsgroups</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s">'tip'</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">],</span> <span class="s">'size'</span><span class="p">:</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">)})</span></code></pre></figure>
+<span class="n">tipsgroups</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s">'tip'</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">],</span> <span class="s">'size'</span><span class="p">:</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">)})</span>
+<span class="c">#see also .apply()</span></code></pre></figure>
 
 <div>
 <table border="1" class="dataframe">
@@ -891,7 +857,7 @@ more details!</p>
 <p>We can use a variety of joins in pandas, the most basic using the concat
 function:</p>
 
-<p><strong>In [65]:</strong></p>
+<p><strong>In [24]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df1</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">({</span><span class="s">'A'</span><span class="p">:</span> <span class="p">[</span><span class="s">'A0'</span><span class="p">,</span> <span class="s">'A1'</span><span class="p">,</span> <span class="s">'A2'</span><span class="p">,</span> <span class="s">'A3'</span><span class="p">],</span>
                     <span class="s">'B'</span><span class="p">:</span> <span class="p">[</span><span class="s">'B0'</span><span class="p">,</span> <span class="s">'B1'</span><span class="p">,</span> <span class="s">'B2'</span><span class="p">,</span> <span class="s">'B3'</span><span class="p">],</span>
@@ -902,7 +868,9 @@ function:</p>
                     <span class="s">'B'</span><span class="p">:</span> <span class="p">[</span><span class="s">'B4'</span><span class="p">,</span> <span class="s">'B5'</span><span class="p">,</span> <span class="s">'B6'</span><span class="p">,</span> <span class="s">'B7'</span><span class="p">],</span>
                     <span class="s">'C'</span><span class="p">:</span> <span class="p">[</span><span class="s">'C4'</span><span class="p">,</span> <span class="s">'C5'</span><span class="p">,</span> <span class="s">'C6'</span><span class="p">,</span> <span class="s">'C7'</span><span class="p">],</span>
                     <span class="s">'D'</span><span class="p">:</span> <span class="p">[</span><span class="s">'D4'</span><span class="p">,</span> <span class="s">'D5'</span><span class="p">,</span> <span class="s">'D6'</span><span class="p">,</span> <span class="s">'D7'</span><span class="p">]},</span>
-                     <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span></code></pre></figure>
+                     <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="c">#print(df1)</span>
+<span class="c">#print(df2)</span></code></pre></figure>
 
 <p><strong>In [66]:</strong></p>
 
@@ -1094,10 +1062,11 @@ function:</p>
 </table>
 </div>
 
-<p><strong>In [74]:</strong></p>
+<p><strong>In [29]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#we can ignore the index!</span>
-<span class="n">df1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df2</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></code></pre></figure>
+<span class="n">df2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="c">#df2.append(df1)</span></code></pre></figure>
 
 <div>
 <table border="1" class="dataframe">
@@ -1108,11 +1077,19 @@ function:</p>
       <th>B</th>
       <th>C</th>
       <th>D</th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+      <th>D</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>A0</td>
       <td>B0</td>
       <td>C0</td>
@@ -1120,6 +1097,10 @@ function:</p>
     </tr>
     <tr>
       <th>1</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>A1</td>
       <td>B1</td>
       <td>C1</td>
@@ -1127,6 +1108,10 @@ function:</p>
     </tr>
     <tr>
       <th>2</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>A2</td>
       <td>B2</td>
       <td>C2</td>
@@ -1134,6 +1119,10 @@ function:</p>
     </tr>
     <tr>
       <th>3</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
       <td>A3</td>
       <td>B3</td>
       <td>C3</td>
@@ -1145,6 +1134,10 @@ function:</p>
       <td>B4</td>
       <td>C4</td>
       <td>D4</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>5</th>
@@ -1152,6 +1145,10 @@ function:</p>
       <td>B5</td>
       <td>C5</td>
       <td>D5</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>6</th>
@@ -1159,6 +1156,10 @@ function:</p>
       <td>B6</td>
       <td>C6</td>
       <td>D6</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>7</th>
@@ -1166,6 +1167,10 @@ function:</p>
       <td>B7</td>
       <td>C7</td>
       <td>D7</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
   </tbody>
 </table>
@@ -1175,7 +1180,7 @@ function:</p>
 
 <p>We have the standard joins - inner, outer, left, right, full and union:</p>
 
-<p><strong>In [78]:</strong></p>
+<p><strong>In [30]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df1</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">({</span><span class="s">'key'</span><span class="p">:</span> <span class="p">[</span><span class="s">'A'</span><span class="p">,</span> <span class="s">'B'</span><span class="p">,</span> <span class="s">'C'</span><span class="p">,</span> <span class="s">'D'</span><span class="p">],</span>
                  <span class="s">'value'</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">)})</span>
@@ -1220,42 +1225,50 @@ function:</p>
     <tr>
       <th>0</th>
       <td>A</td>
-      <td>-2.275516</td>
+      <td>-1.259100</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>1</th>
       <td>B</td>
-      <td>0.050553</td>
-      <td>2.301355</td>
+      <td>-2.293441</td>
+      <td>-0.569932</td>
     </tr>
     <tr>
       <th>2</th>
       <td>C</td>
-      <td>0.943035</td>
+      <td>-0.415496</td>
       <td>NaN</td>
     </tr>
     <tr>
       <th>3</th>
       <td>D</td>
-      <td>-0.237517</td>
-      <td>0.449717</td>
+      <td>0.786847</td>
+      <td>1.958187</td>
     </tr>
     <tr>
       <th>4</th>
       <td>D</td>
-      <td>-0.237517</td>
-      <td>-1.692712</td>
+      <td>0.786847</td>
+      <td>-0.275405</td>
     </tr>
     <tr>
       <th>5</th>
       <td>E</td>
       <td>NaN</td>
-      <td>-1.079463</td>
+      <td>0.549911</td>
     </tr>
   </tbody>
 </table>
 </div>
+
+<p>We have not covered a bunch of stuff: <a href="http://pandas.pydata.org/pandas-docs/stable/reshaping.html">Pivot tables and
+reshaping</a>, <a href="http://pandas.pydata.org/pandas-
+docs/version/0.18.0/whatsnew.html#whatsnew-0180-enhancements-moments">window
+functions (which were completely updated
+yesterday)</a> and <a href="http://pandas.pydata.org/pandas-docs/stable/timeseries.html">time
+series</a>. We will
+cover these as we continue throughout the course.</p>
 
 <h3 id="example">Example</h3>
 
