@@ -1922,3 +1922,26 @@ and assess the analysis.
 Here's the link to the [original
 article](http://www.buzzfeed.com/heidiblake/the-tennis-racket) and the [notebook
 on github](https://github.com/BuzzFeedNews/2016-01-tennis-betting-analysis)
+
+
+### Exercises
+
+* Update pandas, using conda. Read the documentation for the new window functions.
+
+* Read through the tennis example, and make sure you understand the basic idea of what is being done
+
+* Rewrite cell 5, so that it does not use the ~ for negation - you might need to google how to do this
+
+* Write a function or statement to find how many of the report_players are in your list of significant outliers (the output of cell 21)
+
+* Read the following csv in, using io.StringIO. There is no header!
+{% highlight python %}
+data = """\
+10/08/2012,12:10:10,name1,0.81,4.02,50;18.5701400N,4;07.7693770E,7.92,10.50,0.0106,4.30,0.0301
+10/08/2012,12:10:11,name2,-999,-999,-999,-999,10.87,1.40,0.0099,9.70,0.0686
+"""
+{% endhighlight %}
+
+* Read in the data as above, but with -999 being a missing value
+
+* (advanced) From the tennis data frame, find the player (by hash) who has the worst winning record. Find the player with the best winning record (remember, we have a row for each betting agent on each match!)
