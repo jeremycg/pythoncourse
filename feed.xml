@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 15 Mar 2016 13:33:12 -0400</pubDate>
-    <lastBuildDate>Tue, 15 Mar 2016 13:33:12 -0400</lastBuildDate>
+    <pubDate>Tue, 15 Mar 2016 13:36:29 -0400</pubDate>
+    <lastBuildDate>Tue, 15 Mar 2016 13:36:29 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -2998,6 +2998,40 @@ and assess the analysis.&lt;/p&gt;
 &lt;p&gt;Here’s the link to the &lt;a href=&quot;http://www.buzzfeed.com/heidiblake/the-tennis-racket&quot;&gt;original
 article&lt;/a&gt; and the &lt;a href=&quot;https://github.com/BuzzFeedNews/2016-01-tennis-betting-analysis&quot;&gt;notebook
 on github&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;exercises&quot;&gt;Exercises&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Update pandas, using conda. Read the documentation for the new window functions.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Read through the tennis example, and make sure you understand the basic idea of what is being done&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Rewrite cell 5, so that it does not use the ~ for negation - you might need to google how to do this&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Write a function or statement to find how many of the report_players are in your list of significant outliers (the output of cell 21)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Read the following csv in, using io.StringIO. There is no header!&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\
+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;10/08/2012,12:10:10,name1,0.81,4.02,50;18.5701400N,4;07.7693770E,7.92,10.50,0.0106,4.30,0.0301
+10/08/2012,12:10:11,name2,-999,-999,-999,-999,10.87,1.40,0.0099,9.70,0.0686
+&quot;&quot;&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Read in the data as above, but with -999 being a missing value&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;(advanced) From the tennis data frame, find the player (by hash) who has the worst winning record. Find the player with the best winning record (remember, we have a row for each betting agent on each match!)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 </description>
         <pubDate>Fri, 11 Mar 2016 00:00:00 -0500</pubDate>
         <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/11/lesson04r&d.html</link>
