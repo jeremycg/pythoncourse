@@ -87,12 +87,16 @@ book - <a href="http://shop.oreilly.com/product/0636920023784.do">Python for Dat
 Analysis</a> or the <a href="http://pandas.pydata.org/pandas-docs/version/0.17.1/">official
 pandas website</a>.</p>
 
-<p>If you are familiar with <a href="http://pandas.pydata.org/pandas-docs/version/0.17.1/comparison_with_r.html">R</a>,
-<a href="http://pandas.pydata.org/pandas-docs/version/0.17.1/comparison_with_sas.html">SAS</a>, and/or
-<a href="http://pandas.pydata.org/pandas-docs/version/0.17.1/comparison_with_sql.html">SQL</a>, click on the links to lead you to
+<p>If you are familiar with <a href="http://pandas.pydata.org/pandas-
+docs/version/0.17.1/comparison_with_r.html">R</a>,
+<a href="http://pandas.pydata.org/pandas-
+docs/version/0.17.1/comparison_with_sas.html">SAS</a>, and/or
+<a href="http://pandas.pydata.org/pandas-
+docs/version/0.17.1/comparison_with_sql.html">SQL</a>, click on the links to lead you to
 the intro to pandas for users of each language.</p>
 
-<p>Please download todays notebook <a href="/pythoncourse/assets/notebooks/applied/lesson 05 applied.ipynb">here</a>.</p>
+<p>Please download todays notebook
+<a href="/pythoncourse/assests/notebooks/applied/lesson 05 applied.ipynb">here</a>.</p>
 
 <h3 id="data-import">Data Import</h3>
 
@@ -633,8 +637,13 @@ with some linking between levels.</p>
 <span class="n">dat</span><span class="o">.</span><span class="n">TripType</span>
 <span class="c">#get one specific column</span>
 <span class="n">dat</span><span class="p">[</span><span class="s">'TripType'</span><span class="p">]</span>
-<span class="c">#use ix (index) to get the 10th row</span>
-<span class="n">dat</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+<span class="c">#if we want rows, we need ix, loc or iloc</span>
+<span class="c">#loc works on labels in the index:</span>
+<span class="n">dat</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="c">#iloc works on integer index:</span>
+<span class="n">dat</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="c">#ix tries to work like loc, but falls back to iloc if not found:</span>
+<span class="n">dat</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="c">#add a new column</span>
 <span class="n">dat</span><span class="p">[</span><span class="s">'foo'</span><span class="p">]</span><span class="o">=</span><span class="s">"spam"</span>
 <span class="c">#using other columns:</span>
@@ -1804,6 +1813,14 @@ function:</p>
 </table>
 </div>
 
+<p>We have not covered a bunch of stuff: <a href="http://pandas.pydata.org/pandas-docs/stable/reshaping.html">Pivot tables and
+reshaping</a>, <a href="http://pandas.pydata.org/pandas-
+docs/version/0.18.0/whatsnew.html#whatsnew-0180-enhancements-moments">window
+functions (which were completely updated on
+Sunday)</a> and <a href="http://pandas.pydata.org/pandas-docs/stable/timeseries.html">time
+series</a>. We will
+cover these as we continue throughout the course.</p>
+
 <h3 id="example">Example</h3>
 
 <p>From here, we will look at a worked example of data analysis using pandas. In
@@ -1819,21 +1836,27 @@ on github</a></p>
 
 <ul>
   <li>
-    <p>Update pandas, using conda. Read the documentation for the new window functions.</p>
+    <p>Update pandas, using conda. Read the documentation for the new window
+functions.</p>
   </li>
   <li>
-    <p>Read through the tennis example, and make sure you understand the basic idea of what is being done</p>
+    <p>Read through the tennis example, and make sure you understand the basic idea
+of what is being done</p>
   </li>
   <li>
-    <p>Rewrite cell 5, so that it does not use the ~ for negation - you might need to google how to do this</p>
+    <p>Rewrite cell 5, so that it does not use the ~ for negation - you might need to
+google how to do this</p>
   </li>
   <li>
-    <p>Write a function or statement to find how many of the report_players are in your list of significant outliers (the output of cell 21)</p>
+    <p>Write a function or statement to find how many of the report_players are in
+your list of significant outliers (the output of cell 21)</p>
   </li>
   <li>
     <p>Read the following csv in, using io.StringIO. There is no header!</p>
   </li>
 </ul>
+
+<p><strong>In [1]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">data</span> <span class="o">=</span> <span class="s">"""</span><span class="se">\
 </span><span class="s">10/08/2012,12:10:10,name1,0.81,4.02,50;18.5701400N,4;07.7693770E,7.92,10.50,0.0106,4.30,0.0301
@@ -1845,7 +1868,9 @@ on github</a></p>
     <p>Read in the data as above, but with -999 being a missing value</p>
   </li>
   <li>
-    <p>(advanced) From the tennis data frame, find the player (by hash) who has the worst winning record. Find the player with the best winning record (remember, we have a row for each betting agent on each match!)</p>
+    <p>(advanced) From the tennis data frame, find the player (by hash) who has the
+worst winning record. Find the player with the best winning record (remember, we
+have a row for each betting agent on each match!)</p>
   </li>
 </ul>
 

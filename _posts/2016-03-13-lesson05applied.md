@@ -17,12 +17,16 @@ book - [Python for Data
 Analysis](http://shop.oreilly.com/product/0636920023784.do) or the [official
 pandas website](http://pandas.pydata.org/pandas-docs/version/0.17.1/).
 
-If you are familiar with [R](http://pandas.pydata.org/pandas-docs/version/0.17.1/comparison_with_r.html),
-[SAS](http://pandas.pydata.org/pandas-docs/version/0.17.1/comparison_with_sas.html), and/or
-[SQL](http://pandas.pydata.org/pandas-docs/version/0.17.1/comparison_with_sql.html), click on the links to lead you to
+If you are familiar with [R](http://pandas.pydata.org/pandas-
+docs/version/0.17.1/comparison_with_r.html),
+[SAS](http://pandas.pydata.org/pandas-
+docs/version/0.17.1/comparison_with_sas.html), and/or
+[SQL](http://pandas.pydata.org/pandas-
+docs/version/0.17.1/comparison_with_sql.html), click on the links to lead you to
 the intro to pandas for users of each language.
 
-Please download todays notebook [here](/pythoncourse/assets/notebooks/applied/lesson 05 applied.ipynb).
+Please download todays notebook
+[here](/pythoncourse/assests/notebooks/applied/lesson 05 applied.ipynb).
 
 ### Data Import
 
@@ -623,8 +627,13 @@ dat[['TripType','VisitNumber']]
 dat.TripType
 #get one specific column
 dat['TripType']
-#use ix (index) to get the 10th row
-dat.ix[10]
+#if we want rows, we need ix, loc or iloc
+#loc works on labels in the index:
+dat.loc[1]
+#iloc works on integer index:
+dat.iloc[1]
+#ix tries to work like loc, but falls back to iloc if not found:
+dat.ix[1]
 #add a new column
 dat['foo']="spam"
 #using other columns:
@@ -1912,6 +1921,14 @@ pd.merge(df1, df2, on='key', how='outer')
 
 
 
+We have not covered a bunch of stuff: [Pivot tables and
+reshaping](http://pandas.pydata.org/pandas-docs/stable/reshaping.html), [window
+functions (which were completely updated on
+Sunday)](http://pandas.pydata.org/pandas-
+docs/version/0.18.0/whatsnew.html#whatsnew-0180-enhancements-moments) and [time
+series](http://pandas.pydata.org/pandas-docs/stable/timeseries.html). We will
+cover these as we continue throughout the course.
+
 ### Example
 
 From here, we will look at a worked example of data analysis using pandas. In
@@ -1923,18 +1940,26 @@ Here's the link to the [original
 article](http://www.buzzfeed.com/heidiblake/the-tennis-racket) and the [notebook
 on github](https://github.com/BuzzFeedNews/2016-01-tennis-betting-analysis)
 
-
 ### Exercises
 
-* Update pandas, using conda. Read the documentation for the new window functions.
+* Update pandas, using conda. Read the documentation for the new window
+functions.
 
-* Read through the tennis example, and make sure you understand the basic idea of what is being done
+* Read through the tennis example, and make sure you understand the basic idea
+of what is being done
 
-* Rewrite cell 5, so that it does not use the ~ for negation - you might need to google how to do this
+* Rewrite cell 5, so that it does not use the ~ for negation - you might need to
+google how to do this
 
-* Write a function or statement to find how many of the report_players are in your list of significant outliers (the output of cell 21)
+* Write a function or statement to find how many of the report_players are in
+your list of significant outliers (the output of cell 21)
 
 * Read the following csv in, using io.StringIO. There is no header!
+
+
+
+**In [1]:**
+
 {% highlight python %}
 data = """\
 10/08/2012,12:10:10,name1,0.81,4.02,50;18.5701400N,4;07.7693770E,7.92,10.50,0.0106,4.30,0.0301
@@ -1944,4 +1969,6 @@ data = """\
 
 * Read in the data as above, but with -999 being a missing value
 
-* (advanced) From the tennis data frame, find the player (by hash) who has the worst winning record. Find the player with the best winning record (remember, we have a row for each betting agent on each match!)
+* (advanced) From the tennis data frame, find the player (by hash) who has the
+worst winning record. Find the player with the best winning record (remember, we
+have a row for each betting agent on each match!)
