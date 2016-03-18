@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Test 1 answers - r&d</title>
+  <meta name="description" content="Test 1 - R&amp;D stream">
+
+  <link rel="stylesheet" href="/pythoncourse/css/main.css">
+  <link rel="canonical" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/18/test1answersrd.html">
+  <link rel="alternate" type="application/rss+xml" title="Python @ Precima" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/pythoncourse/">Python @ Precima</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/Applied%20Statistics%20stream/">Applied Statistics stream</a>
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/R&D%20stream/">R&D stream</a>
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-73837623-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Test 1 answers - r&d</h1>
+    <p class="post-meta"><time datetime="2016-03-18T00:00:00-04:00" itemprop="datePublished">Mar 18, 2016</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Jeremy</span></span></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h2 id="test-1---rd-stream">Test 1 - R&amp;D stream</h2>
+
+<p>The data science department at Walmart often posts problems on the data science
+challenge website, <a href="www.kaggle.com">kaggle</a>. In this test, we will download some
+of their data, and use our current understanding of Python to do some
+exploratory data analysis.</p>
+
+<p>The challenge this data comes from was to revise the method they use to classify
+trip types. The have a number of categories which shopping trips are clustered
+into, and challenged entrants to recapitulate their clustering. The challenge is
+<a href="https://www.kaggle.com/c/walmart-recruiting-trip-type-
+classification/">archived here</a>. The training data set contains the TripType, as well as
+VisitNumber, day of the week, Upc of product purchased, the scancount,
+department, and fineline number (a categorical description of the item). Each
+VisitNumber is a unique basket, with a line for each item scanned. I am
+providing you with the first 50,000 lines of data, from the 650,000 total.</p>
+
+<p>The Desired clustering is the categorical variable TripType.</p>
+
+<p>You can complete this course without any knowledge of Pandas and Numpy - I am
+loading the data in like this, as it is the easiest way (by far). Please leave
+the code blocks in the Data Import section untouched - run them as needed. Feel
+free to download the csv from the website and check it out, but use Python for
+the analysis!</p>
+
+<h3 id="data-import">Data Import</h3>
+
+<p>Here I’m loading the data from the course website, showing the first 5 lines,
+and putting it into a dictionary, where each VisitNumber has its own entry.</p>
+
+<p>The dict is called groups.</p>
+
+<p>Please run the below (cursor in cell, then <code class="highlighter-rouge">ctrl-enter</code>, or click run cell.</p>
+
+<p><strong>In [1]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">Series</span></code></pre></figure>
+
+<p><strong>In [2]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">dat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"http://jeremy.kiwi.nz/pythoncourse/assets/tests/r&amp;d/test1data.csv"</span><span class="p">)</span></code></pre></figure>
+
+<p><strong>In [3]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">dat</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></figure>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TripType</th>
+      <th>VisitNumber</th>
+      <th>Weekday</th>
+      <th>Upc</th>
+      <th>ScanCount</th>
+      <th>DepartmentDescription</th>
+      <th>FinelineNumber</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>999</td>
+      <td>5</td>
+      <td>Friday</td>
+      <td>68113152929</td>
+      <td>-1</td>
+      <td>FINANCIAL SERVICES</td>
+      <td>1000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>30</td>
+      <td>7</td>
+      <td>Friday</td>
+      <td>60538815980</td>
+      <td>1</td>
+      <td>SHOES</td>
+      <td>8931</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>30</td>
+      <td>7</td>
+      <td>Friday</td>
+      <td>7410811099</td>
+      <td>1</td>
+      <td>PERSONAL CARE</td>
+      <td>4504</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>26</td>
+      <td>8</td>
+      <td>Friday</td>
+      <td>2238403510</td>
+      <td>2</td>
+      <td>PAINT AND ACCESSORIES</td>
+      <td>3565</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>26</td>
+      <td>8</td>
+      <td>Friday</td>
+      <td>2006613744</td>
+      <td>2</td>
+      <td>PAINT AND ACCESSORIES</td>
+      <td>1017</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>In [4]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#convert DataFrame to dict</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dat</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">"VisitNumber"</span><span class="p">)))</span>
+<span class="c">#convert dataframe rows to lists in dict</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">val</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></code></pre></figure>
+
+<h3 id="data-checking">Data Checking</h3>
+
+<p>Please run the below cell, you should get:</p>
+
+<p><code class="highlighter-rouge">
+[[999, 5, 'Friday', 68113152929.0, -1, 'FINANCIAL SERVICES', 1000.0]]
+[[30, 7, 'Friday', 60538815980.0, 1, 'SHOES', 8931.0], [30, 7, 'Friday',
+7410811099.0, 1, 'PERSONAL CARE', 4504.0]]
+</code></p>
+
+<p>If not, please redownload the notebook from the website.</p>
+
+<p><strong>In [5]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">groups</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">groups</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[999, 5, 'Friday', 68113152929.0, -1, 'FINANCIAL SERVICES', 1000.0]]
+[[30, 7, 'Friday', 60538815980.0, 1, 'SHOES', 8931.0], [30, 7, 'Friday', 7410811099.0, 1, 'PERSONAL CARE', 4504.0]]
+</code></pre>
+</div>
+
+<h3 id="test">Test</h3>
+
+<p>Please fill the below questions in the cells and run them for output.</p>
+
+<p>If you’d like another cell, use <code class="highlighter-rouge">alt-enter</code> or the insert menu.</p>
+
+<p>If you’d like to enter text to explain, either use # for comments, or add a new
+cell, then use the dropdown box above to convert it to markdown (from code).</p>
+
+<p>Some data is missing or non-numeric, remember to check and remove or fix these
+data points!</p>
+
+<p>Don’t worry about printing the outputs - assign them to a variable so I check
+them</p>
+
+<p>1. Create a new dict, which contains the same keys, but a list of unique
+DepartmentDescription of items for each visit: ie {7:[‘SHOES’, ‘PERSONAL CARE’]}</p>
+
+<p><strong>In [6]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#a nested comprehension - set i:the 5th element for each j for i,j in dict</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="nb">set</span><span class="p">([</span><span class="n">j</span><span class="p">[</span><span class="n">q</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span> <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">j</span><span class="p">))])</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></code></pre></figure>
+
+<p>2. If you used a function to do this, use a comprehension, if you used a
+comprehension, use a function</p>
+
+<p><strong>In [7]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#nested loop</span>
+<span class="c">#use the temp variable to hold temporary values</span>
+<span class="k">def</span> <span class="nf">newdict</span><span class="p">(</span><span class="n">olddict</span><span class="p">):</span>
+    <span class="n">dict2</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="n">olddict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">j</span><span class="p">:</span>
+            <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+        <span class="n">dict2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">dict2</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">newdict</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span></code></pre></figure>
+
+<p><strong>In [8]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#check both methods are the same</span>
+<span class="n">x</span> <span class="o">==</span> <span class="n">y</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>True
+</code></pre>
+</div>
+
+<p><strong>In [9]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#or using our dict of visits (after defining the class):</span>
+<span class="c">#dict2 = {}</span>
+<span class="c">#for i, j in newdict.items():</span>
+<span class="c">#    dict2.update({i:set(j.departments)})</span></code></pre></figure>
+
+<p>3. Create a new dict, with the total number of each category each customer
+bought. It should look like <code class="highlighter-rouge"><span class="p">{</span><span class="err">7:[['SHOES',1],</span><span class="w"> </span><span class="err">['PERSONAL</span><span class="w"> </span><span class="err">CARE',1]],</span><span class="w"> </span><span class="err">....</span><span class="p">}</span></code></p>
+
+<p><strong>In [10]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#same as previous, but don't use set</span>
+<span class="k">def</span> <span class="nf">newdict2</span><span class="p">(</span><span class="n">olddict</span><span class="p">):</span>
+    <span class="n">dict2</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="n">olddict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">j</span><span class="p">:</span>
+            <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+        <span class="n">dict2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">dict2</span><span class="p">)</span>
+
+<span class="c">#temp dict</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">newdict2</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
+
+<span class="n">newdict</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c">#use the .count method to count each item</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="n">y</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+        <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">j</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+    <span class="n">newdict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span></code></pre></figure>
+
+<p>4. Create a new dict, which contains each customer as a key, with a list of day
+shopped, TripType, and summed ScanCount (total items bought).</p>
+
+<p><strong>In [11]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#add all the totalitems,</span>
+<span class="c">#take the first for each of day and trip type</span>
+<span class="n">dictnew</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">totalitems</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">j</span><span class="p">:</span>
+        <span class="n">totalitems</span> <span class="o">+=</span> <span class="n">k</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">dictnew</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">totalitems</span><span class="p">]</span></code></pre></figure>
+
+<p>5. Create a Visit Class, which contains the total data we have about each
+visit, with the minimum amount of repetition.</p>
+
+<p><strong>In [12]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#im making it easy to init</span>
+<span class="c">#there are a wide way of making this class</span>
+<span class="k">class</span> <span class="nc">Visit</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">triptype</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">day</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upcs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">departments</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fineline</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">upcs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">departments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fineline</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span></code></pre></figure>
+
+<p>6. Add methods into the class which will describe total items scanned, most
+common DepartmentDescription and most common FinelineNumber</p>
+
+<p><strong>In [13]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Visit</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">triptype</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">day</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upcs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">departments</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fineline</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">upcs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">departments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fineline</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">totalscans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scans</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">commondepartment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c">#we use max, with a key, which is the function we run on each item inthe first argument</span>
+        <span class="c">#this would be like running:</span>
+        <span class="c">#for i in set(self.departments):</span>
+        <span class="c">#       self.departments.count</span>
+        <span class="c">#then taking the max value</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">departments</span><span class="p">),</span> <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">departments</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">commonfineline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fineline</span><span class="p">),</span> <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fineline</span><span class="o">.</span><span class="n">count</span><span class="p">)</span></code></pre></figure>
+
+<p>7. Turn the current dict into a dict of {VisitNumber : Vist} using the new
+class.</p>
+
+<p><strong>In [14]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#depending on the init method</span>
+<span class="n">newdict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">newdict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="n">j</span><span class="p">)</span></code></pre></figure>
+
+<p>8. Create a method in your class to calculate the similarity of a visit to
+another visit based on DepartmentDescription (you could use total number of
+shared categories, or Cosine Similarity)</p>
+
+<p><strong>In [15]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">Visit</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">triptype</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">day</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upcs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scans</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">departments</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fineline</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">upcs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">departments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fineline</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">totalscans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scans</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">commondepartment</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">departments</span><span class="p">),</span> <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">departments</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">commonfineline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fineline</span><span class="p">),</span> <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fineline</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">similarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+        <span class="c">#this is for speed - if we share no elements, we can give a 0</span>
+        <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">departments</span><span class="p">)</span><span class="o">.</span><span class="n">isdisjoint</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">departments</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">acount</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">bcount</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">departments</span><span class="p">)</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">departments</span><span class="p">):</span>
+            <span class="n">acount</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">departments</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="n">bcount</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">departments</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="c">#we could do the cosine part much faster with numpy!</span>
+        <span class="c">#taken from https://stackoverflow.com/questions/18424228/cosine-similarity-between-2-number-lists</span>
+        <span class="n">sumxx</span><span class="p">,</span> <span class="n">sumxy</span><span class="p">,</span> <span class="n">sumyy</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">acount</span><span class="p">)):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">acount</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="n">y</span> <span class="o">=</span> <span class="n">bcount</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">sumxx</span> <span class="o">+=</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span>
+            <span class="n">sumyy</span> <span class="o">+=</span> <span class="n">y</span><span class="o">*</span><span class="n">y</span>
+            <span class="n">sumxy</span> <span class="o">+=</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span>
+            <span class="c">#I am scaling by the number of categories, may or may not be sensible!</span>
+        <span class="k">return</span> <span class="n">sumxy</span><span class="o">/</span><span class="p">((</span><span class="n">sumxx</span><span class="o">*</span><span class="n">sumyy</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">acount</span><span class="p">)</span></code></pre></figure>
+
+<p>9. Compare every basket to every other basket using your similarity score -
+Which baskets are the two most similar? How did you score this?</p>
+
+<p><strong>In [19]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#need to remake the dict with the new attribute</span>
+<span class="n">newdict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">newdict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Visit</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+
+<span class="c">#create a list to hold the best result</span>
+<span class="n">foundmax</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c">#get a list of values</span>
+<span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">newdict</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">newdict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">&gt;</span> <span class="n">foundmax</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">foundmax</span> <span class="o">=</span> <span class="p">[[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">],</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">j</span><span class="p">])]</span>
+<span class="c">#takes around 10 minutes on my computer, not fast, but not toooo slow...</span></code></pre></figure>
+
+<p><strong>In [23]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">foundmax</span><span class="p">)</span>
+<span class="c">#groups[keys[foundmax[0][0]]]</span>
+<span class="c">#groups[keys[foundmax[0][1]]]</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[5564, 7008], 23.421313765753897]
+</code></pre>
+</div>
+
+<p>10. Optional, open ended question - Can you get an idea how the TripType
+categories are determined? Hint, tally TripTypes against categories, fineline
+categories, day of the week, number of items.</p>
+
+<p>Include your code, and a quick description. They used a machine learning
+algorithm, so don’t worry about complete accuracy, a qualatative explanation is
+perfect.</p>
+
+<p><strong>In [None]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#some great answers here!!</span></code></pre></figure>
+
+
+  </div>
+  
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'jeremycg';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Python @ Precima</h2>
+
+
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
