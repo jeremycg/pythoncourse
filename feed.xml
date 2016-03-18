@@ -5,12 +5,12 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 18 Mar 2016 11:31:58 -0400</pubDate>
-    <lastBuildDate>Fri, 18 Mar 2016 11:31:58 -0400</lastBuildDate>
+    <pubDate>Fri, 18 Mar 2016 11:33:30 -0400</pubDate>
+    <lastBuildDate>Fri, 18 Mar 2016 11:33:30 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
-        <title>Lesson 05 - rd</title>
+        <title>Lesson 05 - Plotting and regression</title>
         <description>&lt;h2 id=&quot;lesson-05---plotting-and-regression&quot;&gt;Lesson 05 - Plotting and regression&lt;/h2&gt;
 
 &lt;p&gt;Welcome to lesson 6. Today we will learn the basics of plotting in python, and
