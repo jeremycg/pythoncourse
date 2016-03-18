@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Lesson 05 - rd</title>
+  <meta name="description" content="Lesson 05 - Plotting and regression">
+
+  <link rel="stylesheet" href="/pythoncourse/css/main.css">
+  <link rel="canonical" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/18/lesson-05-rd.html">
+  <link rel="alternate" type="application/rss+xml" title="Python @ Precima" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/pythoncourse/">Python @ Precima</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/Applied%20Statistics%20stream/">Applied Statistics stream</a>
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/R&D%20stream/">R&D stream</a>
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/python/">python</a>
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/notebook/">notebook</a>
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-73837623-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Lesson 05 - rd</h1>
+    <p class="post-meta"><time datetime="2016-03-18T00:00:00-04:00" itemprop="datePublished">Mar 18, 2016</time></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h2 id="lesson-05---plotting-and-regression">Lesson 05 - Plotting and regression</h2>
+
+<p>Welcome to lesson 6. Today we will learn the basics of plotting in python, and
+how to carry out a linear regression.</p>
+
+<p>Python does not come with built in plotting capability - if you are using it to
+make a website, you probably don;t want the ability to draw a histogram.</p>
+
+<p>Again, the Python community has picked up and run with a number of different
+ways of plotting data, and today we will focus on the most commonly used
+package, matplotlib, and its extension, seaborn.</p>
+
+<p>Almost all plotting packages are based on matplotlib under the hood, so we will
+spend some time there, before moving on to the native pandas plotting methods,
+and seaborn.</p>
+
+<p>For those who know R, there is an effort to port ggplot2 into python - available
+on <a href="https://github.com/yhat/ggplot">yhats github</a> or
+<a href="http://ggplot.yhathq.com/">website</a>. It is semi-abandoned, so we won’t dicuss
+it any more, but it is a low overhead way to get current R plots working in
+Python.</p>
+
+<h3 id="matplotlib">matplotlib</h3>
+
+<p><a href="http://matplotlib.org/">matplotlib</a> started life as a clone of the graphing
+capabilities from matlab into python, by John Hunter.</p>
+
+<p>Let’s run our imports:</p>
+
+<p><strong>In [1]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">Series</span><span class="p">,</span> <span class="n">DataFrame</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span></code></pre></figure>
+
+<p>To work with matplotlib, we generally initiate a figure, add layers to it and
+then save (or display). We will cover how to do this towards the end of the
+lesson, for now we will display in the notebook.</p>
+
+<p>Let’s make and plot an example:</p>
+
+<p><strong>In [2]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">({</span><span class="s">'x'</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="s">'y'</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">)),</span> <span class="s">'z'</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">20</span><span class="p">)})</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'x'</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s">'y'</span><span class="p">])</span></code></pre></figure>
+
+<p>Huh, we did not get a graph, just a matplotlib object. To fix this, we need the
+magic command, %matplotlib inline:</p>
+
+<p><strong>In [3]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">({</span><span class="s">'x'</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="s">'y'</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">)),</span> <span class="s">'z'</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">20</span><span class="p">)})</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'x'</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s">'y'</span><span class="p">])</span>
+<span class="c">#by assigning we have supressed the matplotlib object printing</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_5_0.png" alt="png" /></p>
+
+<p>matplotlib works by making a figure object, and adding to it. Let’s make a 2*2
+subplot and add in some plot types</p>
+
+<p><strong>In [4]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">figure</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">figure</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">figure</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">figure</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">ax4</span> <span class="o">=</span> <span class="n">figure</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_7_0.png" alt="png" /></p>
+
+<p><strong>In [5]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'z'</span><span class="p">])</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'x'</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s">'y'</span><span class="p">],</span> <span class="s">'--'</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'x'</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s">'y'</span><span class="p">])</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'x'</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s">'y'</span><span class="p">])</span>
+<span class="n">figure</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_8_0.png" alt="png" /></p>
+
+<h3 id="anatomy-of-a-plot">Anatomy of a plot</h3>
+
+<p>Matplotlib stores plots as a figure object, which contains subplots (or axes),
+which contain titles, x and y values and the actual plot. We can add on multiple
+plot types on one asix. We can add them on one by one:</p>
+
+<p><strong>In [6]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">'lightblue'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">],</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">26</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">'darkgreen'</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s">'^'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="n">xlim</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">],</span> <span class="n">title</span> <span class="o">=</span> <span class="s">'title!'</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s">'y'</span><span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s">'x'</span><span class="p">);</span>
+<span class="c">#here we would use plt.savefig('figpath.png', dpi=400)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[&lt;matplotlib.text.Text at 0x2d72568e9b0&gt;,
+ (0.5, 4.5),
+ &lt;matplotlib.text.Text at 0x2d7255db668&gt;,
+ &lt;matplotlib.text.Text at 0x2d726676908&gt;]
+</code></pre>
+</div>
+
+<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_10_1.png" alt="png" /></p>
+
+<p>We can use <a href="http://matplotlib.org/mpl_examples/color/named_colors.hires.png">multiple
+colours</a>,
+<a href="http://matplotlib.org/examples/lines_bars_and_markers/marker_reference
+.html">markers</a> and <a href="http://matplotlib.org/examples/lines_bars_and_markers/li
+ne_styles_reference.html">line types</a>.</p>
+
+<p>We can also use boxplots:</p>
+
+<p><strong>In [7]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">plt</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'z'</span><span class="p">]);</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_12_0.png" alt="png" /></p>
+
+<p>but it doesn’t look too nice….</p>
+
+<h3 id="seaborn">Seaborn</h3>
+
+<p><a href="https://stanford.edu/~mwaskom/software/seaborn/index.html">Seaborn</a> is an
+extension to matplotlib, which adds a more modern looking theme, better colour
+palettes as well as built in plots for several common statistical methods</p>
+
+<p>Let’s redo our boxplot</p>
+
+<p><strong>In [8]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'z'</span><span class="p">])</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'z'</span><span class="p">],</span> <span class="n">orient</span> <span class="o">=</span> <span class="s">'v'</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_14_0.png" alt="png" /></p>
+
+<p>We can see a couple of things - the seaborn plot looks nicer, and the boxplot
+has a grid and different axes!</p>
+
+<p>Importing seaborn by default changes the parameters in matplotlib, so beware.</p>
+
+<p>Let’s load some new data and try out a violin plot:</p>
+
+<p><strong>In [9]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">tips</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s">"tips"</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">tips</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s">'sex'</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s">'tip'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">tips</span><span class="p">);</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>   total_bill   tip     sex smoker  day    time  size
+0       16.99  1.01  Female     No  Sun  Dinner     2
+1       10.34  1.66    Male     No  Sun  Dinner     3
+2       21.01  3.50    Male     No  Sun  Dinner     3
+3       23.68  3.31    Male     No  Sun  Dinner     2
+4       24.59  3.61  Female     No  Sun  Dinner     4
+</code></pre>
+</div>
+
+<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_16_1.png" alt="png" /></p>
+
+<p>For more info on seaborn and its plots and arguments, see the <a href="http
+s://stanford.edu/~mwaskom/software/seaborn/generated/seaborn.violinplot.html?hig
+hlight=violinplot#seaborn.violinplot">online help</a>.</p>
+
+<p>Plotting is an example where it is best to learn as you go - use google,
+stackoverflow and the docs to figure out what you want to do!</p>
+
+<p>E.g. How do I move the above axis label up to the origin?</p>
+
+<h3 id="linear-regression">Linear Regression</h3>
+
+<p>Seaborn has a nice set of built in plots to carry out linear regression. Let’s
+use the tips data to continue on:</p>
+
+<p><strong>In [10]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="s">"total_bill"</span><span class="p">,</span> <span class="s">"tip"</span><span class="p">,</span> <span class="n">tips</span><span class="p">);</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_19_0.png" alt="png" /></p>
+
+<p><strong>In [11]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">residplot</span><span class="p">(</span><span class="s">"total_bill"</span><span class="p">,</span> <span class="s">"tip"</span><span class="p">,</span> <span class="n">tips</span><span class="p">);</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_20_0.png" alt="png" /></p>
+
+<p><strong>In [12]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="s">"total_bill"</span><span class="p">,</span> <span class="s">"tip"</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="s">'sex'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">tips</span><span class="p">);</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_21_0.png" alt="png" /></p>
+
+<p><strong>In [13]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="s">"total_bill"</span><span class="p">,</span> <span class="s">"tip"</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="s">'sex'</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="s">'smoker'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">tips</span><span class="p">);</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_22_0.png" alt="png" /></p>
+
+<p><strong>In [14]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="s">"total_bill"</span><span class="p">,</span> <span class="s">"tip"</span><span class="p">,</span> <span class="n">tips</span><span class="p">,</span> <span class="n">lowess</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s">"color"</span><span class="p">:</span> <span class="s">'black'</span><span class="p">});</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_23_0.png" alt="png" /></p>
+
+<p>Great! but how do we get the parameters? Turns out, we can’t from seaborn…….</p>
+
+<p><strong>In [None]:</strong></p>
+
+
+  </div>
+  
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Python @ Precima</h2>
+
+
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
