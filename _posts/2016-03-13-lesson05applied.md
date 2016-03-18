@@ -26,7 +26,7 @@ docs/version/0.17.1/comparison_with_sql.html), click on the links to lead you to
 the intro to pandas for users of each language.
 
 Please download todays notebook
-[here](/pythoncourse/assests/notebooks/applied/lesson 05 applied.ipynb).
+[here](/pythoncourse/assets/notebooks/applied/lesson 05 applied.ipynb).
 
 ### Data Import
 
