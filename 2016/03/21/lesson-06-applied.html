@@ -6,11 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Lesson 05 - Plotting and regression</title>
-  <meta name="description" content="Lesson 05 - Plotting and regression">
+  <title>Lesson 06 - Plotting and regression</title>
+  <meta name="description" content="Lesson 06 - Plotting and regression">
 
   <link rel="stylesheet" href="/pythoncourse/css/main.css">
-  <link rel="canonical" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/18/lesson-05-rd.html">
+  <link rel="canonical" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/21/lesson-06-applied.html">
   <link rel="alternate" type="application/rss+xml" title="Python @ Precima" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml">
 </head>
 
@@ -71,14 +71,14 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Lesson 05 - Plotting and regression</h1>
-    <p class="post-meta"><time datetime="2016-03-18T00:00:00-04:00" itemprop="datePublished">Mar 18, 2016</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Jeremy</span></span></p>
+    <h1 class="post-title" itemprop="name headline">Lesson 06 - Plotting and regression</h1>
+    <p class="post-meta"><time datetime="2016-03-21T00:00:00-04:00" itemprop="datePublished">Mar 21, 2016</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Jeremy</span></span></p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <h2 id="lesson-05---plotting-and-regression">Lesson 05 - Plotting and regression</h2>
+    <h2 id="lesson-06---plotting-and-regression">Lesson 06 - Plotting and regression</h2>
 
-<p>Welcome to lesson 6. Today we will learn the basics of plotting in python, and
+<p>Welcome to lesson 7. Today we will learn the basics of plotting in python, and
 how to carry out a linear regression.</p>
 
 <p>Python does not come with built in plotting capability - if you are using it to
@@ -98,7 +98,7 @@ on <a href="https://github.com/yhat/ggplot">yhats github</a> or
 it any more, but it is a low overhead way to get current R plots working in
 Python.</p>
 
-<p><a href="/pythoncourse/assets/notebooks/r&amp;d/lesson 05 -rd.ipynb">Download todays notebook here</a></p>
+<p><a href="/pythoncourse/assets/notebooks/applied/lesson 06 - applied.ipynb">Download todays notebook here</a></p>
 
 <h3 id="matplotlib">matplotlib</h3>
 
@@ -141,7 +141,7 @@ magic command, %matplotlib inline:</p>
 <span class="n">z</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'x'</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s">'y'</span><span class="p">])</span>
 <span class="c">#by assigning we have supressed the matplotlib object printing</span></code></pre></figure>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_5_0.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_5_0.png" alt="png" /></p>
 
 <p>matplotlib works by making a figure object, and adding to it. Let’s make a 2*2
 subplot and add in some plot types</p>
@@ -154,7 +154,7 @@ subplot and add in some plot types</p>
 <span class="n">ax3</span> <span class="o">=</span> <span class="n">figure</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="n">ax4</span> <span class="o">=</span> <span class="n">figure</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span></code></pre></figure>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_7_0.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_7_0.png" alt="png" /></p>
 
 <p><strong>In [5]:</strong></p>
 
@@ -164,7 +164,7 @@ subplot and add in some plot types</p>
 <span class="n">ax4</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'x'</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s">'y'</span><span class="p">])</span>
 <span class="n">figure</span></code></pre></figure>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_8_0.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_8_0.png" alt="png" /></p>
 
 <h3 id="anatomy-of-a-plot">Anatomy of a plot</h3>
 
@@ -188,7 +188,7 @@ plot types on one axis. We can add them on one by one:</p>
 </code></pre>
 </div>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_10_1.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_10_1.png" alt="png" /></p>
 
 <p>We can use <a href="http://matplotlib.org/mpl_examples/color/named_colors.hires.png">multiple
 colours</a>,
@@ -208,7 +208,7 @@ ne_styles_reference.html">line types</a>.</p>
 </code></pre>
 </div>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_12_1.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_12_1.png" alt="png" /></p>
 
 <p>This works for wide data, how about long data?</p>
 
@@ -359,7 +359,7 @@ ne_styles_reference.html">line types</a>.</p>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="s">'z'</span><span class="p">][</span><span class="n">dat</span><span class="p">[</span><span class="s">'y'</span><span class="p">]</span><span class="o">==</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="s">'y'</span><span class="p">])[</span><span class="n">i</span><span class="p">]],</span>
              <span class="n">dat</span><span class="p">[</span><span class="s">'x'</span><span class="p">][</span><span class="n">dat</span><span class="p">[</span><span class="s">'y'</span><span class="p">]</span><span class="o">==</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="s">'y'</span><span class="p">])[</span><span class="n">i</span><span class="p">]],</span> <span class="n">color</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">])</span></code></pre></figure>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_15_0.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_15_0.png" alt="png" /></p>
 
 <p>Luckily, we have pandas and groupby:</p>
 
@@ -374,7 +374,7 @@ dtype: object
 </code></pre>
 </div>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_17_1.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_17_1.png" alt="png" /></p>
 
 <p>or we could pivot using pivot tables, so that each level gets its own column:</p>
 
@@ -387,7 +387,7 @@ dtype: object
 </code></pre>
 </div>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_19_1.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_19_1.png" alt="png" /></p>
 
 <p>We can also use boxplots:</p>
 
@@ -396,7 +396,7 @@ dtype: object
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">({</span><span class="s">'x'</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">20</span><span class="p">)})</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'x'</span><span class="p">]);</span></code></pre></figure>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_21_0.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_21_0.png" alt="png" /></p>
 
 <p>but it doesn’t look too nice….</p>
 
@@ -417,7 +417,7 @@ palettes as well as built in plots for several common statistical methods</p>
 <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">ax2</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'x'</span><span class="p">],</span> <span class="n">orient</span> <span class="o">=</span> <span class="s">'v'</span><span class="p">)</span></code></pre></figure>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_23_0.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_23_0.png" alt="png" /></p>
 
 <p>We can see a couple of things - the seaborn plot looks nicer, and the boxplot
 has a grid and different axes!</p>
@@ -443,7 +443,7 @@ has a grid and different axes!</p>
 </code></pre>
 </div>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_25_1.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_25_1.png" alt="png" /></p>
 
 <p>For more info on seaborn and its plots and arguments, see the <a href="http
 s://stanford.edu/~mwaskom/software/seaborn/generated/seaborn.violinplot.html?hig
@@ -463,31 +463,31 @@ use the tips data to continue on:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="s">"total_bill"</span><span class="p">,</span> <span class="s">"tip"</span><span class="p">,</span> <span class="n">tips</span><span class="p">);</span></code></pre></figure>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_28_0.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_28_0.png" alt="png" /></p>
 
 <p><strong>In [16]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">residplot</span><span class="p">(</span><span class="s">"total_bill"</span><span class="p">,</span> <span class="s">"tip"</span><span class="p">,</span> <span class="n">tips</span><span class="p">);</span></code></pre></figure>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_29_0.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_29_0.png" alt="png" /></p>
 
 <p><strong>In [17]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="s">"total_bill"</span><span class="p">,</span> <span class="s">"tip"</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="s">'sex'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">tips</span><span class="p">);</span></code></pre></figure>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_30_0.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_30_0.png" alt="png" /></p>
 
 <p><strong>In [18]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="s">"total_bill"</span><span class="p">,</span> <span class="s">"tip"</span><span class="p">,</span> <span class="n">hue</span> <span class="o">=</span> <span class="s">'sex'</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="s">'smoker'</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">tips</span><span class="p">);</span></code></pre></figure>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_31_0.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_31_0.png" alt="png" /></p>
 
 <p><strong>In [19]:</strong></p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="s">"total_bill"</span><span class="p">,</span> <span class="s">"tip"</span><span class="p">,</span> <span class="n">tips</span><span class="p">,</span> <span class="n">lowess</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s">"color"</span><span class="p">:</span> <span class="s">'black'</span><span class="p">});</span></code></pre></figure>
 
-<p><img src="/pythoncourse/assets/graphing/lesson-05---rd_32_0.png" alt="png" /></p>
+<p><img src="/pythoncourse/assets/graphing/lesson-06---applied_32_0.png" alt="png" /></p>
 
 <p>Great! but how do we get the parameters? Turns out, we can’t from seaborn…….</p>
 
