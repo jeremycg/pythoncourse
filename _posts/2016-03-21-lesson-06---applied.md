@@ -1,14 +1,14 @@
 ---
 layout: post
-title: "Lesson 05 - Plotting and regression"
+title: "Lesson 06 - Plotting and regression"
 author: Jeremy
 tags:
- - R&D stream
+ - Applied Statistics stream
 comments: true
 ---
-## Lesson 05 - Plotting and regression
+## Lesson 06 - Plotting and regression
 
-Welcome to lesson 6. Today we will learn the basics of plotting in python, and
+Welcome to lesson 7. Today we will learn the basics of plotting in python, and
 how to carry out a linear regression.
 
 Python does not come with built in plotting capability - if you are using it to
@@ -28,7 +28,7 @@ on [yhats github](https://github.com/yhat/ggplot) or
 it any more, but it is a low overhead way to get current R plots working in
 Python.
 
-[Download todays notebook here](/pythoncourse/assets/notebooks/r&d/lesson 05 -rd.ipynb)
+[Download todays notebook here](/pythoncourse/assets/notebooks/applied/lesson 06 - applied.ipynb)
 
 ### matplotlib
 
@@ -77,7 +77,7 @@ z = plt.plot(x['x'], x['y'])
 {% endhighlight %}
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_5_0.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_5_0.png)
 
 
 matplotlib works by making a figure object, and adding to it. Let's make a 2\*2
@@ -94,7 +94,7 @@ ax4 = figure.add_subplot(2, 2, 4)
 {% endhighlight %}
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_7_0.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_7_0.png)
 
 
 **In [5]:**
@@ -110,7 +110,7 @@ figure
 
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_8_0.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_8_0.png)
 
 
 
@@ -142,7 +142,7 @@ ax.set(xlim = [0.5, 4.5], title = 'title!', ylabel = 'y', xlabel = 'x');
 
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_10_1.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_10_1.png)
 
 
 We can use [multiple
@@ -169,7 +169,7 @@ plt.plot(x['y'], x['z'], 'r-', x['x'], x['x'], 'go', x['z'], x['z'], 'b^')
 
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_12_1.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_12_1.png)
 
 
 This works for wide data, how about long data?
@@ -331,7 +331,7 @@ for i in range(len(np.unique(dat['y']))):
 {% endhighlight %}
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_15_0.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_15_0.png)
 
 
 Luckily, we have pandas and groupby:
@@ -353,7 +353,7 @@ fig, ax = plt.subplots(1,1); dat.groupby("y").plot(x="z", y="x", ax=ax)
 
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_17_1.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_17_1.png)
 
 
 or we could pivot using pivot tables, so that each level gets its own column:
@@ -373,7 +373,7 @@ pivoted.plot()
 
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_19_1.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_19_1.png)
 
 
 We can also use boxplots:
@@ -386,7 +386,7 @@ plt.boxplot(x['x']);
 {% endhighlight %}
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_21_0.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_21_0.png)
 
 
 but it doesn't look too nice....
@@ -412,7 +412,7 @@ ax2 = sns.boxplot(x['x'], orient = 'v')
 {% endhighlight %}
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_23_0.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_23_0.png)
 
 
 We can see a couple of things - the seaborn plot looks nicer, and the boxplot
@@ -441,7 +441,7 @@ sns.violinplot(x = 'sex', y = 'tip', data = tips);
 
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_25_1.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_25_1.png)
 
 
 For more info on seaborn and its plots and arguments, see the [online help](http
@@ -465,7 +465,7 @@ sns.regplot("total_bill", "tip", tips);
 {% endhighlight %}
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_28_0.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_28_0.png)
 
 
 **In [16]:**
@@ -475,7 +475,7 @@ sns.residplot("total_bill", "tip", tips);
 {% endhighlight %}
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_29_0.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_29_0.png)
 
 
 **In [17]:**
@@ -485,7 +485,7 @@ sns.lmplot("total_bill", "tip", hue = 'sex', data = tips);
 {% endhighlight %}
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_30_0.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_30_0.png)
 
 
 **In [18]:**
@@ -495,7 +495,7 @@ sns.lmplot("total_bill", "tip", hue = 'sex', col = 'smoker', data = tips);
 {% endhighlight %}
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_31_0.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_31_0.png)
 
 
 **In [19]:**
@@ -505,7 +505,7 @@ sns.lmplot("total_bill", "tip", tips, lowess=True, line_kws={"color": 'black'});
 {% endhighlight %}
 
 
-![png](/pythoncourse/assets/graphing/lesson-05---rd_32_0.png)
+![png](/pythoncourse/assets/graphing/lesson-06---applied_32_0.png)
 
 
 Great! but how do we get the parameters? Turns out, we can't from seaborn.......
