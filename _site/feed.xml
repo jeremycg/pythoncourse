@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 21 Mar 2016 09:04:41 -0400</pubDate>
-    <lastBuildDate>Mon, 21 Mar 2016 09:04:41 -0400</lastBuildDate>
+    <pubDate>Mon, 21 Mar 2016 09:06:27 -0400</pubDate>
+    <lastBuildDate>Mon, 21 Mar 2016 09:06:27 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -33,7 +33,7 @@ on &lt;a href=&quot;https://github.com/yhat/ggplot&quot;&gt;yhats github&lt;/a&g
 it any more, but it is a low overhead way to get current R plots working in
 Python.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;/pythoncourse/assets/notebooks/applied/lesson 06 - applied.ipynb&quot;&gt;Download todays notebook here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/pythoncourse/assets/notebooks/applied/Lesson 06 - applied.ipynb&quot;&gt;Download todays notebook here&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;matplotlib&quot;&gt;matplotlib&lt;/h3&gt;
 
@@ -1510,7 +1510,7 @@ on &lt;a href=&quot;https://github.com/yhat/ggplot&quot;&gt;yhats github&lt;/a&g
 it any more, but it is a low overhead way to get current R plots working in
 Python.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;/pythoncourse/assets/notebooks/r&amp;amp;d/lesson 05 -rd.ipynb&quot;&gt;Download todays notebook here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/pythoncourse/assets/notebooks/r&amp;amp;d/Lesson 05 -rd.ipynb&quot;&gt;Download todays notebook here&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;matplotlib&quot;&gt;matplotlib&lt;/h3&gt;
 

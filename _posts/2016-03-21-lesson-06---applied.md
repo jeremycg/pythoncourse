@@ -28,7 +28,7 @@ on [yhats github](https://github.com/yhat/ggplot) or
 it any more, but it is a low overhead way to get current R plots working in
 Python.
 
-[Download todays notebook here](/pythoncourse/assets/notebooks/applied/lesson 06 - applied.ipynb)
+[Download todays notebook here](/pythoncourse/assets/notebooks/applied/Lesson 06 - applied.ipynb)
 
 ### matplotlib
 
