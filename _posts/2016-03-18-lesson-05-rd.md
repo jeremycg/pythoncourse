@@ -810,3 +810,38 @@ a number of methods of carrying out a linear regression.
 
 Next week we will cover generalized linear models, linear optimization and
 clustering.
+
+### Exercises
+
+* for the Following data:
+{% highlight python %}
+dat = DataFrame({'x':np.random.randn(20),'y':[1,2]*10, 'z':[val for val in range(10) for _ in (0, 1)]})
+{% endhighlight %}
+modify the below plot to have a sensible legend (you will need to use the docs and google)
+{% highlight python %}
+fig, ax = plt.subplots(1,1); dat.groupby("y").plot(x="z", y="x", ax=ax)
+{% endhighlight %}
+
+* For the violin plot:
+{% highlight python %}
+
+tips = sns.load_dataset("tips")
+sns.violinplot(x = 'sex', y = 'tip', data = tips);
+{% endhighlight %}
+
+Modify it to have the x axis at y = 0
+
+* Using the mtcars dataset:
+{% highlight python %}
+
+mpg = pd.read_csv('https://vincentarelbundock.github.io/Rdatasets/csv/ggplot2/mpg.csv')
+{% endhighlight %}
+
+Carry out a linear regression between cyl (cylinders) and hwy (highway mpg). What are the relevant stats?
+
+* Using sns.factorplot, plot the anova we carried out in class:
+{% highlight python %}
+
+moore = sm.datasets.get_rdataset("Moore", "car", cache=True).data
+moore = moore.rename(columns={"partner.status" : "partner_status"})
+{% endhighlight %}
