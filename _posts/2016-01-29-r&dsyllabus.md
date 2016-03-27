@@ -45,15 +45,22 @@ progresses.
 *	List comprehensions
 *	“Pythonic” programming
 
-### Lesson 2: Functions and Classes
+### Lesson 2: Functions
 
 *	Writing functions
 *	Function scope and side effects
 *	Lambda functions
-*	Classes: Object orientated programming in Python
-*	Generating classes
 
-### Lesson 3: NumPy and Pandas 1
+
+### Lesson 3: Classes and Modules
+
+*	Classes: Object orientated programming in Python
+*	Functions vs methods
+*	Generating classes
+* Installing Modules
+* Creating modules
+
+### Lesson 4: NumPy and Pandas 1
 
 *	Modules in Python
 *	Vectorization in NumPy
@@ -61,40 +68,29 @@ progresses.
 *	Reading, displaying and exporting csv files
 *	Subsetting, functions and methods on dataframes
 
-### Lesson 4: NumPy and Pandas 2
+### Lesson 5: NumPy and Pandas 2
 *	Reshaping, pivoting and aggregating using Pandas
 *	Advanced data munging
 *	Time series analysis
 
-### Lesson 5: Python in Practice
+### Lesson 6: Plotting and Regression
 
-* Working on remote servers
-*	Working with SQL and other data sources
-*	Jupyter notebooks
-*	Script organization and modules
-* git and pydoit
+*	Matplotlib/Seaborn, Pandas plotting, ggplot for Python
+*	Saving, embedding and using plots
+* Statsmodels module
+* Linear Regression and ANOVA
 
-### Lesson 6: Exploratory analysis in Python
+### Lesson 7: Advanced Stats
 
-*	Linear and non-linear models
-* Model fitting and comparison
-* Network analysis
-*	Plotting with Matplotlib and Seaborn
+* Logistic regression and GLMs
+* Linear Optimization
+* Clustering
 
-### Lesson 7: Machine Learning and scikit-learn
+### Lesson 8: Machine Learning and scikit-learn
 
+* Introduction to sci-kit-learn
 *	Data formats and methods
-*	Unsupervised clustering
-* Model validation
-
-### Lesson 8: scikit-learn 2
-
-* Feature selection
-* Dimension reduction
-* Supervised clustering and random forests
-* Time series analysis
-* Ensemble methods
-
+*	Unsupervised clustering example – kmeans
 
 ### Lesson 9: Optimization
 
@@ -102,8 +98,9 @@ progresses.
 * Parallel processing
 * Working out of memory
 
-### Lesson 10: Text wrangling / Advanced Python
+### Lesson 10: Work Flow
 
-* Regular expressions
-* Natural language processing
-* Advanced Python coding
+* Working on remote servers
+*	Working with SQL
+*	Script organization and modules
+*	Jupyter Notebooks

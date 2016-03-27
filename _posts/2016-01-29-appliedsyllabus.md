@@ -51,7 +51,7 @@ progresses.
 *	“Pythonic” programming
 *	Built in functions and methods
 
-### Lesson 3: Functions and Classes
+### Lesson 3: Functions
 
 *	Writing functions
 *	Function scope and side effects
@@ -61,7 +61,15 @@ progresses.
 *	Functions vs methods
 *	Generating classes
 
-### Lesson 4: NumPy and Pandas 1
+### Lesson 4: Classes and Modules
+
+*	Classes: Object orientated programming in Python
+*	Functions vs methods
+*	Generating classes
+* Installing Modules
+* Creating modules
+
+### Lesson 5: NumPy and Pandas 1
 
 *	Modules in Python
 *	Vectorization in NumPy
@@ -69,38 +77,34 @@ progresses.
 *	Reading, displaying and exporting csv files
 *	Subsetting, functions and methods on dataframes
 
-### Lesson 5: NumPy and Pandas 2
+### Lesson 6: NumPy and Pandas 2
 
 *	Reshaping, pivoting and aggregating using Pandas
 *	Advanced data munging
 * Tidy and untidy data
 
-### Lesson 6: Work flow
+### Lesson 7: Plotting and Regression
+
+*	Matplotlib/Seaborn, Pandas plotting, ggplot for Python
+*	Saving, embedding and using plots
+* Statsmodels module
+* Linear Regression and ANOVA
+
+### Lesson 8: Advanced Stats
+
+* Logistic regression and GLMs
+* Linear Optimization
+* Clustering
+
+### Lesson 9: Machine Learning and scikit-learn
+
+* Introduction to sci-kit-learn
+*	Data formats and methods
+*	Unsupervised clustering example – kmeans
+
+### Lesson 10: Work Flow
 
 * Working on remote servers
 *	Working with SQL
 *	Script organization and modules
 *	Jupyter Notebooks
-
-
-### Lesson 7: Statistics in Python
-
-*	Linear and non-linear models, hypothesis tests, ANOVA, Clustering
-*	Methods available in SciPy, NumPy and scikit packages
-
-### Lesson 8: Graphing and data Visualization
-
-*	Matplotlib/Seaborn, Pandas plotting, ggplot for Python
-*	Saving, embedding and using plots
-
-### Lesson 9: Reproducible Research in Python
-
-*	git and MarkDown
-* Make and Pydoit
-*	Profiling, debugging and unit testing
-
-### Lesson 10: Machine Learning and scikit-learn
-
-* Introduction to sci-kit-learn
-*	Data formats and methods
-*	Unsupervised clustering example – kmeans
