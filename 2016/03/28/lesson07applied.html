@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Lesson 07 - GLMs, Linear Optimization and Clustering</title>
+  <meta name="description" content="Lesson 07 - GLMs, Linear Optimization and Clustering">
+
+  <link rel="stylesheet" href="/pythoncourse/css/main.css">
+  <link rel="canonical" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/28/lesson07applied.html">
+  <link rel="alternate" type="application/rss+xml" title="Python @ Precima" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/pythoncourse/">Python @ Precima</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/Applied%20Statistics%20stream/">Applied Statistics stream</a>
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/R&D%20stream/">R&D stream</a>
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-73837623-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Lesson 07 - GLMs, Linear Optimization and Clustering</h1>
+    <p class="post-meta"><time datetime="2016-03-28T00:00:00-04:00" itemprop="datePublished">Mar 28, 2016</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Jeremy</span></span></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h2 id="lesson-07---glms-linear-optimization-and-clustering">Lesson 07 - GLMs, Linear Optimization and Clustering</h2>
+
+<p>Welcome to lesson 8! We will continue on with our application of what we have
+learned so far to statistical analysis of our data.</p>
+
+<p>Today we will cover Generalised Linear Models (in the form of logistic
+regression), Linear Optimization using NumPy, and clustering using UPGMA and
+Kmeans in scikit-learn.</p>
+
+<p>Download the <a href="/pythoncourse/assets/notebooks/applied/lesson 07.ipynb">notebook here</a>.</p>
+
+<h3 id="generalised-linear-models">Generalised Linear Models</h3>
+
+<p>Linear models can be extended to fit certain non-linear data, using GLMs.</p>
+
+<p>To do this, we need a ‘link’ function, which gives us a linear response. For
+today we will use a logistic regression, but we have a <a href="http://statsmodels.sourceforge.net/devel/glm.html#families">wide array of link
+functions
+available</a>.</p>
+
+<p>We use logistic regression where we have a binomial output - 0 or 1. For example
+whether a patient is sick (1) or not (0) relates to their temperature
+(continuous), but not in a linear fashion.</p>
+
+<p>Let’s do some imports:</p>
+
+<p><strong>In [3]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">Series</span><span class="p">,</span> <span class="n">DataFrame</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="kn">as</span> <span class="nn">sm</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">as</span> <span class="nn">smf</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span></code></pre></figure>
+
+<p>We will read in some college admissions data. This data shows whether an
+applicant was admitted to a college or not, their gre and gpa, and a categorical
+ranking of the college by ‘prestige’.</p>
+
+<p>We are interested in the relationship between admission, gpa, gre and prestige.</p>
+
+<p><strong>In [167]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"http://www.ats.ucla.edu/stat/data/binary.csv"</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s">"admit"</span><span class="p">,</span> <span class="s">"gre"</span><span class="p">,</span> <span class="s">"gpa"</span><span class="p">,</span> <span class="s">"prestige"</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></figure>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>admit</th>
+      <th>gre</th>
+      <th>gpa</th>
+      <th>prestige</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>380</td>
+      <td>3.61</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>660</td>
+      <td>3.67</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>800</td>
+      <td>4.00</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>640</td>
+      <td>3.19</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>520</td>
+      <td>2.93</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Pandas has a crosstab function, which is useful for tabulating data based on
+categorical variables. Here we tabulate admit and prestige, before plotting out
+our data.</p>
+
+<p><strong>In [3]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'admit'</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s">'prestige'</span><span class="p">],</span> <span class="n">rownames</span><span class="o">=</span><span class="p">[</span><span class="s">'admit'</span><span class="p">])</span></code></pre></figure>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>prestige</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+    </tr>
+    <tr>
+      <th>admit</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>28</td>
+      <td>97</td>
+      <td>93</td>
+      <td>55</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>33</td>
+      <td>54</td>
+      <td>28</td>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>In [168]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df</span><span class="o">.</span><span class="n">hist</span><span class="p">();</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing2/lesson-06_6_0.png" alt="png" /></p>
+
+<p>Now we can carry out our regression - we will model admission as a response of
+gre, prestige (as a categorical variable) and gpa.</p>
+
+<p>To do this we can use the formula interface, similar to last week, and using the
+glm function with the family specified as Bionomial:</p>
+
+<p><strong>In [169]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#using smf</span>
+<span class="n">logit</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">glm</span><span class="p">(</span><span class="s">'admit ~ gre + C(prestige) + gpa'</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">sm</span><span class="o">.</span><span class="n">families</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(),</span> <span class="n">data</span> <span class="o">=</span> <span class="n">df</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">logit</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>                 Generalized Linear Model Regression Results
+==============================================================================
+Dep. Variable:                  admit   No. Observations:                  400
+Model:                            GLM   Df Residuals:                      394
+Model Family:                Binomial   Df Model:                            5
+Link Function:                  logit   Scale:                             1.0
+Method:                          IRLS   Log-Likelihood:                -229.26
+Date:                Fri, 25 Mar 2016   Deviance:                       458.52
+Time:                        09:57:37   Pearson chi2:                     397.
+No. Iterations:                     6
+====================================================================================
+                       coef    std err          z      P&gt;|z|      [95.0% Conf. Int.]
+------------------------------------------------------------------------------------
+Intercept           -3.9900      1.140     -3.500      0.000        -6.224    -1.756
+C(prestige)[T.2]    -0.6754      0.316     -2.134      0.033        -1.296    -0.055
+C(prestige)[T.3]    -1.3402      0.345     -3.881      0.000        -2.017    -0.663
+C(prestige)[T.4]    -1.5515      0.418     -3.713      0.000        -2.370    -0.733
+gre                  0.0023      0.001      2.070      0.038         0.000     0.004
+gpa                  0.8040      0.332      2.423      0.015         0.154     1.454
+====================================================================================
+</code></pre>
+</div>
+
+<p>It is difficult to plot two continuous variables against each other: here we
+will use seaborn to plot the effects of gre and gpa seperately:</p>
+
+<p><strong>In [7]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#plot</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">"gre"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">"admit"</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">"prestige"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">y_jitter</span><span class="o">=.</span><span class="mo">02</span><span class="p">,</span> <span class="n">logistic</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">"gpa"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">"admit"</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s">"prestige"</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">y_jitter</span><span class="o">=.</span><span class="mo">02</span><span class="p">,</span> <span class="n">logistic</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing2/lesson-06_10_0.png" alt="png" /></p>
+
+<p><img src="/pythoncourse/assets/graphing2/lesson-06_10_1.png" alt="png" /></p>
+
+<p>To use the non-formula interface, we need to create dumm variables. Dummy
+variables allow us to treat categorical variables as 1s and 0s by adding on more
+factors:</p>
+
+<p><strong>In [170]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#we can also do it using the non-formula interface:</span>
+<span class="n">dummy_ranks</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s">'prestige'</span><span class="p">],</span> <span class="n">prefix</span><span class="o">=</span><span class="s">'prestige'</span><span class="p">)</span>
+<span class="n">dummy_ranks</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></figure>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>prestige_1</th>
+      <th>prestige_2</th>
+      <th>prestige_3</th>
+      <th>prestige_4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>To avoid multi-colinearity, we must remove one of the dummy variables.</p>
+
+<p>We also need to manually add an intercept column if we wish to allow for an
+intercept term in our model</p>
+
+<p><strong>In [9]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#remove the first dummy variable</span>
+<span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s">'admit'</span><span class="p">,</span> <span class="s">'gre'</span><span class="p">,</span> <span class="s">'gpa'</span><span class="p">]]</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dummy_ranks</span><span class="o">.</span><span class="n">ix</span><span class="p">[:,</span> <span class="s">'prestige_2'</span><span class="p">:])</span>
+<span class="c">#manually add an intercept:</span>
+<span class="n">df2</span><span class="p">[</span><span class="s">'intercept'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></figure>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>admit</th>
+      <th>gre</th>
+      <th>gpa</th>
+      <th>prestige_2</th>
+      <th>prestige_3</th>
+      <th>prestige_4</th>
+      <th>intercept</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>380</td>
+      <td>3.61</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>660</td>
+      <td>3.67</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>800</td>
+      <td>4.00</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>640</td>
+      <td>3.19</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>520</td>
+      <td>2.93</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>In [187]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">logit</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">GLM</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="s">'admit'</span><span class="p">],</span> <span class="n">df2</span><span class="p">[</span><span class="n">df2</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:]],</span> <span class="n">family</span><span class="o">=</span><span class="n">sm</span><span class="o">.</span><span class="n">families</span><span class="o">.</span><span class="n">Binomial</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">logit</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>                 Generalized Linear Model Regression Results
+==============================================================================
+Dep. Variable:                  admit   No. Observations:                  400
+Model:                            GLM   Df Residuals:                      394
+Model Family:                Binomial   Df Model:                            5
+Link Function:                  logit   Scale:                             1.0
+Method:                          IRLS   Log-Likelihood:                -229.26
+Date:                Fri, 25 Mar 2016   Deviance:                       458.52
+Time:                        10:16:29   Pearson chi2:                     397.
+No. Iterations:                     6
+==============================================================================
+                 coef    std err          z      P&gt;|z|      [95.0% Conf. Int.]
+------------------------------------------------------------------------------
+gre            0.0023      0.001      2.070      0.038         0.000     0.004
+gpa            0.8040      0.332      2.423      0.015         0.154     1.454
+prestige_2    -0.6754      0.316     -2.134      0.033        -1.296    -0.055
+prestige_3    -1.3402      0.345     -3.881      0.000        -2.017    -0.663
+prestige_4    -1.5515      0.418     -3.713      0.000        -2.370    -0.733
+intercept     -3.9900      1.140     -3.500      0.000        -6.224    -1.756
+==============================================================================
+</code></pre>
+</div>
+
+<p>We can see that the results are the same. The choice of formula or non formula
+interface is up to you - use whichever you feel most comfortable with.</p>
+
+<p>We can get our odds ratios out by calling .params and taking the exp:</p>
+
+<p><strong>In [198]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#odds ratios</span>
+<span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">logit</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">params</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>gre           1.002267
+gpa           2.234545
+prestige_2    0.508931
+prestige_3    0.261792
+prestige_4    0.211938
+intercept     0.018500
+dtype: float64
+</code></pre>
+</div>
+
+<h3 id="linear-optimization">Linear Optimization</h3>
+
+<p>Python has a variety of ways of carrying out linear optimization. We can either
+use the built in NumPy solver, or interface with a commercial or open source
+solver through Python.</p>
+
+<p><a href="https://www.gurobi.com/documentation/6.5/refman/py_python_api_overview.
+html">Gurobi</a> and AMPL both offer Python apis, as well as <a href="http://www.coin-
+or.org/PuLP/">PuLP</a> and <a href="http://www.pyomo.org/">pyomo</a> which offer integration into a
+wide range of solvers. For use of these packages, see their help pages, as they
+have their own idiosyncracies.</p>
+
+<p>The main purpose of these interfaces is to get the data in from our equations
+and then run the solvers - We will use the built in solver in scipy, available
+in the scipy.optimize library:</p>
+
+<p>https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linprog.html</p>
+
+<p><strong>In [12]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">linprog</span></code></pre></figure>
+
+<p>Imagine we are working for French’s and we want to take advantage of the
+goodwill we have recently got from Canadian consumers.</p>
+
+<p>We want to maxmise our profit on mustard and ketchup: We have 650 units of
+Canadian tomatoes, 1800 units of vinegar and 600 units of mustard seed
+available. We need 2 units of tomatoes and 4 of vinegar per pallet of ketchup,
+and 3 units of mustard seed and 7 units of vinegar per palette of mustard.</p>
+
+<p>We can sell ketchup at $400 per palette, and mustard at $300 per palette.</p>
+
+<p>We also have a limit on our new Canadian ketchup factory - we can produce at
+most 400 palettes of both products.</p>
+
+<p>We also have to produce at lease 100 units of each product to protect our brand.</p>
+
+<p>First let’s state our constraints mathematically:</p>
+
+<p>maximize:</p>
+
+<ul>
+  <li>profit = 400 * ketchup + 300 * mustard</li>
+</ul>
+
+<p>subject to:</p>
+
+<ul>
+  <li>
+    <p>ketchup * 2 &lt;= 650</p>
+  </li>
+  <li>
+    <p>ketchup * 4 + mustard * 7 &lt;= 1800</p>
+  </li>
+  <li>
+    <p>mustard * 3 &lt;= 600</p>
+  </li>
+  <li>
+    <p>ketchup + mustard &lt;= 400</p>
+  </li>
+  <li>
+    <p>ketchup &gt;= 100</p>
+  </li>
+  <li>
+    <p>mustard &gt;= 100</p>
+  </li>
+</ul>
+
+<p>Let’s plot out our system using our knowledge of matplotlib from last lesson:</p>
+
+<p><strong>In [201]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="c">#vinegar supply</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="mi">1800</span> <span class="o">-</span> <span class="n">k</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mi">7</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'vinegar'</span><span class="p">)</span>
+<span class="c">#tomato supply</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">375</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">k</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'tomato supply'</span><span class="p">)</span>
+<span class="c">#mustard supply</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="mi">200</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'mustard supply'</span><span class="p">)</span>
+<span class="c">#factory limit</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">((</span><span class="mi">350</span> <span class="o">-</span> <span class="n">k</span><span class="p">),</span> <span class="n">k</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'factory capacity'</span><span class="p">)</span>
+<span class="c">#minimum mustard</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">m</span><span class="p">),</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'mustard minimum'</span><span class="p">)</span>
+<span class="c">#minimum ketchup</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">k</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'ketchup minimum'</span><span class="p">)</span>
+<span class="c">#set axis limits</span>
+<span class="n">ax</span><span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">550</span><span class="p">],</span> <span class="n">ylim</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">350</span><span class="p">],</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="s">'mustard'</span><span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s">'ketchup'</span><span class="p">)</span>
+<span class="c">#legend</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing2/lesson-06_21_0.png" alt="png" /></p>
+
+<p>Now we need to specify our system to solve it.</p>
+
+<p>To do this, we give an array, c, to be minimized, a 2D array (A) which gives the
+coefficients to be satisfied, and a 1D array with the upper bounds.</p>
+
+<p>We can also optionally use equalities rather than upper bounds.</p>
+
+<p><strong>In [202]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#optimize minimizes, so we take the negative of our values</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">400</span><span class="p">,</span> <span class="o">-</span><span class="mi">300</span><span class="p">]</span>
+<span class="c">#our input formula</span>
+<span class="n">A</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+<span class="c">#our values</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">650</span><span class="p">,</span> <span class="mi">1800</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">]</span>
+<span class="c">#bounds as a tuple</span>
+<span class="n">k_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="c">#secondary bounds</span>
+<span class="n">m_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="c">#linprog:</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">linprog</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">A_ub</span><span class="o">=</span><span class="n">A</span><span class="p">,</span> <span class="n">b_ub</span><span class="o">=</span><span class="n">b</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="n">k_bounds</span><span class="p">,</span> <span class="n">m_bounds</span><span class="p">),</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">"disp"</span><span class="p">:</span> <span class="bp">True</span><span class="p">})</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Optimization terminated successfully.
+         Current function value: -130000.000000
+         Iterations: 3
+</code></pre>
+</div>
+
+<p><strong>In [203]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">res</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>     fun: -130000.0
+ message: 'Optimization terminated successfully.'
+     nit: 3
+   slack: array([ 150.,  100.,  300.,    0.,  150.,  300.,    0.,    0.])
+  status: 0
+ success: True
+       x: array([ 250.,  100.])
+</code></pre>
+</div>
+
+<p><strong>In [165]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="mi">250</span> <span class="o">*</span> <span class="mi">400</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">*</span> <span class="mi">300</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>130000
+</code></pre>
+</div>
+
+<p>We can generalize this to multiple dimensions and variables! In scipy, we only
+have a simplex solver available, so to find faster and other solvers, try
+playing with pyomo and pulp. In general, these packages produce the same arrays
+to pass into the solvers from nicer inputs - the solvers and algorithms are the
+differences here.</p>
+
+<h3 id="clustering">Clustering</h3>
+
+<p>Clustering allows us to put multidimensional data into bins by similarity.</p>
+
+<p>Clustering is one of the major methods used, and be both supervised or
+unsupervised - where we know a priori the ;number of clusters or not.</p>
+
+<p>Today we will use two supervised clustering examples, before we move on to more
+sophisticated methods of clustering in the next lessons.</p>
+
+<p>First, let’s load in some libraries and data:</p>
+
+<p><strong>In [1]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="kn">import</span> <span class="n">dendrogram</span><span class="p">,</span> <span class="n">linkage</span><span class="p">,</span> <span class="n">fcluster</span>
+
+<span class="n">iris</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+
+<span class="n">dat</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+<span class="k">print</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">DESCR</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Iris Plants Database
+
+Notes
+-----
+Data Set Characteristics:
+    :Number of Instances: 150 (50 in each of three classes)
+    :Number of Attributes: 4 numeric, predictive attributes and the class
+    :Attribute Information:
+        - sepal length in cm
+        - sepal width in cm
+        - petal length in cm
+        - petal width in cm
+        - class:
+                - Iris-Setosa
+                - Iris-Versicolour
+                - Iris-Virginica
+    :Summary Statistics:
+
+    ============== ==== ==== ======= ===== ====================
+                    Min  Max   Mean    SD   Class Correlation
+    ============== ==== ==== ======= ===== ====================
+    sepal length:   4.3  7.9   5.84   0.83    0.7826
+    sepal width:    2.0  4.4   3.05   0.43   -0.4194
+    petal length:   1.0  6.9   3.76   1.76    0.9490  (high!)
+    petal width:    0.1  2.5   1.20  0.76     0.9565  (high!)
+    ============== ==== ==== ======= ===== ====================
+
+    :Missing Attribute Values: None
+    :Class Distribution: 33.3% for each of 3 classes.
+    :Creator: R.A. Fisher
+    :Donor: Michael Marshall (MARSHALL%PLU@io.arc.nasa.gov)
+    :Date: July, 1988
+
+This is a copy of UCI ML iris datasets.
+http://archive.ics.uci.edu/ml/datasets/Iris
+
+The famous Iris database, first used by Sir R.A Fisher
+
+This is perhaps the best known database to be found in the
+pattern recognition literature.  Fisher's paper is a classic in the field and
+is referenced frequently to this day.  (See Duda &amp; Hart, for example.)  The
+data set contains 3 classes of 50 instances each, where each class refers to a
+type of iris plant.  One class is linearly separable from the other 2; the
+latter are NOT linearly separable from each other.
+
+References
+----------
+   - Fisher,R.A. "The use of multiple measurements in taxonomic problems"
+     Annual Eugenics, 7, Part II, 179-188 (1936); also in "Contributions to
+     Mathematical Statistics" (John Wiley, NY, 1950).
+   - Duda,R.O., &amp; Hart,P.E. (1973) Pattern Classification and Scene Analysis.
+     (Q327.D83) John Wiley &amp; Sons.  ISBN 0-471-22361-1.  See page 218.
+   - Dasarathy, B.V. (1980) "Nosing Around the Neighborhood: A New System
+     Structure and Classification Rule for Recognition in Partially Exposed
+     Environments".  IEEE Transactions on Pattern Analysis and Machine
+     Intelligence, Vol. PAMI-2, No. 1, 67-71.
+   - Gates, G.W. (1972) "The Reduced Nearest Neighbor Rule".  IEEE Transactions
+     on Information Theory, May 1972, 431-433.
+   - See also: 1988 MLC Proceedings, 54-64.  Cheeseman et al"s AUTOCLASS II
+     conceptual clustering system finds 3 classes in the data.
+   - Many, many more ...
+</code></pre>
+</div>
+
+<p>Now let’s plot the first two dimensions:</p>
+
+<p><strong>In [4]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dat</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dat</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">target</span><span class="p">);</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing2/lesson-06_30_0.png" alt="png" /></p>
+
+<p>Now we can plot these using seaborn. We will use the same dataset, but in a
+slightly different format:</p>
+
+<p><strong>In [5]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">iris</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s">"iris"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">clustermap</span><span class="p">(</span><span class="n">iris</span><span class="p">[[</span><span class="s">'sepal_length'</span><span class="p">,</span>  <span class="s">'sepal_width'</span><span class="p">,</span>  <span class="s">'petal_length'</span><span class="p">,</span>  <span class="s">'petal_width'</span><span class="p">]],</span> <span class="n">col_cluster</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>   sepal_length  sepal_width  petal_length  petal_width species
+0           5.1          3.5           1.4          0.2  setosa
+1           4.9          3.0           1.4          0.2  setosa
+2           4.7          3.2           1.3          0.2  setosa
+3           4.6          3.1           1.5          0.2  setosa
+4           5.0          3.6           1.4          0.2  setosa
+
+
+
+
+
+&lt;seaborn.matrix.ClusterGrid at 0x7fe70cbd2ba8&gt;
+</code></pre>
+</div>
+
+<p><img src="/pythoncourse/assets/graphing2/lesson-06_32_2.png" alt="png" /></p>
+
+<p>However, we quickly run into the same problem as last lesson - how do we get the
+values out?</p>
+
+<p>Under the hood, seaborn is using <a href="https://docs.scipy.or
+g/doc/scipy/reference/cluster.hierarchy.html">scipy.cluster.hierarchy</a></p>
+
+<p>To recapitulate the results, we can use the function linkage:</p>
+
+<p><strong>In [6]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">linkagemat</span> <span class="o">=</span> <span class="n">linkage</span><span class="p">(</span><span class="n">dat</span><span class="p">,</span> <span class="s">'average'</span><span class="p">)</span>
+<span class="n">linkagemat</span><span class="o">.</span><span class="n">shape</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(149, 4)
+</code></pre>
+</div>
+
+<p>Here I am using straight pairwise differences, we can use a <a href="https://docs.scipy.org/doc/scipy/reference/spatial.distance.html">wide range of
+distance
+metrics</a>. You
+should also correct your data for outliers and different scales - here we have
+data all in a similar scale, so the differences are simple to use as is.</p>
+
+<p>The method for clustering used is ‘average’, also known as the UPGMA method,
+common in ecology (and many other fields).</p>
+
+<p>This works by finding the two most similar items, clustering them and meaning
+their values. The branch length is then the distance between these objects. The
+method works recursively until there is only one group left. We have a <a href="https://docs.scipy.org/doc/scipy/reference/generat
+ed/scipy.cluster.hierarchy.linkage.html#scipy.cluster.hierarchy.linkage">wide
+range of methods to use here</a>.</p>
+
+<p>Now we can plot using dendrogram:</p>
+
+<p><strong>In [7]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">dendrogram</span><span class="p">(</span>
+    <span class="n">linkagemat</span><span class="p">,</span>
+    <span class="n">leaf_rotation</span><span class="o">=</span><span class="mf">90.</span><span class="p">,</span>  <span class="c"># rotates the x axis labels</span>
+    <span class="n">leaf_font_size</span><span class="o">=</span><span class="mf">8.</span>  <span class="c"># font size for the x axis labels</span>
+<span class="p">);</span></code></pre></figure>
+
+<p><img src="/pythoncourse/assets/graphing2/lesson-06_36_0.png" alt="png" /></p>
+
+<p>From here we can cluster <a href="https://docs.scipy.org/doc
+/scipy/reference/generated/scipy.cluster.hierarchy.fcluster.html#scipy.cluster.h
+ierarchy.fcluster">using a variety of methods</a>, with the function fclust.</p>
+
+<p>We can specify a number of clusters, which works by descending a line until we
+hit the given distance or specifying a distance. Let’s specify three clusters:</p>
+
+<p><strong>In [8]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">out</span> <span class="o">=</span> <span class="n">fcluster</span><span class="p">(</span><span class="n">linkagemat</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s">'maxclust'</span><span class="p">)</span>
+<span class="c">#and plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dat</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dat</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dat</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dat</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">out</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;matplotlib.collections.PathCollection at 0x7fe70c44ec50&gt;
+</code></pre>
+</div>
+
+<p><img src="/pythoncourse/assets/graphing2/lesson-06_38_1.png" alt="png" /></p>
+
+<p>We can also use kmeans, another clustering algorithm. This works by putting k
+random centroids on a graph, finding the closest centroid to each point, then
+moving centroids to minimize the error within each group.</p>
+
+<p>Let’s do this in scikit-learn, the machine learning library.</p>
+
+<p>We will cover sci kit learn exclusively in the next lesson, but for now we can
+do a brief overview.</p>
+
+<p>We have already imported the dataset, iris from it. Datasets are generally used
+or made into numpy matrices, with data and targets as seperate arrays. The data
+are stored as np.float64 by default, and we need to convert categorical
+variables into dummy variables, but targets are ok as categorical variables.</p>
+
+<p>There is a <a href="http://scikit-
+learn.org/stable/modules/clustering.html#clustering">wide range of clustering algorithms available</a>. For now we will run a
+<a href="http://scikit-
+learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">simple kmeans</a>.</p>
+
+<p>Scikit-learn is set up to allow validation, pipelining etc etc.</p>
+
+<p><strong>In [9]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+
+<span class="c">#describe the model note, no data yet</span>
+<span class="n">k_means</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">k_means</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span>
+<span class="n">k_means</span><span class="o">.</span><span class="n">labels_</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+       0, 0, 0, 0, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1, 1,
+       2, 2, 2, 2, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2,
+       1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 1], dtype=int32)
+</code></pre>
+</div>
+
+<p><strong>In [10]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">decomposition</span>
+<span class="c">#PCA</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">decomposition</span><span class="o">.</span><span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">dat</span><span class="p">)</span>
+
+<span class="c">#rerun kmeans</span>
+<span class="n">k_meanspca</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">k_meanspca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c">#rerurn UPGMA</span>
+<span class="n">linkagematpca</span> <span class="o">=</span> <span class="n">linkage</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="s">'average'</span><span class="p">)</span>
+<span class="n">outpca</span> <span class="o">=</span> <span class="n">fcluster</span><span class="p">(</span><span class="n">linkagemat</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">criterion</span><span class="o">=</span><span class="s">'maxclust'</span><span class="p">)</span>
+
+<span class="c">#plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax4</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">ax5</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ax6</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dat</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dat</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dat</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dat</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">out</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dat</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dat</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">k_means</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dat</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dat</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">target</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">)</span>
+<span class="n">ax5</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dat</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dat</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">outpca</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">)</span>
+<span class="n">ax6</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">dat</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dat</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">k_meanspca</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Paired</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;matplotlib.collections.PathCollection at 0x7fe70be615f8&gt;
+</code></pre>
+</div>
+
+<p><img src="/pythoncourse/assets/graphing2/lesson-06_41_1.png" alt="png" /></p>
+
+<p>That’s it for today, we have had a brief tour of GLMs, linear optimisation and
+clustering. Nect week we will focus on scikit-learn and some applied pipelines
+and examples.</p>
+
+  </div>
+  
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'jeremycg';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Python @ Precima</h2>
+
+
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
