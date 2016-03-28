@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 28 Mar 2016 08:58:23 -0400</pubDate>
-    <lastBuildDate>Mon, 28 Mar 2016 08:58:23 -0400</lastBuildDate>
+    <pubDate>Mon, 28 Mar 2016 09:02:53 -0400</pubDate>
+    <lastBuildDate>Mon, 28 Mar 2016 09:02:53 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -825,7 +825,7 @@ and examples.&lt;/p&gt;
         <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/28/lesson07applied.html</link>
         <guid isPermaLink="true">http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/28/lesson07applied.html</guid>
         
-        <category>R&amp;D stream</category>
+        <category>Applied Statistics stream</category>
         
         
       </item>

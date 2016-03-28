@@ -3,7 +3,7 @@ layout: post
 title: "Lesson 07 - GLMs, Linear Optimization and Clustering"
 author: Jeremy
 tags:
- - R&D stream
+ - Applied Statistics stream
 comments: true
 ---
 ## Lesson 07 - GLMs, Linear Optimization and Clustering
