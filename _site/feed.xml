@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 28 Mar 2016 09:06:54 -0400</pubDate>
-    <lastBuildDate>Mon, 28 Mar 2016 09:06:54 -0400</lastBuildDate>
+    <pubDate>Tue, 29 Mar 2016 20:49:11 -0400</pubDate>
+    <lastBuildDate>Tue, 29 Mar 2016 20:49:11 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -1639,8 +1639,38 @@ learn.org/stable/modules/generated/sklearn.cluster.KMeans.html&quot;&gt;simple k
 &lt;p&gt;&lt;img src=&quot;/pythoncourse/assets/graphing2/lesson-06_41_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;That’s it for today, we have had a brief tour of GLMs, linear optimisation and
-clustering. Nect week we will focus on scikit-learn and some applied pipelines
+clustering. Next week we will focus on scikit-learn and some applied pipelines
 and examples.&lt;/p&gt;
+
+&lt;h3 id=&quot;exercises&quot;&gt;Exercises&lt;/h3&gt;
+
+&lt;p&gt;1. Use the awards data from ucla to carry out a poisson glm in stasmodels:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;awarddata&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://www.ats.ucla.edu/stat/data/poisson_sim.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The data shows how many awards a student received, with columns for their math score,
+and the program they were in coded as a categorical variable.&lt;/p&gt;
+
+&lt;p&gt;2. Solve the optimization problem (taken from http://www.purplemath.com/modules/linprog3.htm)&lt;/p&gt;
+
+&lt;p&gt;P = –2x + 5y, subject to:
+100 &amp;lt; x &amp;lt; 200
+80 &amp;lt;  y &amp;lt; 170
+y &amp;gt; –x + 200&lt;/p&gt;
+
+&lt;p&gt;3. Change the iris data set from seaborn into the numpy format used by scikit-learn.&lt;/p&gt;
+
+&lt;p&gt;4. Change the iris data set from scikit-learn into a pandas dataframe the same as used in seaborn&lt;/p&gt;
+
+&lt;p&gt;5. Make some ‘noisy moons’ using scikit-learns dataset module:&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;noisy_moons&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;make_moons&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_samples&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;500&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;noise&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;05&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#plot using&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scatter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noisy_moons&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][:,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;noisy_moons&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][:,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;noisy_moons&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Fit the data using a Kmeans algorithm.&lt;/p&gt;
+
+&lt;p&gt;6. Fit your noisy moons data using hierarchical clustering&lt;/p&gt;
 </description>
         <pubDate>Fri, 25 Mar 2016 00:00:00 -0400</pubDate>
         <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/25/lesson06r&d.html</link>
