@@ -883,8 +883,44 @@ learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">simple kmeans</a
 <p><img src="/pythoncourse/assets/graphing2/lesson-06_41_1.png" alt="png" /></p>
 
 <p>That’s it for today, we have had a brief tour of GLMs, linear optimisation and
-clustering. Nect week we will focus on scikit-learn and some applied pipelines
+clustering. Next week we will focus on scikit-learn and some applied pipelines
 and examples.</p>
+
+<h3 id="exercises">Exercises</h3>
+
+<p>All these exercises are a little tough this week, do numbers 3 and 4, and do the questions
+from 1,2,5 and 6 which are relevant to your work.</p>
+
+<p>1. Use the awards data from ucla to carry out a poisson glm in stasmodels:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">awarddata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"http://www.ats.ucla.edu/stat/data/poisson_sim.csv"</span><span class="p">)</span></code></pre></figure>
+
+<p>The data shows how many awards a student received, with columns for their math score,
+and the program they were in coded as a categorical variable.</p>
+
+<p>2. Solve the optimization problem (taken from http://www.purplemath.com/modules/linprog3.htm)</p>
+
+<p>P = –2x + 5y, subject to:</p>
+
+<p>100 &lt; x &lt; 200</p>
+
+<p>80 &lt;  y &lt; 170</p>
+
+<p>y &gt; –x + 200</p>
+
+<p>3. Change the iris data set from seaborn into the numpy format used by scikit-learn.</p>
+
+<p>4. Change the iris data set from scikit-learn into a pandas dataframe the same as used in seaborn</p>
+
+<p>5. Make some ‘noisy moons’ using scikit-learns dataset module:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">noisy_moons</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">make_moons</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">noise</span><span class="o">=.</span><span class="mo">05</span><span class="p">)</span>
+<span class="c">#plot using</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">noisy_moons</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">noisy_moons</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">noisy_moons</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></code></pre></figure>
+
+<p>Fit the data using a Kmeans algorithm.</p>
+
+<p>6. Fit your noisy moons data using hierarchical clustering</p>
 
   </div>
   

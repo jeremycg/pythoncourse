@@ -904,5 +904,47 @@ ax6.scatter(dat[:, 0], dat[:, 1], c = k_meanspca.labels_, cmap=plt.cm.Paired)
 
 
 That's it for today, we have had a brief tour of GLMs, linear optimisation and
-clustering. Nect week we will focus on scikit-learn and some applied pipelines
+clustering. Next week we will focus on scikit-learn and some applied pipelines
 and examples.
+
+### Exercises
+
+
+All these exercises are a little tough this week, do numbers 3 and 4, and do the questions
+from 1,2,5 and 6 which are relevant to your work.
+
+
+1\. Use the awards data from ucla to carry out a poisson glm in stasmodels:
+{% highlight python %}
+
+awarddata = pd.read_csv("http://www.ats.ucla.edu/stat/data/poisson_sim.csv")
+{% endhighlight %}
+
+The data shows how many awards a student received, with columns for their math score,
+and the program they were in coded as a categorical variable.
+
+2\. Solve the optimization problem (taken from http://www.purplemath.com/modules/linprog3.htm)
+
+P = –2x + 5y, subject to:
+
+100 < x < 200
+
+80 <  y < 170
+
+y > –x + 200
+
+3\. Change the iris data set from seaborn into the numpy format used by scikit-learn.
+
+4\. Change the iris data set from scikit-learn into a pandas dataframe the same as used in seaborn
+
+5\. Make some 'noisy moons' using scikit-learns dataset module:
+{% highlight python %}
+
+noisy_moons = datasets.make_moons(n_samples=500, noise=.05)
+#plot using
+plt.scatter(noisy_moons[0][:,0], noisy_moons[0][:,1], c = noisy_moons[1])
+{% endhighlight %}
+
+Fit the data using a Kmeans algorithm.
+
+6\. Fit your noisy moons data using hierarchical clustering
