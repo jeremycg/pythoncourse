@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 29 Mar 2016 20:49:11 -0400</pubDate>
-    <lastBuildDate>Tue, 29 Mar 2016 20:49:11 -0400</lastBuildDate>
+    <pubDate>Tue, 29 Mar 2016 20:51:04 -0400</pubDate>
+    <lastBuildDate>Tue, 29 Mar 2016 20:51:04 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -1653,10 +1653,13 @@ and the program they were in coded as a categorical variable.&lt;/p&gt;
 
 &lt;p&gt;2. Solve the optimization problem (taken from http://www.purplemath.com/modules/linprog3.htm)&lt;/p&gt;
 
-&lt;p&gt;P = –2x + 5y, subject to:
-100 &amp;lt; x &amp;lt; 200
-80 &amp;lt;  y &amp;lt; 170
-y &amp;gt; –x + 200&lt;/p&gt;
+&lt;p&gt;P = –2x + 5y, subject to:&lt;/p&gt;
+
+&lt;p&gt;100 &amp;lt; x &amp;lt; 200&lt;/p&gt;
+
+&lt;p&gt;80 &amp;lt;  y &amp;lt; 170&lt;/p&gt;
+
+&lt;p&gt;y &amp;gt; –x + 200&lt;/p&gt;
 
 &lt;p&gt;3. Change the iris data set from seaborn into the numpy format used by scikit-learn.&lt;/p&gt;
 
