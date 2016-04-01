@@ -5,9 +5,476 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 30 Mar 2016 19:57:54 -0400</pubDate>
-    <lastBuildDate>Wed, 30 Mar 2016 19:57:54 -0400</lastBuildDate>
+    <pubDate>Fri, 01 Apr 2016 00:36:01 -0400</pubDate>
+    <lastBuildDate>Fri, 01 Apr 2016 00:36:01 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
+    
+      <item>
+        <title>Lesson 07 - Scikit-Learn</title>
+        <description>&lt;h2 id=&quot;lesson-07---scikit-learn&quot;&gt;Lesson 07 - Scikit-Learn&lt;/h2&gt;
+
+&lt;p&gt;Welcome to lesson 8, on machine learning with scikit-learn.&lt;/p&gt;
+
+&lt;p&gt;Machine learning is a rapidly growing and advancing field, and the premier
+module for carrying it out in Python is scikit-learn (aka scikits-learn). Today
+we will cover the basic syntax and logic of the module, without touching too
+deeply on the wide array of methods available.&lt;/p&gt;
+
+&lt;p&gt;Download the &lt;a href=&quot;/pythoncourse/assets/notebooks/r&amp;amp;d/lesson 07.ipynb&quot;&gt;notebook here&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;machine-learning-101&quot;&gt;Machine Learning 101&lt;/h3&gt;
+
+&lt;p&gt;We can define machine learning as building a program which can adapt to
+previously seen data - we build an algorithm, which takes data as an input and
+outputs predictions, once being trained on a training set.&lt;/p&gt;
+
+&lt;p&gt;We can broadly define machine learning into two major classes - Supervised and
+Unsupervised.&lt;/p&gt;
+
+&lt;p&gt;In supervised clustering we have known targets - eg an iris species, or a
+continuous variable such as retail spend for which we have both ‘features’, our
+predictors, and ‘labels’, our outputs.&lt;/p&gt;
+
+&lt;p&gt;We can further subsection this into clustering, with categorical labels, and
+regression, with continuous labels.&lt;/p&gt;
+
+&lt;p&gt;Similarly, we have unsupervised learning, in which we have features, but need to
+discover or define the labels ourselves based on the data. Again, this splits
+into clustering and regression. We can also often use unsupervised learning as a
+dimensional reduction tool - PCA can be seen as a sort of unsupervised learning.&lt;/p&gt;
+
+&lt;p&gt;There can also be some middle area between the methods - maybe we wish to
+validate our labels which we already have, or develop new ones.&lt;/p&gt;
+
+&lt;h3 id=&quot;scikit-learn-101&quot;&gt;Scikit-Learn 101&lt;/h3&gt;
+
+&lt;p&gt;Sklearn aims to be a unified module for all methods of machine learning, from
+data splitting, normalization and reduction through to model fitting, prediction
+and validation. The module is updated regularly to implement the most recent
+machine learning algorithms. &lt;a href=&quot;http://scikit-learn.org/stable/&quot;&gt;The website&lt;/a&gt; is a
+great resource for help, examples and explanations of the differing methods we
+can use.&lt;/p&gt;
+
+&lt;p&gt;sklearn does it best to implement the models in a uniform fashion, so we can
+pass in the same data, and use the same transform, fit, predict, score and other
+methods. This allows for a uniform workflow, and no need to transform data
+between formats for different models.&lt;/p&gt;
+
+&lt;p&gt;In sklearn, we have a standard data format for most algorithms input data:&lt;/p&gt;
+
+&lt;p&gt;A numpy array of dimensions ‘samples’ by ‘features’. By Default these are stored
+as np.float64, but we can change this if desired. Additionally we can use the
+sparse matrix class from scipy if we have very large (and sparse) matrices.&lt;/p&gt;
+
+&lt;p&gt;Categorical features must be dummified (see last lesson)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [86]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;np&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load_iris&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[[ 5.1  3.5  1.4  0.2]
+ [ 4.9  3.   1.4  0.2]
+ [ 4.7  3.2  1.3  0.2]
+ [ 4.6  3.1  1.5  0.2]
+ [ 5.   3.6  1.4  0.2]
+ [ 5.4  3.9  1.7  0.4]]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Addtionally we have a target, or label array if we have a supervised learning
+dataset:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [87]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[0 0 0 0 0 0]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;In [88]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[&#39;setosa&#39; &#39;versicolor&#39; &#39;virginica&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Feature engineering is one of the most important parts of machine learning and
+requires knowledge of the dataset. We will not cover non-automated feature
+engineering today.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/pythoncourse/assets/sklearn/supervised.png&quot; alt=&quot;png&quot; /&gt;
+&lt;img src=&quot;/pythoncourse/assets/sklearn/supervised.png&quot; alt=&quot;png&quot; /&gt;
+both from http://www.astroml.org/sklearn_tutorial/general_concepts.html&lt;/p&gt;
+
+&lt;p&gt;Overfitting is a serious problem in machine learning models - recall the problem
+with &lt;a href=&quot;http://www.wired.com/2015/10/can-learn-epic-failure-
+google-flu-trends/&quot;&gt;googles flu trends&lt;/a&gt;. It ended up predicting winter, rather than flu. Similarly,
+we might make a model that is really good at describing our current data, but
+extremely poor at predicting the labels for new data.&lt;/p&gt;
+
+&lt;p&gt;We can stop overfitting in several ways. The first is to train our predictive
+models on a training dataset, then test them on a held out, test set. This test
+set should never be used for fitting models! We should also use simpler models,
+and cross validation.&lt;/p&gt;
+
+&lt;p&gt;We have set ups for this in sklearn!&lt;/p&gt;
+
+&lt;h3 id=&quot;workflow&quot;&gt;Workflow&lt;/h3&gt;
+
+&lt;p&gt;We will work through the sklearn workflow step by step.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;split our data into test and train sets&lt;/li&gt;
+  &lt;li&gt;Preprocess our data - extract features, dummyify, normalise, dimension
+reduction&lt;/li&gt;
+  &lt;li&gt;Choose a model or models for our data&lt;/li&gt;
+  &lt;li&gt;Fit the models to our data&lt;/li&gt;
+  &lt;li&gt;Analyse our models output&lt;/li&gt;
+  &lt;li&gt;Validate our data on our test set and determine error&lt;/li&gt;
+  &lt;li&gt;Predict new data&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;splitting-data&quot;&gt;Splitting data&lt;/h3&gt;
+
+&lt;p&gt;The &lt;a href=&quot;http://scikit-
+learn.org/stable/modules/cross_validation.html&quot;&gt;cross validation submodule&lt;/a&gt; is made to help avoid
+overfitting. The most common method is to hold some of the data out of the
+analysis, fit and then cimpare estimators on the test set.&lt;/p&gt;
+
+&lt;p&gt;Alternatively, the submodule contains methods for carrying out crossvalidation
+during fitting, these should be used with caution.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [89]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.cross_validation&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_test_split&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;\
+   &lt;span class=&quot;n&quot;&gt;train_test_split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random_state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(150, 4)
+(90, 4)
+(60, 4)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The function is smart, choosing to stratify within outcomes, and by default
+holds out 25% of the data. If we have time series or other structured data, a
+more complex scheme needs to be devised.&lt;/p&gt;
+
+&lt;p&gt;The test set should now not be touched until it’s time for validation&lt;/p&gt;
+
+&lt;h3 id=&quot;preprocessing-data&quot;&gt;Preprocessing data&lt;/h3&gt;
+
+&lt;p&gt;The next step is feature addition. This is the point where you can calculate
+your features. Many features can be created from the data (recall the work we
+did during the test). In general, it is best to carry out these operations with
+the test data removed, so that the process is the same for any new data.&lt;/p&gt;
+
+&lt;p&gt;Depending on your choice of method, remove correlated features.&lt;/p&gt;
+
+&lt;p&gt;Once this is carried out, we can use the &lt;a href=&quot;http://scikit-
+learn.org/stable/modules/preprocessing.html#preprocessing&quot;&gt;preprocessing
+submodule&lt;/a&gt; to process our data:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [90]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;preprocessing&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# we can dummify data using http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# we can turn data into categories using http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.binarize.html&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# see also imputer!&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;scaler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;preprocessing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StandardScaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#be careful to use the correct version!&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;scaler&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[[ 0.18206758  0.71103882  0.45664061  0.5584109 ]
+ [-1.17402201  0.00522823 -1.10334891 -1.19183221]
+ [-0.04394735 -0.93585257  0.77939706  0.93346299]
+ [-0.26996228 -0.93585257  0.29526238  0.1833588 ]
+ [-0.26996228 -0.46531217 -0.02749407  0.1833588 ]
+ [-0.38296975 -1.40639297  0.1876769   0.1833588 ]]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The next step to preprocess our data is optionally use matrix decomposition to
+reduce the number of dimensions our data has. We can use the &lt;a href=&quot;http://scikit-learn.org/stable/modules/decomposition.html&quot;&gt;decomposition
+module&lt;/a&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [91]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;decomposition&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;pca&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;decomposition&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_components&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#by fitting a model, we can transform our test data later using the transform method&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pca&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pca&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now we can put our normalised and transformed data into a model&lt;/p&gt;
+
+&lt;h3 id=&quot;choosing-and-fitting-a-model&quot;&gt;Choosing and Fitting a Model&lt;/h3&gt;
+
+&lt;p&gt;Choosing a model is a statistical choice - I’ll leave it to you. You could even
+&lt;a href=&quot;http://scikit-
+learn.org/stable/developers/contributing.html#rolling-your-own-estimator&quot;&gt;make your own&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Generally, we have a wide range of standard machine learning models - Let’s use
+a &lt;a href=&quot;https://en.wikipedia.org/wiki/Support_vector_machine&quot;&gt;support vector machine&lt;/a&gt;
+this time. Briefly, &lt;a href=&quot;http://scikit-
+learn.org/stable/modules/svm.html&quot;&gt;an SVM draws&lt;/a&gt; lines (or vector) between our classes of
+data, either linearly or by apply the &lt;a href=&quot;https://en.wikipedia.org/wiki/Kernel_method&quot;&gt;‘kernel
+trick’&lt;/a&gt; to &lt;a href=&quot;https://www.youtube.com/watch?v=3liCbRZPrZA&quot;&gt;make it non-
+linear&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Again, as long as our data is in the correct format we can fit more or less any
+model from sklearn.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [92]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;svm&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;rbf_svc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;svm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SVC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;rbf&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#hyperparameters!&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#again, once a model is described, we need to fit it:&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rbf_svc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;In [93]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;array([1, 0, 2, 1, 1, 1, 1, 2, 0, 0, 2, 1, 0, 0, 1, 0, 2, 1, 0, 1, 2, 1, 0,
+       2, 2, 2, 2, 0, 0, 2, 2, 0, 2, 0, 2, 2, 0, 0, 2, 0, 0, 0, 1, 2, 2, 0,
+       0, 0, 1, 1, 0, 0, 1, 0, 2, 1, 2, 1, 0, 2, 0, 2, 0, 0, 2, 0, 2, 1, 1,
+       1, 2, 2, 1, 2, 0, 1, 2, 2, 0, 1, 1, 2, 1, 0, 0, 0, 2, 1, 2, 0])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;evaluating-the-model&quot;&gt;Evaluating the model&lt;/h3&gt;
+
+&lt;p&gt;Now we can evaluate our models, both on the training set, and on the test set.&lt;/p&gt;
+
+&lt;p&gt;We need to recreate our transformations on the test set….&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [94]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#most models have a .score method, which is particular to them. It is normally 1 - out of classification rate&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0.97777777777777775
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;In [95]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scaler&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pca&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;array([2, 1, 0, 2, 0, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 2, 1, 0,
+       0, 2, 0, 0, 1, 1, 0, 2, 1, 0, 2, 2, 1, 0, 2, 1, 1, 2, 0, 2, 0, 0, 1,
+       2, 2, 1, 2, 1, 2, 1, 1, 2, 1, 2, 2, 1, 2])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;In [96]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#not quite as good, but much much better than the clustering we use last week&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0.93333333333333335
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We can also use the &lt;a href=&quot;http://scikit-
+learn.org/stable/modules/model_evaluation.html&quot;&gt;metrics submodule&lt;/a&gt; to do a ton of metrics about our
+fit, or make our own:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [97]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.metrics&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;confusion_matrix&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;plt&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matplotlib&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inline&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;y_pred&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cm&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;confusion_matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;plot_confusion_matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Confusion matrix&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Blues&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imshow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;interpolation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;nearest&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cmap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorbar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;tick_marks&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xticks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tick_marks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rotation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;yticks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tick_marks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tight_layout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;True label&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Predicted label&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;plot_confusion_matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/lesson-07---scikit-learn_21_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we can predict new data exactly as we did for our test set!&lt;/p&gt;
+
+&lt;h3 id=&quot;saving-models&quot;&gt;Saving Models&lt;/h3&gt;
+
+&lt;p&gt;We can save our model - a lot of algorithms will take a long time to train, and
+the prediction is much faster, especially as it is run on a small amount of
+newer data. To do this, we have to learn a little bit about pickling.&lt;/p&gt;
+
+&lt;p&gt;Briefly, we can see that python does not hold data as a tabular format in memory
+- we can give arbitrary classes, so it has no natural state to be stored on the
+disk. So far, every time we loaded or saved we used a csv or array, which is
+naturally sequential.&lt;/p&gt;
+
+&lt;p&gt;Python has a built in module, called pickle, to save its native binary
+representation of objects to disk. We will use the jobdumps module for now, as
+it is faster for sklearn objects (it is optimised for numpy arrays).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [98]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.externals&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;joblib&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;joblib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dump&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;model.pkl&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[&#39;model.pkl&#39;,
+ &#39;model.pkl_01.npy&#39;,
+ &#39;model.pkl_02.npy&#39;,
+ &#39;model.pkl_03.npy&#39;,
+ &#39;model.pkl_04.npy&#39;,
+ &#39;model.pkl_05.npy&#39;,
+ &#39;model.pkl_06.npy&#39;,
+ &#39;model.pkl_07.npy&#39;,
+ &#39;model.pkl_08.npy&#39;,
+ &#39;model.pkl_09.npy&#39;,
+ &#39;model.pkl_10.npy&#39;,
+ &#39;model.pkl_11.npy&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We can load it back in using&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [99]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;joblib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;model.pkl&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;pipelines&quot;&gt;Pipelines&lt;/h3&gt;
+
+&lt;p&gt;We can see that the method we used was fine, but reconstituting the pathway we
+took through the processing was a little tricky for the test set. We need to
+make sure we don’t miss a step, or our predictions will be off. We also needed
+to make sure we used the model based transformations, as otherwise we couldn’t
+apply the same transformations to our new data.&lt;/p&gt;
+
+&lt;p&gt;To make this easier to redo, we can use the &lt;a href=&quot;http://scikit-
+learn.org/stable/modules/pipeline.html&quot;&gt;pipelines submodule&lt;/a&gt;. Once we have a pipeline, we can call
+fit and predict as though it were a single model.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [100]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pipeline&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#we get our estimators as a list of tuples:&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;estimators&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;normalise&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;preprocessing&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StandardScaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()),&lt;/span&gt;
+              &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;reduce_dim&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;decomposition&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PCA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()),&lt;/span&gt;
+              &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;svm&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;svm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SVC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kernel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;rbf&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))]&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pipeline&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Pipeline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;estimators&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;In [101]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;\
+   &lt;span class=&quot;n&quot;&gt;train_test_split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random_state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Pipeline(steps=[(&#39;normalise&#39;, StandardScaler(copy=True, with_mean=True, with_std=True)), (&#39;reduce_dim&#39;, PCA(copy=True, n_components=None, whiten=False)), (&#39;svm&#39;, SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape=None, degree=3, gamma=&#39;auto&#39;, kernel=&#39;rbf&#39;,
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False))])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;In [102]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[2 1 0 2 0 2 0 1 1 1 1 1 1 1 1 0 1 1 0 0 2 1 0 0 2 0 0 1 1 0 2 1 0 2 2 1 0
+ 2 1 1 2 0 2 0 0 1 2 2 1 2 1 2 1 1 2 1 2 2 1 2]
+0.933333333333
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We can change the parameters in a pipeline. One of the reasons we might want to
+to do this is to optimise a ‘hyperparameter’ one that does not depend on the
+model.&lt;/p&gt;
+
+&lt;p&gt;We can do this using the &lt;a href=&quot;http://scikit-
+learn.org/stable/modules/grid_search.html&quot;&gt;gridsearch submodule&lt;/a&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [103]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.grid_search&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GridSearchCV&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#in the SVC, C is the penalty term, lambda is the degree of the kernel&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#we can change it using name__param&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;svm__C&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Pipeline(steps=[(&#39;normalise&#39;, StandardScaler(copy=True, with_mean=True, with_std=True)), (&#39;reduce_dim&#39;, PCA(copy=True, n_components=None, whiten=False)), (&#39;svm&#39;, SVC(C=10, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape=None, degree=3, gamma=&#39;auto&#39;, kernel=&#39;rbf&#39;,
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False))])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Grid search lets us search a range of parameters to find the best one:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [104]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#again using name__param. Can do as many as we&#39;d like!&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;svm__C&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;grid_search&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GridSearchCV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;param_grid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;grid_search&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;best_params_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;best_score_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&#39;svm__C&#39;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.966666666667&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.933333333333&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;There is still a ton more to learn from sklearn - we have not touch on ensemble
+models, feature importance, roc curves, multithreading and a wide range of
+models.&lt;/p&gt;
+
+&lt;p&gt;Now we know the basic syntax of split, transform, fit, predict, score we can run
+most of the models in the module, and analyse their output. Further analysis is
+left to you to read the docs and understand them.&lt;/p&gt;
+
+&lt;p&gt;For the rest of the lesson, we will work through the titanic dataset example,
+fitted with a random forest model:
+http://nbviewer.jupyter.org/github/donnemartin/data-science-ipython-
+notebooks/blob/master/kaggle/titanic.ipynb&lt;/p&gt;
+</description>
+        <pubDate>Fri, 01 Apr 2016 00:00:00 -0400</pubDate>
+        <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/04/01/lesson07rd.html</link>
+        <guid isPermaLink="true">http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/04/01/lesson07rd.html</guid>
+        
+        <category>R&amp;D stream</category>
+        
+        
+      </item>
     
       <item>
         <title>Lesson 07 - GLMs, Linear Optimization and Clustering</title>
@@ -7823,47 +8290,6 @@ minimum and maximum values. Find the index of these values&lt;/p&gt;
         <guid isPermaLink="true">http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/07/lesson04applied.html</guid>
         
         <category>Applied Statistics stream</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Test 01 - Base Python</title>
-        <description>&lt;h2 id=&quot;welcome-to-test-1&quot;&gt;Welcome to Test 1&lt;/h2&gt;
-
-&lt;p&gt;Please read these instructions carefully!&lt;/p&gt;
-
-&lt;p&gt;To access the test, you must first fill out the mid course survey, available
-&lt;a href=&quot;http://goo.gl/forms/oxQzVsRXPq&quot;&gt;online here&lt;/a&gt;. The responses will be anonymous.&lt;/p&gt;
-
-&lt;p&gt;The survey contains a link to the test notebooks - please click on the link and
-the relevant notebook (r&amp;amp;d).&lt;/p&gt;
-
-&lt;p&gt;Github will render the notebooks online if you’d like to read them, download them from the download links:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/pythoncourse/assets/test1/1.png&quot; alt=&quot;install&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Please open the test using the Jupyter notebook.&lt;/p&gt;
-
-&lt;p&gt;To do this, open the launcher and click launch on the button next to ipython/jupyter notebook.&lt;/p&gt;
-
-&lt;p&gt;Once the browser window opens, navigate to where you downloaded the test and click open.&lt;/p&gt;
-
-&lt;p&gt;The test is written as markdown and code. Please follow the instructions inside the test.&lt;/p&gt;
-
-&lt;p&gt;The save icon is in the upper left corner - please save your work regularly, and
-once complete, email the entire notebook to Jeremy at JGray@loyalty.com.&lt;/p&gt;
-
-&lt;p&gt;If you have problems with the notebook, please make sure you followed the initial
-installation instructions exactly. Part of the test is for you to figure out how to download and run
-a notebook, so please take some time to try and get it working. If you encounter an
-error you cannot fix, please post in the forum below and I will try and trouble shoot it for you.&lt;/p&gt;
-</description>
-        <pubDate>Fri, 04 Mar 2016 00:00:00 -0500</pubDate>
-        <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/04/test1r&d.html</link>
-        <guid isPermaLink="true">http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/04/test1r&d.html</guid>
-        
-        <category>R&amp;D stream</category>
         
         
       </item>
