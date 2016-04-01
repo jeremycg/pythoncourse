@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 01 Apr 2016 00:36:01 -0400</pubDate>
-    <lastBuildDate>Fri, 01 Apr 2016 00:36:01 -0400</lastBuildDate>
+    <pubDate>Fri, 01 Apr 2016 00:38:48 -0400</pubDate>
+    <lastBuildDate>Fri, 01 Apr 2016 00:38:48 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -109,7 +109,7 @@ requires knowledge of the dataset. We will not cover non-automated feature
 engineering today.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/pythoncourse/assets/sklearn/supervised.png&quot; alt=&quot;png&quot; /&gt;
-&lt;img src=&quot;/pythoncourse/assets/sklearn/supervised.png&quot; alt=&quot;png&quot; /&gt;
+&lt;img src=&quot;/pythoncourse/assets/sklearn/unsupervised.png&quot; alt=&quot;png&quot; /&gt;
 both from http://www.astroml.org/sklearn_tutorial/general_concepts.html&lt;/p&gt;
 
 &lt;p&gt;Overfitting is a serious problem in machine learning models - recall the problem
@@ -131,7 +131,7 @@ and cross validation.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;split our data into test and train sets&lt;/li&gt;
-  &lt;li&gt;Preprocess our data - extract features, dummyify, normalise, dimension
+  &lt;li&gt;Preprocess our data - extract features, dummify, normalise, dimension
 reduction&lt;/li&gt;
   &lt;li&gt;Choose a model or models for our data&lt;/li&gt;
   &lt;li&gt;Fit the models to our data&lt;/li&gt;
@@ -322,7 +322,7 @@ fit, or make our own:&lt;/p&gt;
 
 &lt;span class=&quot;n&quot;&gt;plot_confusion_matrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/lesson-07---scikit-learn_21_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/pythoncourse/assets/sklearn/lesson-07---scikit-learn_21_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Now we can predict new data exactly as we did for our test set!&lt;/p&gt;
 
