@@ -1,6 +1,6 @@
 ---
 layout: post
-title: title: "Lesson 08 - Scikit-Learn"
+title: "Lesson 08 - Scikit-Learn"
 author: Jeremy
 tags:
  - Applied Statistics stream
