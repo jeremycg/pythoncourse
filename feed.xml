@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 04 Apr 2016 09:27:53 -0400</pubDate>
-    <lastBuildDate>Mon, 04 Apr 2016 09:27:53 -0400</lastBuildDate>
+    <pubDate>Mon, 04 Apr 2016 09:29:00 -0400</pubDate>
+    <lastBuildDate>Mon, 04 Apr 2016 09:29:00 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -20,8 +20,7 @@ module for carrying it out in Python is scikit-learn (aka scikits-learn). Today
 we will cover the basic syntax and logic of the module, without touching too
 deeply on the wide array of methods available.&lt;/p&gt;
 
-&lt;p&gt;Download the &lt;a href=&quot;/pythoncourse/assets/notebooks/applied/lesson 08
-applied.ipynb&quot;&gt;notebook here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Download the &lt;a href=&quot;/pythoncourse/assets/notebooks/applied/lesson 08 applied.ipynb&quot;&gt;notebook here&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;machine-learning-101&quot;&gt;Machine Learning 101&lt;/h3&gt;
 
