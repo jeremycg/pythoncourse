@@ -15,8 +15,7 @@ module for carrying it out in Python is scikit-learn (aka scikits-learn). Today
 we will cover the basic syntax and logic of the module, without touching too
 deeply on the wide array of methods available.
 
-Download the [notebook here](/pythoncourse/assets/notebooks/applied/lesson 08
-applied.ipynb)
+Download the [notebook here](/pythoncourse/assets/notebooks/applied/lesson 08 applied.ipynb)
 
 ### Machine Learning 101
 
