@@ -63,7 +63,7 @@ sparse matrix class from scipy if we have very large (and sparse) matrices.
 
 Categorical features must be dummified (see last lesson)
 
-**In [86]:**
+**In [2]:**
 
 {% highlight python %}
 from sklearn import datasets
@@ -84,7 +84,7 @@ print(iris.data[:6,:])
 Addtionally we have a target, or label array if we have a supervised learning
 dataset:
 
-**In [87]:**
+**In [3]:**
 
 {% highlight python %}
 print(iris.target[:6])
@@ -93,7 +93,7 @@ print(iris.target[:6])
     [0 0 0 0 0 0]
 
 
-**In [88]:**
+**In [4]:**
 
 {% highlight python %}
 print(iris.target_names)
@@ -146,7 +146,7 @@ analysis, fit and then cimpare estimators on the test set.
 Alternatively, the submodule contains methods for carrying out crossvalidation
 during fitting, these should be used with caution.
 
-**In [89]:**
+**In [5]:**
 
 {% highlight python %}
 from sklearn.cross_validation import train_test_split
@@ -182,7 +182,7 @@ Once this is carried out, we can use the [preprocessing
 submodule](http://scikit-
 learn.org/stable/modules/preprocessing.html#preprocessing) to process our data:
 
-**In [90]:**
+**In [6]:**
 
 {% highlight python %}
 from sklearn import preprocessing
@@ -210,7 +210,7 @@ The next step to preprocess our data is optionally use matrix decomposition to
 reduce the number of dimensions our data has. We can use the [decomposition
 module](http://scikit-learn.org/stable/modules/decomposition.html):
 
-**In [91]:**
+**In [7]:**
 
 {% highlight python %}
 from sklearn import decomposition
@@ -240,7 +240,7 @@ linear](https://www.youtube.com/watch?v=3liCbRZPrZA).
 Again, as long as our data is in the correct format we can fit more or less any
 model from sklearn.
 
-**In [92]:**
+**In [8]:**
 
 {% highlight python %}
 from sklearn import svm
@@ -251,7 +251,7 @@ rbf_svc = svm.SVC(kernel='rbf')
 model = rbf_svc.fit(X_train, y_train)
 {% endhighlight %}
 
-**In [93]:**
+**In [9]:**
 
 {% highlight python %}
 model.predict(X_train)
@@ -273,7 +273,7 @@ Now we can evaluate our models, both on the training set, and on the test set.
 
 We need to recreate our transformations on the test set....
 
-**In [94]:**
+**In [10]:**
 
 {% highlight python %}
 #most models have a .score method, which is particular to them. It is normally 1 - out of classification rate
@@ -287,7 +287,7 @@ model.score(X_train, y_train)
 
 
 
-**In [95]:**
+**In [11]:**
 
 {% highlight python %}
 X_test = scaler.transform(X_test)
@@ -304,7 +304,7 @@ model.predict(X_test)
 
 
 
-**In [96]:**
+**In [12]:**
 
 {% highlight python %}
 model.score(X_test, y_test)
@@ -322,7 +322,7 @@ We can also use the [metrics submodule](http://scikit-
 learn.org/stable/modules/model_evaluation.html) to do a ton of metrics about our
 fit, or make our own:
 
-**In [97]:**
+**In [13]:**
 
 {% highlight python %}
 from sklearn.metrics import confusion_matrix
@@ -347,7 +347,7 @@ plot_confusion_matrix(cm)
 {% endhighlight %}
 
 
-![png](/pythoncourse/assets/sklearn/lesson-07---scikit-learn_21_0.png)
+![png](/pythoncourse/assets/sklearn/lesson-08-applied_21_0.png)
 
 
 Now we can predict new data exactly as we did for our test set!
@@ -367,7 +367,7 @@ Python has a built in module, called pickle, to save its native binary
 representation of objects to disk. We will use the jobdumps module for now, as
 it is faster for sklearn objects (it is optimised for numpy arrays).
 
-**In [98]:**
+**In [14]:**
 
 {% highlight python %}
 from sklearn.externals import joblib
@@ -394,7 +394,7 @@ joblib.dump(model, 'model.pkl')
 
 We can load it back in using
 
-**In [99]:**
+**In [15]:**
 
 {% highlight python %}
 model = joblib.load('model.pkl')
@@ -413,7 +413,7 @@ learn.org/stable/modules/pipeline.html). Once we have a pipeline, we can call
 fit and predict as though it were a single model.
 
 
-**In [100]:**
+**In [16]:**
 
 {% highlight python %}
 from sklearn import pipeline
@@ -426,7 +426,7 @@ estimators = [('normalise', preprocessing.StandardScaler()),
 pipe = pipeline.Pipeline(estimators)
 {% endhighlight %}
 
-**In [101]:**
+**In [17]:**
 
 {% highlight python %}
 X_train, X_test, y_train, y_test =\
@@ -444,7 +444,7 @@ pipe.fit(X_train, y_train)
 
 
 
-**In [102]:**
+**In [18]:**
 
 {% highlight python %}
 print(pipe.predict(X_test))
@@ -463,7 +463,7 @@ model.
 We can do this using the [gridsearch submodule](http://scikit-
 learn.org/stable/modules/grid_search.html):
 
-**In [103]:**
+**In [19]:**
 
 {% highlight python %}
 from sklearn.grid_search import GridSearchCV
@@ -485,7 +485,7 @@ pipe.set_params(svm__C = 10)
 
 Grid search lets us search a range of parameters to find the best one:
 
-**In [104]:**
+**In [20]:**
 
 {% highlight python %}
 #again using name__param. Can do as many as we'd like!
@@ -502,9 +502,143 @@ print(grid.score(X_test, y_test))
     0.933333333333
 
 
+### Decision Trees and Random Forests
+
+One of the most popular methods in machine learning is the random forest
+classifier.
+
+We will briefly cover the theory behind it, before seeing a run example.
+
+[Decision trees](http://scikit-learn.org/stable/modules/tree.html) [work with
+boolean logic](http://scikit-learn.org/stable/modules/generated/sklearn.tree.Dec
+isionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier) - at each point,
+we split our data into two classes, based on whether they are above or below a
+certain value for a given feature. The algorithm chooses the feature with
+maximum information and then splits, until we rech our maximum depth, or are
+completely correctly classified:
+
+**In [21]:**
+
+{% highlight python %}
+from sklearn import tree
+model = tree.DecisionTreeClassifier()
+model = model.fit(X_train, y_train)
+{% endhighlight %}
+
+**In [27]:**
+
+{% highlight python %}
+print(model.predict(X_test))
+model.score(X_test, y_test)
+{% endhighlight %}
+
+    [2 1 0 2 0 2 0 1 1 1 2 1 1 1 1 0 1 1 0 0 2 1 0 0 2 0 0 1 1 0 2 1 0 2 2 1 0
+     2 1 1 2 0 2 0 0 1 2 2 1 2 1 2 1 1 2 2 1 2 1 2]
+
+
+
+
+
+    0.94999999999999996
+
+
+
+**In [30]:**
+
+{% highlight python %}
+model.predict_proba(X_test[:6,:])
+{% endhighlight %}
+
+
+
+
+    array([[ 0.,  0.,  1.],
+           [ 0.,  1.,  0.],
+           [ 1.,  0.,  0.],
+           [ 0.,  0.,  1.],
+           [ 1.,  0.,  0.],
+           [ 0.,  0.,  1.]])
+
+
+
+Now we can see we have likely highly overfit our data - by going all the way to
+full resolution, we have described, but maybe not predicted well.
+
+To fix this, we can use a [random forest
+classifier](http://www.stat.berkeley.edu/~breiman/RandomForests/cc_home.htm). A
+[good analogy is here](https://medium.com/@josemarcialportilla/enchanted-random-
+forest-b08d418cb411#.u3ue33opc). We want to bootstrap our original data -
+leading to a bagged forest, then also sample our features. These two methods
+lead to a random forest.
+
+So, now we bootstrap our data, then bootstrap (or otehrwise sample) our
+features, and make a lot of decision trees. We can reduce the error and correct
+for correlated features very easily like this.
+
+The [ensemble submodule](http://scikit-learn.org/stable/modules/ensemble.html)
+contains the [random forest classifier](http://scikit-
+learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html)
+
+We can choose the number of trees, criterion, maximum number of features,
+maximum depth of branches and seferal other options.
+
+**In [50]:**
+
+{% highlight python %}
+from sklearn import ensemble
+model = ensemble.RandomForestClassifier(n_estimators=100)
+model.fit(X_train, y_train)
+print(model.predict(X_test))
+model.score(X_test, y_test)
+{% endhighlight %}
+
+    [2 1 0 2 0 2 0 1 1 1 2 1 1 1 1 0 1 1 0 0 2 1 0 0 2 0 0 1 1 0 2 1 0 2 2 1 0
+     2 1 1 2 0 2 0 0 1 2 2 1 2 1 2 1 1 2 2 1 2 1 2]
+
+
+
+
+
+    0.94999999999999996
+
+
+
+**In [39]:**
+
+{% highlight python %}
+model.predict_proba(X_test[:6,:])
+{% endhighlight %}
+
+
+
+
+    array([[ 0.   ,  0.01 ,  0.99 ],
+           [ 0.   ,  0.985,  0.015],
+           [ 0.992,  0.008,  0.   ],
+           [ 0.   ,  0.008,  0.992],
+           [ 1.   ,  0.   ,  0.   ],
+           [ 0.   ,  0.003,  0.997]])
+
+
+
+**In [53]:**
+
+{% highlight python %}
+plt.bar(np.arange(4), height = model.feature_importances_, yerr = std);
+{% endhighlight %}
+
+
+![png](/pythoncourse/assets/sklearn/lesson-08-applied_42_0.png)
+
+
+We can see that we have probably overfit our training data now - we would do
+some crossvalidation etc to check how bad it really is.
+
+One of the problems with random forests is they are very hard to interpret - we
+have no easy mapping of features to classes
+
 There is still a ton more to learn from sklearn - we have not touch on ensemble
-models, feature importance, roc curves, multithreading and a wide range of
-models.
+models, roc curves, multithreading and a wide range of models.
 
 Now we know the basic syntax of split, transform, fit, predict, score we can run
 most of the models in the module, and analyse their output. Further analysis is
