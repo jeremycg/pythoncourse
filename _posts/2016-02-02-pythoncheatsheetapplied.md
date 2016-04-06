@@ -560,3 +560,23 @@ a.mymethod("mytext")
 {% endhighlight %}
 
     mytext
+
+
+### Useful Modules
+
+There are a wide range of modules that are useful to data scientists that we have not had time to cover in class.
+
+Here are some of my favourites:
+
+SymPy - symbolic mathematics
+Bokeh - interactive in browser plotting
+d3Py - D3.js based plots
+json - JSON data (Standard library)
+PyMongo - mongoDB
+Flask - Web Dev
+Django - Web Dev
+eve - API construction
+BeautifulSoup - Web scraping
+
+More generally, if you would like to do something in Python, try googling "[task] python"
+you will likely find a useful module or two.
