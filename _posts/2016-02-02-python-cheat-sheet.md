@@ -568,13 +568,29 @@ There are a wide range of modules that are useful to data scientists that we hav
 Here are some of my favourites:
 
 SymPy - symbolic mathematics
+
+
 Bokeh - interactive in browser plotting
+
+
 d3Py - D3.js based plots
+
+
 json - JSON data (Standard library)
+
+
 PyMongo - mongoDB
+
+
 Flask - Web Dev
+
+
 Django - Web Dev
+
+
 eve - API construction
+
+
 BeautifulSoup - Web scraping
 
 More generally, if you would like to do something in Python, try googling "[task] python"

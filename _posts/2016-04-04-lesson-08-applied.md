@@ -648,3 +648,46 @@ For the rest of the lesson, we will work through the titanic dataset example,
 fitted with a random forest model:
 http://nbviewer.jupyter.org/github/donnemartin/data-science-ipython-
 notebooks/blob/master/kaggle/titanic.ipynb
+
+
+### Exercises
+
+1\. Read through and undestand all the steps of the Titanic analysis
+
+2\. Use the [onehotencoder](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html)
+to dummify the sex and embarkation parameters - this will need to be done on the data.values
+
+3\. Load the test data in again:
+{% highlight python %}
+
+dat = pd.read_csv("http://jeremy.kiwi.nz/pythoncourse/assets/tests/r&d/test1data.csv")
+{% endhighlight %}
+
+Create dummies for the day:
+{% highlight python %}
+
+y = pd.get_dummies(dat.Weekday)
+{% endhighlight %}
+
+now create dummy variables for each category (either using get_dummies, or onehotencoder) as a new dataframe, x
+
+4\. Join the Weekday dummies to the old data frame:
+{% highlight python %}
+
+df2 = dat[['TripType', 'ScanCount']].join(y)
+{% endhighlight %}
+
+join the category dummies too.
+
+5\. Run a random forest on the data (don't worry about train test split for now).
+You will probably want something like this:
+{% highlight python %}
+
+model.fit(df2.values[:, 1:],df2.values[:, 0])
+{% endhighlight %}
+
+6\. How well did the model score on our training data? We can see that we did not
+bin our baskets - each line got a new prediction.
+
+7\. Advanced, extension. Bin the baskets, so that we have a line for each basket
+(you probably want .groupby). Rerun the random forest - how did you do?

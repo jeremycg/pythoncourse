@@ -29,7 +29,7 @@ Date & Room Schedule (might be updated as course progresses)
 
 8.      Wednesday, Mar 30th – Manitoba
 
-9.      Wednesday, Apr 6th – Ontario
+9.      Wednesday, Apr 6th – PEI
 
 10.   Wednesday, Apr 13th – British Columbia (6th floor)
 
