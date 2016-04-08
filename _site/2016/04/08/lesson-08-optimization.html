@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Lesson 08 - Optimization</title>
+  <meta name="description" content="Lesson 08 - Python Optimization">
+
+  <link rel="stylesheet" href="/pythoncourse/css/main.css">
+  <link rel="canonical" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/04/08/lesson-08-optimization.html">
+  <link rel="alternate" type="application/rss+xml" title="Python @ Precima" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/pythoncourse/">Python @ Precima</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/Applied%20Statistics%20stream/">Applied Statistics stream</a>
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/R&D%20stream/">R&D stream</a>
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-73837623-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Lesson 08 - Optimization</h1>
+    <p class="post-meta"><time datetime="2016-04-08T00:00:00-04:00" itemprop="datePublished">Apr 8, 2016</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Jeremy</span></span></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h2 id="lesson-08---python-optimization">Lesson 08 - Python Optimization</h2>
+
+<p>Welcome to lesson 9. This lesson we will deepen our understanding of Python, and
+learn how to optimise our code through profiling, benchmarking and timing. We
+will also learn the most common methods of writing code for parallel processing.</p>
+
+<p>We will also learn the general methods of error handling and raising, and how to
+automatically test code to make sure it is carrying out what we want it to do.</p>
+
+<p>Firstly however, we will learn a little more about generators.</p>
+
+<p>Download <a href="/pythoncourse/assets/notebooks/r&amp;d/Lesson 08 - Optimization.ipynb">todays notebook here</a></p>
+
+<h3 id="iterables-and-generators">Iterables and Generators</h3>
+
+<p>Let’s go back to when we introduced zip:</p>
+
+<p><strong>In [49]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#taken from comments on the site</span>
+<span class="n">l</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">k</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">a</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[(1, 4), (2, 5), (3, 6)]
+[]
+</code></pre>
+</div>
+
+<p>Huh, why did’t the second one work?</p>
+
+<p>It turns out, many of the maps, zips etc in python 3 are implemented as
+iterators. These objects allow us to generate a single part at each step,
+without storing it all in memory (these are based on range, but work a little
+differently).</p>
+
+<p><strong>In [54]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(1, 4)
+(2, 5)
+(3, 6)
+[]
+</code></pre>
+</div>
+
+<p>We can iterate over any iterable in a for loop:</p>
+
+<p><strong>In [57]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1
+2
+3
+</code></pre>
+</div>
+
+<p>But to eplicit make it an iterator, we use the iter() function:</p>
+
+<p><strong>In [84]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">j</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">j</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1
+2
+3
+
+
+
+---------------------------------------------------------------------------
+
+StopIteration                             Traceback (most recent call last)
+
+&lt;ipython-input-84-31e9e4b4925c&gt; in &lt;module&gt;()
+      3 print(next(j))
+      4 print(next(j))
+----&gt; 5 print(next(j))
+
+
+StopIteration:
+</code></pre>
+</div>
+
+<p>Turning a preexisitng object into an iterator is not very useful however, as we
+already have it in memory.</p>
+
+<p>If we want to create a function to make our output, we can use a generator
+function</p>
+
+<p>Generator functuions work very similar to standard functions, but use the yield
+keyword, rather than return:</p>
+
+<p><strong>In [67]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">mygen</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">yield</span> <span class="n">n</span>
+    <span class="k">yield</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">mygen</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;generator object mygen at 0x00000241871AE518&gt;
+10
+11
+</code></pre>
+</div>
+
+<p>Or, a fibonacci implementation:</p>
+
+<p><strong>In [80]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">a</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">fib</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+</code></pre>
+</div>
+
+<p>This is also why we can’t do tuple comprehensions - the syntax is reserved for
+making generator expressions:</p>
+
+<p><strong>In [81]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1
+2
+3
+
+
+
+---------------------------------------------------------------------------
+
+StopIteration                             Traceback (most recent call last)
+
+&lt;ipython-input-81-0f1ad886ef79&gt; in &lt;module&gt;()
+      4 print(next(g))
+      5 print(next(g))
+----&gt; 6 print(next(g))
+
+
+StopIteration:
+</code></pre>
+</div>
+
+<p>In general, we can think of generators as a ‘lazy list’ - a way of stroign how
+to get the next object, without taking up all the memory.</p>
+
+<h3 id="working-with-large-files">Working with large files</h3>
+
+<p>In general Python holds the data we have in memory. We need to come up with ways
+to handle larger data out of memory in piecemeal (or buy more RAM). Most methods
+are specific to a certain type of data, but we will cover a general method for
+now.</p>
+
+<p>We can open a file on the disk in Python, as long as we use the correct
+permissions (read_csv from pandas took care of this for us). Let’s download the
+test example data -
+http://jeremy.kiwi.nz/pythoncourse/assets/tests/r&amp;d/test1data.csv</p>
+
+<p><strong>In [90]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">g</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'c:/users/jeremy/downloads/test1data.csv'</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;_io.TextIOWrapper name='c:/users/jeremy/downloads/test1data.csv' mode='r' encoding='cp1252'&gt;
+</code></pre>
+</div>
+
+<p>We need to specify a ‘mode’ to open our file - I have chosen r for read, we can
+also use w for writing (this deletes the exsiting file), a for appending, and r+
+for writing/andor reading.</p>
+
+<p>The file is not read in straight away - we merely have a pointer to the file. We
+can read the next line as though it was created using a generator:</p>
+
+<p><strong>In [91]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#nextline</span>
+<span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>TripType,VisitNumber,Weekday,Upc,ScanCount,DepartmentDescription,FinelineNumber
+
+999,5,Friday,68113152929,-1,FINANCIAL SERVICES,1000
+</code></pre>
+</div>
+
+<p>If you want to read all the lines of a file in a list you can also use list(f),
+f.readlines() or f.read().</p>
+
+<p>Once we are done with a file, we need to close it:</p>
+
+<p><strong>In [92]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">g</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></code></pre></figure>
+
+<p>But, this doesn’t help use too much - we can imagine reading in enough files ot
+fill our memory, and then carrying out some analysis, then reading in more.</p>
+
+<p>Luckily, we have the with statement and generators:</p>
+
+<p><strong>In [7]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'c:/users/jeremy/downloads/test1data.csv'</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">head</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>['TripType,VisitNumber,Weekday,Upc,ScanCount,DepartmentDescription,FinelineNumber', '999,5,Friday,68113152929,-1,FINANCIAL SERVICES,1000', '30,7,Friday,60538815980,1,SHOES,8931', '30,7,Friday,7410811099,1,PERSONAL CARE,4504', '26,8,Friday,2238403510,2,PAINT AND ACCESSORIES,3565']
+</code></pre>
+</div>
+
+<p><strong>In [14]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">partread</span><span class="p">(</span><span class="nb">file</span><span class="p">):</span>
+     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">myfile</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">myfile</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">i</span>
+
+<span class="n">lines</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">partread</span><span class="p">(</span><span class="s">'c:/users/jeremy/downloads/test1data.csv'</span><span class="p">)</span>
+<span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lines</span><span class="p">)]</span>
+<span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lines</span><span class="p">)]</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>['26,8,Friday,2006613744,2,PAINT AND ACCESSORIES,1017',
+ '26,8,Friday,2006618783,2,PAINT AND ACCESSORIES,1017',
+ '26,8,Friday,2006613743,1,PAINT AND ACCESSORIES,1017',
+ '26,8,Friday,7004802737,1,PAINT AND ACCESSORIES,2802',
+ '26,8,Friday,2238495318,1,PAINT AND ACCESSORIES,4501']
+</code></pre>
+</div>
+
+<p>Pandas also has a built-in methods to generate an interator:</p>
+
+<p><strong>In [17]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'c:/users/jeremy/downloads/test1data.csv'</span><span class="p">,</span> <span class="n">iterator</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;pandas.io.parsers.TextFileReader object at 0x000002A6A7AB2198&gt;
+</code></pre>
+</div>
+
+<p><strong>In [20]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span><span class="o">.</span><span class="n">get_chunk</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span></code></pre></figure>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TripType</th>
+      <th>VisitNumber</th>
+      <th>Weekday</th>
+      <th>Upc</th>
+      <th>ScanCount</th>
+      <th>DepartmentDescription</th>
+      <th>FinelineNumber</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>26</td>
+      <td>8</td>
+      <td>Friday</td>
+      <td>5200010239</td>
+      <td>1</td>
+      <td>DSD GROCERY</td>
+      <td>4606</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>26</td>
+      <td>8</td>
+      <td>Friday</td>
+      <td>88679300501</td>
+      <td>2</td>
+      <td>PAINT AND ACCESSORIES</td>
+      <td>3504</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>26</td>
+      <td>8</td>
+      <td>Friday</td>
+      <td>22006000000</td>
+      <td>1</td>
+      <td>MEAT - FRESH &amp; FROZEN</td>
+      <td>6009</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>26</td>
+      <td>8</td>
+      <td>Friday</td>
+      <td>2236760452</td>
+      <td>1</td>
+      <td>PAINT AND ACCESSORIES</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>26</td>
+      <td>8</td>
+      <td>Friday</td>
+      <td>88679300501</td>
+      <td>-1</td>
+      <td>PAINT AND ACCESSORIES</td>
+      <td>3504</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>There are more sensible workflows using large data technologies - for now we
+will move on.</p>
+
+<h3 id="error-and-exception-handling">Error and Exception handling</h3>
+
+<p>It’s easier to ask forgiveness than it is to get permission. - Grace Hopper</p>
+
+<p>We can often program more easily, if we simply try to do something, and then
+handle the failure. Errors will however break our code if we are not careful, so
+we can build in fail safe methods to handle errors:</p>
+
+<p><strong>In [22]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'testfile'</span><span class="p">,</span><span class="s">'r'</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>---------------------------------------------------------------------------
+
+FileNotFoundError                         Traceback (most recent call last)
+
+&lt;ipython-input-22-9b568190695a&gt; in &lt;module&gt;()
+----&gt; 1 f = open('testfile','r')
+
+
+FileNotFoundError: [Errno 2] No such file or directory: 'testfile'
+</code></pre>
+</div>
+
+<p>We can try to do this, using the try statement, and an exception:</p>
+
+<p><strong>In [26]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">try</span><span class="p">:</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'testfile'</span><span class="p">,</span><span class="s">'r'</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'file not found'</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>file not found
+</code></pre>
+</div>
+
+<p>Now we have no longer raised an error serious enough to stop our script (whether
+this is bad or good is up to you). We can also specify the <a href="https://docs.python.org/3/library/exceptions.html#bltin-exceptions">type of
+error</a> we
+will catch (more specific is better):</p>
+
+<p><strong>In [29]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">try</span><span class="p">:</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'testfile'</span><span class="p">,</span><span class="s">'r'</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">FileNotFoundError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'file not found'</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">TypeError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'type error!'</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>file not found
+</code></pre>
+</div>
+
+<p><strong>In [31]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">try</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="k">except</span> <span class="n">FileNotFoundError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'file not found'</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">TypeError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'type error!'</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>type error!
+</code></pre>
+</div>
+
+<p>We can add on a final else which is only completed if we did not raise an error:</p>
+
+<p><strong>In [34]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">try</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="k">except</span> <span class="n">FileNotFoundError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'file not found'</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">TypeError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'type error!'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'operation sucessful'</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>operation sucessful
+</code></pre>
+</div>
+
+<p>We can use finally to run a piece of code whether or not we were sucessful,
+which is useful for cleanup:</p>
+
+<p><strong>In [37]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">try</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="k">except</span> <span class="n">FileNotFoundError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'file not found'</span><span class="p">)</span>
+<span class="k">except</span> <span class="nb">TypeError</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'type error!'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'operation sucessful'</span><span class="p">)</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="k">del</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'cleanedup'</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>type error!
+cleanedup
+</code></pre>
+</div>
+
+<p>Still to come - unit testing,  profiling, benchmarking and parallel prcoessing</p>
+
+<p><strong>In [39]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">%</span><span class="n">prun</span> <span class="k">pass</span></code></pre></figure>
+
+
+  </div>
+  
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'jeremycg';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Python @ Precima</h2>
+
+
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
