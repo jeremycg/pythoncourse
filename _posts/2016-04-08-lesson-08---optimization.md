@@ -17,7 +17,7 @@ automatically test code to make sure it is carrying out what we want it to do.
 
 Firstly however, we will learn a little more about generators.
 
-Download [todays notebook here](/pythoncourse/notebooks/r&d/Lesson 08 - Optimization.ipynb)
+Download [todays notebook here](/pythoncourse/assets/notebooks/r&d/Lesson 08 - Optimization.ipynb)
 
 ### Iterables and Generators
 

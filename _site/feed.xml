@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 10 Apr 2016 23:54:15 -0400</pubDate>
-    <lastBuildDate>Sun, 10 Apr 2016 23:54:15 -0400</lastBuildDate>
+    <pubDate>Mon, 11 Apr 2016 09:44:25 -0400</pubDate>
+    <lastBuildDate>Mon, 11 Apr 2016 09:44:25 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -21,7 +21,7 @@ automatically test code to make sure it is carrying out what we want it to do.&l
 
 &lt;p&gt;Firstly however, we will learn a little more about generators.&lt;/p&gt;
 
-&lt;p&gt;Download &lt;a href=&quot;/pythoncourse/notebooks/r&amp;amp;d/Lesson 08 - Optimization.ipynb&quot;&gt;todays notebook here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Download &lt;a href=&quot;/pythoncourse/assets/notebooks/r&amp;amp;d/Lesson 08 - Optimization.ipynb&quot;&gt;todays notebook here&lt;/a&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;iterables-and-generators&quot;&gt;Iterables and Generators&lt;/h3&gt;
 
