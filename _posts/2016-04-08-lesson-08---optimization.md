@@ -23,7 +23,7 @@ Download [todays notebook here](/pythoncourse/assets/notebooks/r&d/Lesson 08 - O
 
 Let's go back to when we introduced zip:
 
-**In [118]:**
+**In [1]:**
 
 {% highlight python %}
 #taken from comments on the site
@@ -75,7 +75,7 @@ for i in l:
     3
 
 
-But to eplicit make it an iterator, we use the iter() function:
+But to explicitly make it an iterator, we use the iter() function:
 
 **In [121]:**
 
@@ -135,7 +135,7 @@ print(next(g))
 
 Or, a fibonacci implementation:
 
-**In [130]:**
+**In [2]:**
 
 {% highlight python %}
 def fib(n):
@@ -146,6 +146,7 @@ def fib(n):
 
 for num in fib(10):
     print(num)
+#x = fib(10)
 {% endhighlight %}
 
     1
@@ -203,9 +204,10 @@ to handle larger data out of memory in piecemeal (or buy more RAM). Most methods
 are specific to a certain type of data, but we will cover a general method for
 now.
 
-We can open a file on the disk in Python, as long as we use the correct
-permissions (read_csv from pandas took care of this for us). Let's download the
-test example data -
+[We can open a file on the disk in
+Python](https://docs.python.org/3.5/tutorial/inputoutput.html), as long as we
+use the correct permissions (read_csv from pandas took care of this for us).
+Let's download the test example data -
 http://jeremy.kiwi.nz/pythoncourse/assets/tests/r&d/test1data.csv
 
 **In [132]:**
@@ -219,7 +221,7 @@ print(g)
 
 
 We need to specify a 'mode' to open our file - I have chosen r for read, we can
-also use w for writing (this deletes the exsiting file), a for appending, and r+
+also use w for writing (this deletes the existing file), a for appending, and r+
 for writing/andor reading.
 
 The file is not read in straight away - we merely have a pointer to the file. We
@@ -250,21 +252,33 @@ Once we are done with a file, we need to close it:
 g.close()
 {% endhighlight %}
 
-But, this doesn't help use too much - we can imagine reading in enough files ot
+But, this doesn't help us too much - we can imagine reading in enough files to
 fill our memory, and then carrying out some analysis, then reading in more.
 
 Luckily, we have the with statement and generators:
 
-**In [135]:**
+**In [4]:**
 
 {% highlight python %}
 with open('/home/jeremy/Downloads/test1data.csv', 'r') as file:
-    head = [next(file).strip() for x in range(5)]
+    head = [next(file).strip() for _ in range(5)]
 
 print(head)
 {% endhighlight %}
 
-    ['TripType,VisitNumber,Weekday,Upc,ScanCount,DepartmentDescription,FinelineNumber', '999,5,Friday,68113152929,-1,FINANCIAL SERVICES,1000', '30,7,Friday,60538815980,1,SHOES,8931', '30,7,Friday,7410811099,1,PERSONAL CARE,4504', '26,8,Friday,2238403510,2,PAINT AND ACCESSORIES,3565']
+
+    ---------------------------------------------------------------------------
+
+    FileNotFoundError                         Traceback (most recent call last)
+
+    <ipython-input-4-f6f9a1ae0ace> in <module>()
+    ----> 1 with open('/home/jeremy/Downloads/test1data.csv', 'r') as file:
+          2     head = [next(file).strip() for _ in range(5)]
+          3
+          4 print(head)
+
+
+    FileNotFoundError: [Errno 2] No such file or directory: '/home/jeremy/Downloads/test1data.csv'
 
 
 **In [136]:**
@@ -484,7 +498,7 @@ else:
 We can use finally to run a piece of code whether or not we were sucessful,
 which is useful for cleanup:
 
-**In [144]:**
+**In [5]:**
 
 {% highlight python %}
 try:
@@ -505,7 +519,26 @@ finally:
     cleanedup
 
 
-Still to come - unit testing and parallel prcoessing
+If we want to manually raise an exception, we can use the raise statement (or
+use an assertion):
+
+**In [9]:**
+
+{% highlight python %}
+raise TypeError("I'm sorry, Dave. I'm afraid I can't do that.")
+{% endhighlight %}
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    <ipython-input-9-ed11983429c5> in <module>()
+    ----> 1 raise TypeError("I'm sorry, Dave. I'm afraid I can't do that.")
+
+
+    TypeError: I'm sorry, Dave. I'm afraid I can't do that.
+
 
 ### Debugging
 
@@ -513,7 +546,7 @@ We have an interactive debugger in iPython, called after an error using the
 %debug command. Using this we can trace back our errors, see current values, and
 step forward in code:
 
-**In [145]:**
+**In [10]:**
 
 {% highlight python %}
 thisisnotadefinedvariable
@@ -524,22 +557,24 @@ thisisnotadefinedvariable
 
     NameError                                 Traceback (most recent call last)
 
-    <ipython-input-145-091615ac5c44> in <module>()
+    <ipython-input-10-091615ac5c44> in <module>()
     ----> 1 thisisnotadefinedvariable
 
 
     NameError: name 'thisisnotadefinedvariable' is not defined
 
 
-**In [146]:**
+**In [11]:**
 
 {% highlight python %}
 %debug
 {% endhighlight %}
 
-    > [1;32m<ipython-input-145-091615ac5c44>[0m(1)[0;36m<module>[1;34m()[0m
+    > [1;32m<ipython-input-10-091615ac5c44>[0m(1)[0;36m<module>[1;34m()[0m
     [1;32m----> 1 [1;33m[0mthisisnotadefinedvariable[0m[1;33m[0m[0m
     [0m
+    ipdb> x
+    *** NameError: name 'x' is not defined
     ipdb> exit
 
 
@@ -554,13 +589,13 @@ The easiest way to debug problematic code is to manually enter a breakpoint,
 using pdb.set_trace(). From here you will enter the debugger, and have access to
 all the variables available in the cirrent environment.
 
-**In [147]:**
+**In [13]:**
 
 {% highlight python %}
 import pdb
 {% endhighlight %}
 
-**In [148]:**
+**In [15]:**
 
 {% highlight python %}
 def fib(num):
@@ -575,7 +610,7 @@ for each in fib(10):
 {% endhighlight %}
 
     1
-    > <ipython-input-148-113b0f967fab>(3)fib()
+    > <ipython-input-15-113b0f967fab>(3)fib()
     -> for i in range(num):
     (Pdb) exit
 
@@ -585,14 +620,14 @@ for each in fib(10):
 
     BdbQuit                                   Traceback (most recent call last)
 
-    <ipython-input-148-113b0f967fab> in <module>()
+    <ipython-input-15-113b0f967fab> in <module>()
           6         pdb.set_trace()
           7
     ----> 8 for each in fib(10):
           9     print(each)
 
 
-    <ipython-input-148-113b0f967fab> in fib(num)
+    <ipython-input-15-113b0f967fab> in fib(num)
           1 def fib(num):
           2     acounter, bcounter = 1, 1
     ----> 3     for i in range(num):
@@ -600,7 +635,7 @@ for each in fib(10):
           5         acounter, bcounter = bcounter, acounter + bcounter
 
 
-    <ipython-input-148-113b0f967fab> in fib(num)
+    <ipython-input-15-113b0f967fab> in fib(num)
           1 def fib(num):
           2     acounter, bcounter = 1, 1
     ----> 3     for i in range(num):
@@ -608,7 +643,7 @@ for each in fib(10):
           5         acounter, bcounter = bcounter, acounter + bcounter
 
 
-    /home/jeremy/anaconda3/lib/python3.5/bdb.py in trace_dispatch(self, frame, event, arg)
+    C:\Anaconda3\lib\bdb.py in trace_dispatch(self, frame, event, arg)
          46             return # None
          47         if event == 'line':
     ---> 48             return self.dispatch_line(frame)
@@ -616,7 +651,7 @@ for each in fib(10):
          50             return self.dispatch_call(frame, arg)
 
 
-    /home/jeremy/anaconda3/lib/python3.5/bdb.py in dispatch_line(self, frame)
+    C:\Anaconda3\lib\bdb.py in dispatch_line(self, frame)
          65         if self.stop_here(frame) or self.break_here(frame):
          66             self.user_line(frame)
     ---> 67             if self.quitting: raise BdbQuit
@@ -699,8 +734,9 @@ np.arange(5000000)
 Now this is not super useful - only if we have a large file with multiple
 functions. We could probably just use %time or %%timeit.
 
-If we want to go line by line, we need the line profiler module (conda install
-line profiler). We then need to load it as an iPython extension, rather than a
+If we want to go line by line, we need the [line profiler
+module](https://pypi.python.org/pypi/line_profiler/) (conda install
+line_profiler). We then need to load it as an iPython extension, rather than a
 module:
 
 **In [152]:**
@@ -731,17 +767,13 @@ def fibo(x):
 In the same manner, we can do memory profiling, using the [memory_profiler
 module](https://pypi.python.org/pypi/memory_profiler)
 
-**In [154]:**
+**In [2]:**
 
 {% highlight python %}
 %load_ext memory_profiler
 {% endhighlight %}
 
-    The memory_profiler extension is already loaded. To reload it, use:
-      %reload_ext memory_profiler
-
-
-**In [155]:**
+**In [13]:**
 
 {% highlight python %}
 def fibo(x):
@@ -756,9 +788,98 @@ def fibo(x):
 #doesnt work unless we run a file!
 {% endhighlight %}
 
-    ERROR: Could not find file <ipython-input-155-4a4111679972>
+    ERROR: Could not find file <ipython-input-13-4a4111679972>
     NOTE: %mprun can only be used on functions defined in physical files, and not in the IPython environment.
 
+
+
+**In [19]:**
+
+{% highlight python %}
+#mymem.py
+import numpy as np
+
+def testmem():
+    a = np.arange(1000000)
+    b = list(range(1000000))
+    del(a)
+    del(b)
+
+testmem()
+{% endhighlight %}
+
+**In [18]:**
+
+{% highlight python %}
+from mymem import testmem
+%mprun -f testmem testmem()
+{% endhighlight %}
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-18-d2a247059265> in <module>()
+          1 from mymem import testmem
+    ----> 2 get_ipython().magic('mprun -f testmem testmem()')
+
+
+    /home/jeremy/anaconda3/lib/python3.5/site-packages/IPython/core/interactiveshell.py in magic(self, arg_s)
+       2334         magic_name, _, magic_arg_s = arg_s.partition(' ')
+       2335         magic_name = magic_name.lstrip(prefilter.ESC_MAGIC)
+    -> 2336         return self.run_line_magic(magic_name, magic_arg_s)
+       2337
+       2338     #-------------------------------------------------------------------------
+
+
+    /home/jeremy/anaconda3/lib/python3.5/site-packages/IPython/core/interactiveshell.py in run_line_magic(self, magic_name, line)
+       2255                 kwargs['local_ns'] = sys._getframe(stack_depth).f_locals
+       2256             with self.builtin_trap:
+    -> 2257                 result = fn(*args,**kwargs)
+       2258             return result
+       2259
+
+
+    /home/jeremy/anaconda3/lib/python3.5/site-packages/memory_profiler.py in mprun(self, parameter_s, cell)
+
+
+    /home/jeremy/anaconda3/lib/python3.5/site-packages/IPython/core/magic.py in <lambda>(f, *a, **k)
+        191     # but it's overkill for just that one bit of state.
+        192     def magic_deco(arg):
+    --> 193         call = lambda f, *a, **k: f(*a, **k)
+        194
+        195         if callable(arg):
+
+
+    /home/jeremy/anaconda3/lib/python3.5/site-packages/memory_profiler.py in mprun(self, parameter_s, cell)
+        724
+        725         try:
+    --> 726             profile.runctx(arg_str, global_ns, local_ns)
+        727             message = ''
+        728         except SystemExit:
+
+
+    /home/jeremy/anaconda3/lib/python3.5/site-packages/memory_profiler.py in runctx(self, cmd, globals, locals)
+        513         self.enable_by_count()
+        514         try:
+    --> 515             exec(cmd, globals, locals)
+        516         finally:
+        517             self.disable_by_count()
+
+
+    <string> in <module>()
+
+
+    /home/jeremy/Downloads/mymem.py in testmem()
+          3
+          4 def testmem():
+    ----> 5     a = np.arange(1000000)
+          6     b = list(range(1000000))
+          7     del(a)
+
+
+    NameError: name 'numpy' is not defined
 
 
 We can also use the %memit magic (Here I'm showing I was not lieing about the
@@ -819,10 +940,10 @@ done
 
 ### Testing
 
-Test driven development is a development style where we write tests that out
-completed code should pass, then attempt to write code to pass them. In this
-manner, we can ensure that our code works as desired, and gives outputs that we
-desire.
+[Test driven development](https://en.wikipedia.org/wiki/Test-driven_development)
+is a development style where we write tests that out completed code should pass,
+then attempt to write code to pass them. In this manner, we can ensure that our
+code works as desired, and gives outputs that we desire.
 
 To a lesser extent, all code should include tests - a lot of time spent
 debugging and writing code is simply manual testing - why didn't my code work?
@@ -1009,3 +1130,12 @@ if __name__ == '__main__':
 {% endhighlight %}
 
 We forgot our initial bug fixes - lucky we had tests!
+
+### Summary
+
+Today we covered generators and iterators - ways of compactly handling data. We
+also covered reading in data in chunks for memory efficiency, error handling,
+debugging, profiling and testing.
+
+In the last lesson we will cover parallel processing, connecting to your netezza
+databases, virtual environments and working on the server.
