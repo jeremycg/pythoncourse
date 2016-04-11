@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 11 Apr 2016 11:07:30 -0400</pubDate>
-    <lastBuildDate>Mon, 11 Apr 2016 11:07:30 -0400</lastBuildDate>
+    <pubDate>Mon, 11 Apr 2016 11:10:33 -0400</pubDate>
+    <lastBuildDate>Mon, 11 Apr 2016 11:10:33 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -27,7 +27,7 @@ automatically test code to make sure it is carrying out what we want it to do.&l
 
 &lt;p&gt;Let’s go back to when we introduced zip:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [118]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [1]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#taken from comments on the site&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
@@ -76,7 +76,7 @@ differently).&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;But to eplicit make it an iterator, we use the iter() function:&lt;/p&gt;
+&lt;p&gt;But to explicitly make it an iterator, we use the iter() function:&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;In [121]:&lt;/strong&gt;&lt;/p&gt;
 
@@ -134,7 +134,7 @@ keyword, rather than return:&lt;/p&gt;
 
 &lt;p&gt;Or, a fibonacci implementation:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [130]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [2]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
@@ -143,7 +143,8 @@ keyword, rather than return:&lt;/p&gt;
         &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#x = fib(10)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1
 1
@@ -200,9 +201,10 @@ to handle larger data out of memory in piecemeal (or buy more RAM). Most methods
 are specific to a certain type of data, but we will cover a general method for
 now.&lt;/p&gt;
 
-&lt;p&gt;We can open a file on the disk in Python, as long as we use the correct
-permissions (read_csv from pandas took care of this for us). Let’s download the
-test example data -
+&lt;p&gt;&lt;a href=&quot;https://docs.python.org/3.5/tutorial/inputoutput.html&quot;&gt;We can open a file on the disk in
+Python&lt;/a&gt;, as long as we
+use the correct permissions (read_csv from pandas took care of this for us).
+Let’s download the test example data -
 http://jeremy.kiwi.nz/pythoncourse/assets/tests/r&amp;amp;d/test1data.csv&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;In [132]:&lt;/strong&gt;&lt;/p&gt;
@@ -215,7 +217,7 @@ http://jeremy.kiwi.nz/pythoncourse/assets/tests/r&amp;amp;d/test1data.csv&lt;/p&
 &lt;/div&gt;
 
 &lt;p&gt;We need to specify a ‘mode’ to open our file - I have chosen r for read, we can
-also use w for writing (this deletes the exsiting file), a for appending, and r+
+also use w for writing (this deletes the existing file), a for appending, and r+
 for writing/andor reading.&lt;/p&gt;
 
 &lt;p&gt;The file is not read in straight away - we merely have a pointer to the file. We
@@ -242,19 +244,30 @@ f.readlines() or f.read().&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;But, this doesn’t help use too much - we can imagine reading in enough files ot
+&lt;p&gt;But, this doesn’t help us too much - we can imagine reading in enough files to
 fill our memory, and then carrying out some analysis, then reading in more.&lt;/p&gt;
 
 &lt;p&gt;Luckily, we have the with statement and generators:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [135]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [4]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;/home/jeremy/Downloads/test1data.csv&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;r&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[&#39;TripType,VisitNumber,Weekday,Upc,ScanCount,DepartmentDescription,FinelineNumber&#39;, &#39;999,5,Friday,68113152929,-1,FINANCIAL SERVICES,1000&#39;, &#39;30,7,Friday,60538815980,1,SHOES,8931&#39;, &#39;30,7,Friday,7410811099,1,PERSONAL CARE,4504&#39;, &#39;26,8,Friday,2238403510,2,PAINT AND ACCESSORIES,3565&#39;]
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---------------------------------------------------------------------------
+
+FileNotFoundError                         Traceback (most recent call last)
+
+&amp;lt;ipython-input-4-f6f9a1ae0ace&amp;gt; in &amp;lt;module&amp;gt;()
+----&amp;gt; 1 with open(&#39;/home/jeremy/Downloads/test1data.csv&#39;, &#39;r&#39;) as file:
+      2     head = [next(file).strip() for _ in range(5)]
+      3
+      4 print(head)
+
+
+FileNotFoundError: [Errno 2] No such file or directory: &#39;/home/jeremy/Downloads/test1data.csv&#39;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -456,7 +469,7 @@ will catch (more specific is better):&lt;/p&gt;
 &lt;p&gt;We can use finally to run a piece of code whether or not we were sucessful,
 which is useful for cleanup:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [144]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [5]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -476,7 +489,24 @@ cleanedup
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Still to come - unit testing and parallel prcoessing&lt;/p&gt;
+&lt;p&gt;If we want to manually raise an exception, we can use the raise statement (or
+use an assertion):&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [9]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;TypeError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I&#39;m sorry, Dave. I&#39;m afraid I can&#39;t do that.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---------------------------------------------------------------------------
+
+TypeError                                 Traceback (most recent call last)
+
+&amp;lt;ipython-input-9-ed11983429c5&amp;gt; in &amp;lt;module&amp;gt;()
+----&amp;gt; 1 raise TypeError(&quot;I&#39;m sorry, Dave. I&#39;m afraid I can&#39;t do that.&quot;)
+
+
+TypeError: I&#39;m sorry, Dave. I&#39;m afraid I can&#39;t do that.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;h3 id=&quot;debugging&quot;&gt;Debugging&lt;/h3&gt;
 
@@ -484,7 +514,7 @@ cleanedup
 %debug command. Using this we can trace back our errors, see current values, and
 step forward in code:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [145]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [10]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;thisisnotadefinedvariable&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
@@ -492,7 +522,7 @@ step forward in code:&lt;/p&gt;
 
 NameError                                 Traceback (most recent call last)
 
-&amp;lt;ipython-input-145-091615ac5c44&amp;gt; in &amp;lt;module&amp;gt;()
+&amp;lt;ipython-input-10-091615ac5c44&amp;gt; in &amp;lt;module&amp;gt;()
 ----&amp;gt; 1 thisisnotadefinedvariable
 
 
@@ -500,13 +530,15 @@ NameError: name &#39;thisisnotadefinedvariable&#39; is not defined
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;In [146]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [11]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;debug&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; [1;32m&amp;lt;ipython-input-145-091615ac5c44&amp;gt;[0m(1)[0;36m&amp;lt;module&amp;gt;[1;34m()[0m
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;gt; [1;32m&amp;lt;ipython-input-10-091615ac5c44&amp;gt;[0m(1)[0;36m&amp;lt;module&amp;gt;[1;34m()[0m
 [1;32m----&amp;gt; 1 [1;33m[0mthisisnotadefinedvariable[0m[1;33m[0m[0m
 [0m
+ipdb&amp;gt; x
+*** NameError: name &#39;x&#39; is not defined
 ipdb&amp;gt; exit
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -522,11 +554,11 @@ online&lt;/a&gt;.&lt;/p&gt;
 using pdb.set_trace(). From here you will enter the debugger, and have access to
 all the variables available in the cirrent environment.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [147]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [13]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pdb&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;&lt;strong&gt;In [148]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [15]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;acounter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bcounter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
@@ -539,7 +571,7 @@ all the variables available in the cirrent environment.&lt;/p&gt;
     &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1
-&amp;gt; &amp;lt;ipython-input-148-113b0f967fab&amp;gt;(3)fib()
+&amp;gt; &amp;lt;ipython-input-15-113b0f967fab&amp;gt;(3)fib()
 -&amp;gt; for i in range(num):
 (Pdb) exit
 
@@ -549,14 +581,14 @@ all the variables available in the cirrent environment.&lt;/p&gt;
 
 BdbQuit                                   Traceback (most recent call last)
 
-&amp;lt;ipython-input-148-113b0f967fab&amp;gt; in &amp;lt;module&amp;gt;()
+&amp;lt;ipython-input-15-113b0f967fab&amp;gt; in &amp;lt;module&amp;gt;()
       6         pdb.set_trace()
       7
 ----&amp;gt; 8 for each in fib(10):
       9     print(each)
 
 
-&amp;lt;ipython-input-148-113b0f967fab&amp;gt; in fib(num)
+&amp;lt;ipython-input-15-113b0f967fab&amp;gt; in fib(num)
       1 def fib(num):
       2     acounter, bcounter = 1, 1
 ----&amp;gt; 3     for i in range(num):
@@ -564,7 +596,7 @@ BdbQuit                                   Traceback (most recent call last)
       5         acounter, bcounter = bcounter, acounter + bcounter
 
 
-&amp;lt;ipython-input-148-113b0f967fab&amp;gt; in fib(num)
+&amp;lt;ipython-input-15-113b0f967fab&amp;gt; in fib(num)
       1 def fib(num):
       2     acounter, bcounter = 1, 1
 ----&amp;gt; 3     for i in range(num):
@@ -572,7 +604,7 @@ BdbQuit                                   Traceback (most recent call last)
       5         acounter, bcounter = bcounter, acounter + bcounter
 
 
-/home/jeremy/anaconda3/lib/python3.5/bdb.py in trace_dispatch(self, frame, event, arg)
+C:\Anaconda3\lib\bdb.py in trace_dispatch(self, frame, event, arg)
      46             return # None
      47         if event == &#39;line&#39;:
 ---&amp;gt; 48             return self.dispatch_line(frame)
@@ -580,7 +612,7 @@ BdbQuit                                   Traceback (most recent call last)
      50             return self.dispatch_call(frame, arg)
 
 
-/home/jeremy/anaconda3/lib/python3.5/bdb.py in dispatch_line(self, frame)
+C:\Anaconda3\lib\bdb.py in dispatch_line(self, frame)
      65         if self.stop_here(frame) or self.break_here(frame):
      66             self.user_line(frame)
 ---&amp;gt; 67             if self.quitting: raise BdbQuit
@@ -657,8 +689,9 @@ function calls:&lt;/p&gt;
 &lt;p&gt;Now this is not super useful - only if we have a large file with multiple
 functions. We could probably just use %time or %%timeit.&lt;/p&gt;
 
-&lt;p&gt;If we want to go line by line, we need the line profiler module (conda install
-line profiler). We then need to load it as an iPython extension, rather than a
+&lt;p&gt;If we want to go line by line, we need the &lt;a href=&quot;https://pypi.python.org/pypi/line_profiler/&quot;&gt;line profiler
+module&lt;/a&gt; (conda install
+line_profiler). We then need to load it as an iPython extension, rather than a
 module:&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;In [152]:&lt;/strong&gt;&lt;/p&gt;
@@ -686,16 +719,11 @@ module:&lt;/p&gt;
 &lt;p&gt;In the same manner, we can do memory profiling, using the &lt;a href=&quot;https://pypi.python.org/pypi/memory_profiler&quot;&gt;memory_profiler
 module&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;In [154]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [2]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load_ext&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memory_profiler&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;The memory_profiler extension is already loaded. To reload it, use:
-  %reload_ext memory_profiler
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [155]:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;In [13]:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
@@ -708,8 +736,93 @@ module&lt;/a&gt;&lt;/p&gt;
 &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mprun&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fibo&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#doesnt work unless we run a file!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ERROR: Could not find file &amp;lt;ipython-input-155-4a4111679972&amp;gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ERROR: Could not find file &amp;lt;ipython-input-13-4a4111679972&amp;gt;
 NOTE: %mprun can only be used on functions defined in physical files, and not in the IPython environment.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;In [19]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#mymem.py&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;np&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testmem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;del&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;del&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;testmem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;In [18]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;mymem&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;testmem&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mprun&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;testmem&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;testmem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---------------------------------------------------------------------------
+
+NameError                                 Traceback (most recent call last)
+
+&amp;lt;ipython-input-18-d2a247059265&amp;gt; in &amp;lt;module&amp;gt;()
+      1 from mymem import testmem
+----&amp;gt; 2 get_ipython().magic(&#39;mprun -f testmem testmem()&#39;)
+
+
+/home/jeremy/anaconda3/lib/python3.5/site-packages/IPython/core/interactiveshell.py in magic(self, arg_s)
+   2334         magic_name, _, magic_arg_s = arg_s.partition(&#39; &#39;)
+   2335         magic_name = magic_name.lstrip(prefilter.ESC_MAGIC)
+-&amp;gt; 2336         return self.run_line_magic(magic_name, magic_arg_s)
+   2337
+   2338     #-------------------------------------------------------------------------
+
+
+/home/jeremy/anaconda3/lib/python3.5/site-packages/IPython/core/interactiveshell.py in run_line_magic(self, magic_name, line)
+   2255                 kwargs[&#39;local_ns&#39;] = sys._getframe(stack_depth).f_locals
+   2256             with self.builtin_trap:
+-&amp;gt; 2257                 result = fn(*args,**kwargs)
+   2258             return result
+   2259
+
+
+/home/jeremy/anaconda3/lib/python3.5/site-packages/memory_profiler.py in mprun(self, parameter_s, cell)
+
+
+/home/jeremy/anaconda3/lib/python3.5/site-packages/IPython/core/magic.py in &amp;lt;lambda&amp;gt;(f, *a, **k)
+    191     # but it&#39;s overkill for just that one bit of state.
+    192     def magic_deco(arg):
+--&amp;gt; 193         call = lambda f, *a, **k: f(*a, **k)
+    194
+    195         if callable(arg):
+
+
+/home/jeremy/anaconda3/lib/python3.5/site-packages/memory_profiler.py in mprun(self, parameter_s, cell)
+    724
+    725         try:
+--&amp;gt; 726             profile.runctx(arg_str, global_ns, local_ns)
+    727             message = &#39;&#39;
+    728         except SystemExit:
+
+
+/home/jeremy/anaconda3/lib/python3.5/site-packages/memory_profiler.py in runctx(self, cmd, globals, locals)
+    513         self.enable_by_count()
+    514         try:
+--&amp;gt; 515             exec(cmd, globals, locals)
+    516         finally:
+    517             self.disable_by_count()
+
+
+&amp;lt;string&amp;gt; in &amp;lt;module&amp;gt;()
+
+
+/home/jeremy/Downloads/mymem.py in testmem()
+      3
+      4 def testmem():
+----&amp;gt; 5     a = np.arange(1000000)
+      6     b = list(range(1000000))
+      7     del(a)
+
+
+NameError: name &#39;numpy&#39; is not defined
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
@@ -765,10 +878,10 @@ teractive/magics.html?highlight=magics&quot;&gt;have a lot built in&lt;/a&gt;. H
 
 &lt;h3 id=&quot;testing&quot;&gt;Testing&lt;/h3&gt;
 
-&lt;p&gt;Test driven development is a development style where we write tests that out
-completed code should pass, then attempt to write code to pass them. In this
-manner, we can ensure that our code works as desired, and gives outputs that we
-desire.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Test-driven_development&quot;&gt;Test driven development&lt;/a&gt;
+is a development style where we write tests that out completed code should pass,
+then attempt to write code to pass them. In this manner, we can ensure that our
+code works as desired, and gives outputs that we desire.&lt;/p&gt;
 
 &lt;p&gt;To a lesser extent, all code should include tests - a lot of time spent
 debugging and writing code is simply manual testing - why didn’t my code work?
@@ -939,6 +1052,15 @@ environment for any other tests.&lt;/p&gt;
 &lt;span class=&quot;c&quot;&gt;#saved as tests.py&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 &lt;p&gt;We forgot our initial bug fixes - lucky we had tests!&lt;/p&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+
+&lt;p&gt;Today we covered generators and iterators - ways of compactly handling data. We
+also covered reading in data in chunks for memory efficiency, error handling,
+debugging, profiling and testing.&lt;/p&gt;
+
+&lt;p&gt;In the last lesson we will cover parallel processing, connecting to your netezza
+databases, virtual environments and working on the server.&lt;/p&gt;
 </description>
         <pubDate>Fri, 08 Apr 2016 00:00:00 -0400</pubDate>
         <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/04/08/lesson-08-optimization.html</link>
