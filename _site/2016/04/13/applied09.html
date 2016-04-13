@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Lesson 09 - Workflow and working on the Server</title>
+  <meta name="description" content="Lesson 09 - Workflow and working on the Server">
+
+  <link rel="stylesheet" href="/pythoncourse/css/main.css">
+  <link rel="canonical" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/04/13/applied09.html">
+  <link rel="alternate" type="application/rss+xml" title="Python @ Precima" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/pythoncourse/">Python @ Precima</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/Applied%20Statistics%20stream/">Applied Statistics stream</a>
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/R&D%20stream/">R&D stream</a>
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-73837623-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Lesson 09 - Workflow and working on the Server</h1>
+    <p class="post-meta"><time datetime="2016-04-13T00:00:00-04:00" itemprop="datePublished">Apr 13, 2016</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Jeremy</span></span></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h2 id="lesson-09---workflow-and-working-on-the-server">Lesson 09 - Workflow and working on the Server</h2>
+
+<p>Welcome to lesson 10. Today we will cover the basics of working on the server -
+reading in data, managing packages in a virtual environment, connecting to and
+running queries with SQL, unit testing, and a brief introduction to version
+control.</p>
+
+<p>Download todays notebook here - <a href="/pythoncourse/assets/notebooks/applied/lesson 09 applied.ipynb">link</a></p>
+
+<p>Firstly however, we will learn a little more about generators</p>
+
+<h3 id="iterables-and-generators">Iterables and Generators</h3>
+
+<p>Let’s go back to when we introduced zip:</p>
+
+<p><strong>In [59]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#taken from comments on the site</span>
+<span class="n">l</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">k</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">a</span><span class="o">=</span><span class="nb">zip</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[(1, 4), (2, 5), (3, 6)]
+[]
+</code></pre>
+</div>
+
+<p>Huh, why did’t the second one work?</p>
+
+<p>It turns out, many of the maps, zips etc in python 3 are implemented as
+iterators. These objects allow us to generate a single part at each step,
+without storing it all in memory (these are based on range, but work a little
+differently).</p>
+
+<p><strong>In [2]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(1, 4)
+(2, 5)
+(3, 6)
+[]
+</code></pre>
+</div>
+
+<p>We can iterate over any iterable in a for loop:</p>
+
+<p><strong>In [4]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1
+2
+3
+</code></pre>
+</div>
+
+<p>But to explicitly make it an iterator, we use the iter() function:</p>
+
+<p><strong>In [7]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">j</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">j</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">j</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1
+2
+3
+
+
+
+---------------------------------------------------------------------------
+
+StopIteration                             Traceback (most recent call last)
+
+&lt;ipython-input-7-31e9e4b4925c&gt; in &lt;module&gt;()
+      3 print(next(j))
+      4 print(next(j))
+----&gt; 5 print(next(j))
+
+
+StopIteration:
+</code></pre>
+</div>
+
+<p>Turning a preexisitng object into an iterator is not very useful however, as we
+already have it in memory.
+If we want to create a function to make our output, we can use a generator
+function
+Generator functuions work very similar to standard functions, but use the yield
+keyword, rather than return:</p>
+
+<p><strong>In [9]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">mygen</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">yield</span> <span class="n">n</span>
+    <span class="k">yield</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">mygen</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;generator object mygen at 0x00000167659A1FC0&gt;
+10
+11
+</code></pre>
+</div>
+
+<p>Or, a fibonacci implementation:</p>
+
+<p><strong>In [10]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">a</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">fib</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+</code></pre>
+</div>
+
+<p>This is also why we can’t do tuple comprehensions - the syntax is reserved for
+making generator expressions:</p>
+
+<p><strong>In [11]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">l</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">g</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>1
+2
+3
+
+
+
+---------------------------------------------------------------------------
+
+StopIteration                             Traceback (most recent call last)
+
+&lt;ipython-input-11-0f1ad886ef79&gt; in &lt;module&gt;()
+      4 print(next(g))
+      5 print(next(g))
+----&gt; 6 print(next(g))
+
+
+StopIteration:
+</code></pre>
+</div>
+
+<p>In general, we can think of generators as a ‘lazy list’ - a way of storing how
+to get the next object, without taking up all the memory.</p>
+
+<h3 id="working-with-large-files">Working with large files</h3>
+<p>In general Python holds the data we have in memory. We need to come up with ways
+to handle larger data out of memory in piecemeal (or buy more RAM). Most methods
+are specific to a certain type of data, but we will cover a general method for
+now.
+<a href="https://docs.python.org/3.5/tutorial/inputoutput.html">We can open a file on the disk in
+Python</a>, as long as we
+use the correct permissions (read_csv from pandas took care of this for us).
+Let’s download the test example data -
+http://jeremy.kiwi.nz/pythoncourse/assets/tests/r&amp;d/test1data.csv</p>
+
+<p><strong>In [13]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">g</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">'c:/users/jeremy/downloads/test1data.csv'</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;_io.TextIOWrapper name='c:/users/jeremy/downloads/test1data.csv' mode='r' encoding='cp1252'&gt;
+</code></pre>
+</div>
+
+<p>We need to specify a ‘mode’ to open our file - I have chosen r for read, we can
+also use w for writing (this deletes the exsiting file), a for appending, and r+
+for writing/andor reading.
+The file is not read in straight away - we merely have a pointer to the file. We
+can read the next line as though it was created using a generator:</p>
+
+<p><strong>In [14]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#nextline</span>
+<span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>TripType,VisitNumber,Weekday,Upc,ScanCount,DepartmentDescription,FinelineNumber
+
+999,5,Friday,68113152929,-1,FINANCIAL SERVICES,1000
+</code></pre>
+</div>
+
+<p>If you want to read all the lines of a file in a list you can also use list(f),
+f.readlines() or f.read().
+Once we are done with a file, we need to close it:</p>
+
+<p><strong>In [15]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">g</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></code></pre></figure>
+
+<p>But, this doesn’t help use too much - we can imagine reading in enough files to
+fill our memory, and then carrying out some analysis, then reading in more.
+Luckily, we have the with statement and generators:</p>
+
+<p><strong>In [16]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'c:/users/jeremy/downloads/test1data.csv'</span><span class="p">,</span> <span class="s">'r'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">partread</span><span class="p">(</span><span class="nb">file</span><span class="p">):</span>
+     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">myfile</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">myfile</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">i</span>
+
+<span class="n">lines</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">partread</span><span class="p">(</span><span class="s">'c:/users/jeremy/downloads/test1data.csv'</span><span class="p">)</span>
+<span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lines</span><span class="p">)]</span>
+<span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lines</span><span class="p">)]</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>['TripType,VisitNumber,Weekday,Upc,ScanCount,DepartmentDescription,FinelineNumber', '999,5,Friday,68113152929,-1,FINANCIAL SERVICES,1000', '30,7,Friday,60538815980,1,SHOES,8931', '30,7,Friday,7410811099,1,PERSONAL CARE,4504', '26,8,Friday,2238403510,2,PAINT AND ACCESSORIES,3565']
+
+
+
+
+
+['26,8,Friday,2006613744,2,PAINT AND ACCESSORIES,1017',
+ '26,8,Friday,2006618783,2,PAINT AND ACCESSORIES,1017',
+ '26,8,Friday,2006613743,1,PAINT AND ACCESSORIES,1017',
+ '26,8,Friday,7004802737,1,PAINT AND ACCESSORIES,2802',
+ '26,8,Friday,2238495318,1,PAINT AND ACCESSORIES,4501']
+</code></pre>
+</div>
+
+<p>Pandas also has a built-in methods to generate an interator:</p>
+
+<p><strong>In [17]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">'c:/users/jeremy/downloads/test1data.csv'</span><span class="p">,</span> <span class="n">iterator</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;pandas.io.parsers.TextFileReader object at 0x00000167659E95F8&gt;
+</code></pre>
+</div>
+
+<p><strong>In [18]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span><span class="o">.</span><span class="n">get_chunk</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span></code></pre></figure>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TripType</th>
+      <th>VisitNumber</th>
+      <th>Weekday</th>
+      <th>Upc</th>
+      <th>ScanCount</th>
+      <th>DepartmentDescription</th>
+      <th>FinelineNumber</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>999</td>
+      <td>5</td>
+      <td>Friday</td>
+      <td>68113152929</td>
+      <td>-1</td>
+      <td>FINANCIAL SERVICES</td>
+      <td>1000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>30</td>
+      <td>7</td>
+      <td>Friday</td>
+      <td>60538815980</td>
+      <td>1</td>
+      <td>SHOES</td>
+      <td>8931</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>30</td>
+      <td>7</td>
+      <td>Friday</td>
+      <td>7410811099</td>
+      <td>1</td>
+      <td>PERSONAL CARE</td>
+      <td>4504</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>26</td>
+      <td>8</td>
+      <td>Friday</td>
+      <td>2238403510</td>
+      <td>2</td>
+      <td>PAINT AND ACCESSORIES</td>
+      <td>3565</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>26</td>
+      <td>8</td>
+      <td>Friday</td>
+      <td>2006613744</td>
+      <td>2</td>
+      <td>PAINT AND ACCESSORIES</td>
+      <td>1017</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>What about SQL? To run a SQL/netezza query from python, we have to install a
+couple of modules…</p>
+
+<h3 id="virtual-environments">Virtual Environments</h3>
+
+<p>When working on a server, we need to be cognizant that others are also using the
+server. Even if we have permissions to install packages we probably shouldn’t -
+what if we want to upgrade pandas for ourselves, while our coworkers are using
+it?</p>
+
+<p>Similarly, we may be working on projects where we need specifically to not have
+a certain module installed, or only install a certain version.</p>
+
+<p>To fix these problems, we can install a <a href="http://docs.python-guide.org/en/latest/dev/virtualenvs/">‘virtual
+environment’</a> and use
+this as the location to load our modules from.</p>
+
+<p>Anaconda comes with a <a href="http://conda.pydata.org/docs/using/envs.html">virtual env
+manager</a>, the most commonly used
+non-conda version is virtualenv and virtualenvwrapper. They work similarly to
+conda.</p>
+
+<p>Let’s check what environments we have available:</p>
+
+<p><code class="highlighter-rouge">
+conda info --envs
+</code></p>
+
+<p>Let’s make a new environment, called sqlproj which has installed pyodbc:</p>
+
+<p><code class="highlighter-rouge">
+conda create -n sqlproj pyodbc
+</code></p>
+
+<p>Now switch to this env:</p>
+
+<p><code class="highlighter-rouge">
+activate sqlproj
+</code></p>
+
+<p>Now that we are in our project, if we open python, we get our new version:</p>
+
+<p><code class="highlighter-rouge">
+python
+</code></p>
+
+<p><strong>In [19]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pyodbc</span>
+<span class="kn">import</span> <span class="nn">pandas</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>---------------------------------------------------------------------------
+
+ImportError                               Traceback (most recent call last)
+
+&lt;ipython-input-19-235fb7d14406&gt; in &lt;module&gt;()
+----&gt; 1 import pyodbc
+      2 import pandas
+
+
+ImportError: No module named 'pyodbc'
+</code></pre>
+</div>
+
+<p>Huh, we don’t have pandas? By default, none of our previous packages come with
+us. This is to stop us copying our environment to a new computer and have it no
+longer work.</p>
+
+<p>Let’s install pandas:</p>
+
+<p><code class="highlighter-rouge">
+conda install pandas
+</code></p>
+
+<p>or, if we aren’t in the env:</p>
+
+<p><code class="highlighter-rouge">
+conda install -n pyodbc pandas
+</code></p>
+
+<p>If we want a specific version, we can specify it:</p>
+
+<p><code class="highlighter-rouge">
+conda install -n pyodbc pandas=0.15.0
+</code></p>
+
+<p>We can even specify a python version here….</p>
+
+<p>Deactivate:
+<code class="highlighter-rouge">
+deactivate
+</code></p>
+
+<p>We can export our configuration:</p>
+
+<p><code class="highlighter-rouge">
+conda -env export &gt; env.yml
+</code></p>
+
+<p>and use that to share our setup with colleagues:</p>
+
+<p><code class="highlighter-rouge">
+conda env create -f env.yml
+</code></p>
+
+<h3 id="connecting-to-the-databases">Connecting to the databases</h3>
+
+<p>netezza is unfortunately a non-free piece of software, and so has a couple of
+integration issues with python.</p>
+
+<p>Luckily, it is compliant with
+<a href="https://en.wikipedia.org/wiki/Open_Database_Connectivity">ODBC</a>, so we can use
+the pyodbc module to connect to our database.</p>
+
+<p><a href="http://www.sqlalchemy.org/">sql-alchemy</a> is also a possibility, but is much
+more involved!</p>
+
+<p>We have two choices - we can run python on the server, and connect to the
+database locally, or we can run python on our computer and connect to the
+database remotely.</p>
+
+<p>The exact configuration will depend on your server! We currently can work with
+the R&amp;D servers - individual servers may require some setup - Please email any
+errors you get to me and we will endeavour to make sure we can connect!</p>
+
+<p><strong>In [20]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#import odbc</span>
+<span class="c">#in general:</span>
+<span class="c">#conn = pyodbc.connect("DRIVER={NetezzaSQL};SERVER=&lt;myserver&gt;;PORT=&lt;myport&gt;;DATABASE=&lt;mydbschema&gt;;UID=&lt;user&gt;;PWD=&lt;password&gt;;")</span>
+<span class="c">#using DSN</span>
+<span class="c">#conn = pyodbc.connect(dsn = 'server', UID = 'uname', PWD = 'PWD') #server eg:prcmusf</span></code></pre></figure>
+
+<p>I don’t have access to your servers, so here is a simple sqlite database:</p>
+
+<p><strong>In [48]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s">'c:/users/jeremy/downloads/survey.db'</span><span class="p">)</span>
+<span class="c">#database from software carpentry, http://files.software-carpentry.org/survey.db</span>
+<span class="c">#same as the above connection!</span></code></pre></figure>
+
+<p>Once we have a connection, we need to create a cursor. A cursor is a control
+structure which allows us to interact with the database</p>
+
+<p><strong>In [40]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">cxn</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+
+<span class="n">cxn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'select * from person'</span><span class="p">)</span>
+<span class="c">#can do much more complicated....</span>
+<span class="c">#declaritive</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;sqlite3.Cursor at 0x16767ed1490&gt;
+</code></pre>
+</div>
+
+<p>Now we have our cursor ready to get data from:</p>
+
+<p><strong>In [33]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">cxn</span><span class="o">.</span><span class="n">fetchall</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">cxn</span><span class="o">.</span><span class="n">fetchall</span><span class="p">())</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[]
+[]
+</code></pre>
+</div>
+
+<p>It looks a lot like a generator! (NB it isn’t…).</p>
+
+<p>We can go line by line, or use it like an iterable:</p>
+
+<p><strong>In [30]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">cxn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'select * from person'</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">cxn</span><span class="o">.</span><span class="n">fetchone</span><span class="p">())</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>('dyer', 'William', 'Dyer')
+</code></pre>
+</div>
+
+<p><strong>In [36]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cxn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">'SELECT * FROM person'</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>('dyer', 'William', 'Dyer')
+('pb', 'Frank', 'Pabodie')
+('lake', 'Anderson', 'Lake')
+('roe', 'Valentina', 'Roerich')
+('danforth', 'Frank', 'Danforth')
+</code></pre>
+</div>
+
+<p>pandas has built in sql integration, through recently is has been reduced to use
+the sql-alchemy backend.</p>
+
+<p>We use the database connection, rather than the cursor:</p>
+
+<p><strong>In [49]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s">'select * from Person'</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">df</span></code></pre></figure>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ident</th>
+      <th>personal</th>
+      <th>family</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>dyer</td>
+      <td>William</td>
+      <td>Dyer</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>pb</td>
+      <td>Frank</td>
+      <td>Pabodie</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>lake</td>
+      <td>Anderson</td>
+      <td>Lake</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>roe</td>
+      <td>Valentina</td>
+      <td>Roerich</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>danforth</td>
+      <td>Frank</td>
+      <td>Danforth</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>In [46]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">df</span><span class="p">[</span><span class="s">'newcol'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span></code></pre></figure>
+
+<p><strong>In [52]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#df.to_sql('data1', x)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s">'select * from data1'</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></code></pre></figure>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>index</th>
+      <th>ident</th>
+      <th>personal</th>
+      <th>family</th>
+      <th>newcol</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>dyer</td>
+      <td>William</td>
+      <td>Dyer</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>pb</td>
+      <td>Frank</td>
+      <td>Pabodie</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>lake</td>
+      <td>Anderson</td>
+      <td>Lake</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>roe</td>
+      <td>Valentina</td>
+      <td>Roerich</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>danforth</td>
+      <td>Frank</td>
+      <td>Danforth</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>In general, we should keep the sql inside python to a minimum - netezza is a
+little finicky with it’s integration, so run a sql command, and then read in all
+the data.</p>
+
+<h3 id="scripts-vs-notebooks">Scripts vs Notebooks</h3>
+
+<p>The i in iPython stands for interactive. In general, we should use iPython to
+develop code, test and run it, and then run as scripts for production. The
+current move is in to using notebooks in production - we can run them on the
+server, and interact with them from our own computers - This however requires
+running a web facing server which is not super secure.</p>
+
+<p>We will see if this is possible for our setup…</p>
+
+<p>In the mean time, see how easy it is to convert a notebook to script.py</p>
+
+<h3 id="testing">Testing</h3>
+
+<p><a href="https://en.wikipedia.org/wiki/Test-driven_development">Test driven development</a>
+is a development style where we write tests that our completed code should pass,
+then attempt to write code to pass them. In this manner, we can ensure that our
+code works as desired, and gives outputs that we desire.</p>
+
+<p>To a lesser extent, all code should include tests - a lot of time spent
+debugging and writing code is simply manual testing - why didn’t my code work?
+Why did this particular data give me an error? What about special edge cases?</p>
+
+<p>This informal testing is often all that code goes through. Code reviews, and
+Pair Programming have been shown to help reduce bugs, but a good start is unit
+testing.</p>
+
+<p>Unit testing allows us to test each part (unit) of our code automatically, and
+can greatly help in refactoring large code bases, or prexisting code bases. We
+could theoretically completely rewrite entire scripts and keep the same tests,
+so that our inputs and outputs stay identical.</p>
+
+<p>There are a <a href="http://docs.python-
+guide.org/en/latest/writing/tests/">wide range of testing suites available</a>, here we will use the <a href="https://docs.python.org/3/library/unittest.html">unittest
+module</a> from the standard
+library.</p>
+
+<p>unittest works best with scripts - Let’s make one with our fibonacci functions
+from the second lesson:</p>
+
+<p><strong>In [53]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">fibo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span>
+    <span class="k">while</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">counter</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">,</span><span class="n">counter</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="c">#saved as fibo.py</span></code></pre></figure>
+
+<p>Then we create a seperate script, which imports unittest, and define our tests
+as a class which inherits from unittest.TestCase. All of our tests are methods
+of this class, and must start with test.</p>
+
+<p>We then use the range of assert* methods built in to the class to say what our
+functions should do:</p>
+
+<p><strong>In [54]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">fibo</span> <span class="kn">import</span> <span class="n">fibo</span>
+
+<span class="k">class</span> <span class="nc">testfibo</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_one</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">fibo</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">fibo</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_negative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="nb">ValueError</span><span class="p">,</span> <span class="n">fibo</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_ten</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">fibo</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="mi">55</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+<span class="c">#saved as tests.py</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>---------------------------------------------------------------------------
+
+ImportError                               Traceback (most recent call last)
+
+&lt;ipython-input-54-097a35bbb889&gt; in &lt;module&gt;()
+      1 import unittest
+----&gt; 2 from fibo import fibo
+      3
+      4 class testfibo(unittest.TestCase):
+      5     def test_one(self):
+
+
+ImportError: No module named 'fibo'
+</code></pre>
+</div>
+
+<p><code class="highlighter-rouge">python tests.py</code></p>
+
+<p>```
+jeremy@thin:~$ python tests.py
+F..F
+======================================================================
+FAIL: test_negative (<strong>main</strong>.testfibo)
+———————————————————————-
+Traceback (most recent call last):
+  File “tests.py”, line 10, in test_negative
+    self.assertRaises(ValueError, fibo, -1)
+AssertionError: ValueError not raised by fibo</p>
+
+<p>======================================================================
+FAIL: test_zero (<strong>main</strong>.testfibo)
+———————————————————————-
+Traceback (most recent call last):
+  File “tests.py”, line 8, in test_zero
+    self.assertEqual(fibo(0), 0)
+AssertionError: 1 != 0</p>
+
+<hr />
+<p>Ran 4 tests in 0.002s</p>
+
+<p>FAILED (failures=2)
+```</p>
+
+<p>Then we can fix our function:</p>
+
+<p><strong>In [55]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">fibo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span>
+    <span class="k">while</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">counter</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">,</span><span class="n">counter</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="c">#saved as fibo.py</span></code></pre></figure>
+
+<p>And rerun our tests.</p>
+
+<p>We know that this is a slow function, so maybe we would like to refactor it. We
+can do this, leaving the tests as is:</p>
+
+<p><strong>In [56]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">memoize</span><span class="p">(</span><span class="n">myfunction</span><span class="p">):</span>
+    <span class="n">cache</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">def</span> <span class="nf">function_to_cache</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">args</span> <span class="ow">in</span> <span class="n">cache</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cache</span><span class="p">[</span><span class="n">args</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cache</span><span class="p">[</span><span class="n">args</span><span class="p">]</span> <span class="o">=</span> <span class="n">myfunction</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">cache</span><span class="p">[</span><span class="n">args</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">function_to_cache</span>
+
+<span class="k">def</span> <span class="nf">fiborecur</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">fiborecur</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fiborecur</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c">#saved as fibo.py</span></code></pre></figure>
+
+<p>Whoops - our refactor didn’t define fibo - We could do this in our script, but
+maybe we don’t want to for now.</p>
+
+<p>We have the setUp and tearDown methods - using these we can run code to set up
+our tests - eg connect to a database or download some data. In general, we
+should keep any set up inside our class - we don’t want to modify the global
+environment for any other tests.</p>
+
+<p><strong>In [None]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">fibo</span> <span class="kn">import</span> <span class="n">fiborecur</span>
+<span class="kn">from</span> <span class="nn">fibo</span> <span class="kn">import</span> <span class="n">memoize</span>
+
+<span class="k">class</span> <span class="nc">testfibo</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fibo</span> <span class="o">=</span> <span class="n">memoize</span><span class="p">(</span><span class="n">fiborecur</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_one</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fibo</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fibo</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_negative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertRaises</span><span class="p">(</span><span class="nb">ValueError</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fibo</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_ten</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fibo</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="mi">55</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+<span class="c">#saved as tests.py</span></code></pre></figure>
+
+<h3 id="version-control">Version Control</h3>
+
+<p>Every piece of code should be under version control!!</p>
+
+<p>It seems that there is no company wide version control system set up - so let’s
+use git. We could also use SVN or mecurial.</p>
+
+<p>Version control allows us to track changes on our code. By making a series of
+commits, we can see the changes we made, who made them, and roll them back if
+necessary.</p>
+
+<p>Install git from <a href="https://git-scm.com/downloads">here</a>.</p>
+
+<p>Let’s play around a small amount as an introduction - you will want to learn a
+lot more before git is useful for you!</p>
+
+<p><code class="highlighter-rouge">
+mkdir gittest
+cd gittest
+dir
+</code></p>
+
+<p>Now we initialise a git repository:</p>
+
+<p><code class="highlighter-rouge">
+git init
+dir
+</code></p>
+
+<p>Turns out it’s a hidden folder:</p>
+
+<p><code class="highlighter-rouge">
+dir /a
+</code></p>
+
+<p>We can get status using git status:
+<code class="highlighter-rouge">
+git status
+</code></p>
+
+<p>Ok, so let’s get coding:</p>
+
+<p><strong>In [57]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">fibo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span>
+    <span class="k">while</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">counter</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">,</span><span class="n">counter</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="c">#saved as fibo.py</span></code></pre></figure>
+
+<p>Now run git status:</p>
+
+<p><code class="highlighter-rouge">
+git status
+</code></p>
+
+<p>we can see that we have an untracked file!</p>
+
+<p><code class="highlighter-rouge">
+git add fibo.py
+#or git add --all
+git status
+</code></p>
+
+<p>Now we commit the change!</p>
+
+<p><code class="highlighter-rouge">
+git commit -m "initial commit of fibo.py"
+git status
+</code></p>
+
+<p>We can see the history using git log:</p>
+
+<p><code class="highlighter-rouge">
+git log
+</code></p>
+
+<p>Now let’s fix our function!</p>
+
+<p><strong>In [58]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">fibo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="s">'''
+    fixed version!
+    '''</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span>
+    <span class="k">while</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">counter</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">,</span><span class="n">counter</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="c">#saved as fibo.py</span></code></pre></figure>
+
+<p>again git status allows us to see we have changes.</p>
+
+<p>git diff allows us to see what they are:
+<code class="highlighter-rouge">
+git diff
+</code></p>
+
+<p>we can then add and commit the changes:</p>
+
+<p><code class="highlighter-rouge">
+git add --all
+git commit -m "passes tests, docstring"
+git log
+</code></p>
+
+<p>Now if we accidently delete our file, we can restore it:</p>
+
+<p><code class="highlighter-rouge">
+git checkout head fibo.py
+</code></p>
+
+<p>or if our changes are no good, we can revert:</p>
+
+<p><code class="highlighter-rouge">
+git checkout head~1 fibo.py
+</code></p>
+
+<p>git is not github! Github is a website built on remote hosting of git
+repositories. You probably can’t use it for work code, but it is useful to see
+how it works.</p>
+
+<p>We can clone down from github:</p>
+
+<p><code class="highlighter-rouge">
+cd ..
+git clone https://github.com/jeremycg/pythoncourse
+cd pythoncourse
+git log
+</code></p>
+
+<p>For more information on git, see the online course at Software Carpentry -
+http://swcarpentry.github.io/git-novice/ and at codeschool :
+https://try.github.io/</p>
+
+  </div>
+  
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'jeremycg';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Python @ Precima</h2>
+
+
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
