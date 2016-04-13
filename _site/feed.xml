@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 11 Apr 2016 11:10:33 -0400</pubDate>
-    <lastBuildDate>Mon, 11 Apr 2016 11:10:33 -0400</lastBuildDate>
+    <pubDate>Tue, 12 Apr 2016 20:08:06 -0400</pubDate>
+    <lastBuildDate>Tue, 12 Apr 2016 20:08:06 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -1061,6 +1061,29 @@ debugging, profiling and testing.&lt;/p&gt;
 
 &lt;p&gt;In the last lesson we will cover parallel processing, connecting to your netezza
 databases, virtual environments and working on the server.&lt;/p&gt;
+
+&lt;h3 id=&quot;exercises&quot;&gt;Exercises&lt;/h3&gt;
+
+&lt;p&gt;1. Write a generator function which will produce factorials: mygen(10) will
+generate 1, 2, 6, 24, 120… up to 10!&lt;/p&gt;
+
+&lt;p&gt;2. Write a unit test for this generator using the unittest module&lt;/p&gt;
+
+&lt;p&gt;3. Write a small script that takes a user input (something like x = input () in the script)
+and returns that number squared. You should use error a=handling to handle cases where the
+inout might not be a number.&lt;/p&gt;
+
+&lt;p&gt;4. Write unit tests for this script - use different types of input as test cases.&lt;/p&gt;
+
+&lt;p&gt;5. Use the pdb module to set_trace inside your factorial generator. Walk through the
+function and get a feel for the debugger.&lt;/p&gt;
+
+&lt;p&gt;6. Install both the memory_profiler and line_profiler plugins. Profile your factorial
+code for both performance and memory usage. Is there anything you can optimise?&lt;/p&gt;
+
+&lt;p&gt;7. Advanced, optional. Read in the test data set. Get a numeric column into numpy using .values.
+Profile and benchmark finding the sum, mean and cumulative sum of these numbers in numpy
+and pandas. Which one (if any) performs better? Can you guess why?&lt;/p&gt;
 </description>
         <pubDate>Fri, 08 Apr 2016 00:00:00 -0400</pubDate>
         <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/04/08/lesson-08-optimization.html</link>

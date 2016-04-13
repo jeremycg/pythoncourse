@@ -1139,3 +1139,26 @@ debugging, profiling and testing.
 
 In the last lesson we will cover parallel processing, connecting to your netezza
 databases, virtual environments and working on the server.
+
+### Exercises
+
+1\. Write a generator function which will produce factorials: mygen(10) will
+generate 1, 2, 6, 24, 120... up to 10!
+
+2\. Write a unit test for this generator using the unittest module
+
+3\. Write a small script that takes a user input (something like x = input () in the script)
+and returns that number squared. You should use error a=handling to handle cases where the
+inout might not be a number.
+
+4\. Write unit tests for this script - use different types of input as test cases.
+
+5\. Use the pdb module to set_trace inside your factorial generator. Walk through the
+function and get a feel for the debugger.
+
+6\. Install both the memory_profiler and line_profiler plugins. Profile your factorial
+code for both performance and memory usage. Is there anything you can optimise?
+
+7\. Advanced, optional. Read in the test data set. Get a numeric column into numpy using .values.
+Profile and benchmark finding the sum, mean and cumulative sum of these numbers in numpy
+and pandas. Which one (if any) performs better? Can you guess why?
