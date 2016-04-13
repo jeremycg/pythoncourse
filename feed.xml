@@ -5,9 +5,1032 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 12 Apr 2016 20:11:50 -0400</pubDate>
-    <lastBuildDate>Tue, 12 Apr 2016 20:11:50 -0400</lastBuildDate>
+    <pubDate>Wed, 13 Apr 2016 10:40:50 -0400</pubDate>
+    <lastBuildDate>Wed, 13 Apr 2016 10:40:50 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
+    
+      <item>
+        <title>Lesson 09 - Workflow and working on the Server</title>
+        <description>&lt;h2 id=&quot;lesson-09---workflow-and-working-on-the-server&quot;&gt;Lesson 09 - Workflow and working on the Server&lt;/h2&gt;
+
+&lt;p&gt;Welcome to lesson 10. Today we will cover the basics of working on the server -
+reading in data, managing packages in a virtual environment, connecting to and
+running queries with SQL, unit testing, and a brief introduction to version
+control.&lt;/p&gt;
+
+&lt;p&gt;Download todays notebook here - &lt;a href=&quot;/pythoncourse/assets/notebooks/applied/lesson 09 applied.ipynb&quot;&gt;link&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Firstly however, we will learn a little more about generators&lt;/p&gt;
+
+&lt;h3 id=&quot;iterables-and-generators&quot;&gt;Iterables and Generators&lt;/h3&gt;
+
+&lt;p&gt;Let’s go back to when we introduced zip:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [59]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#taken from comments on the site&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;zip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[(1, 4), (2, 5), (3, 6)]
+[]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Huh, why did’t the second one work?&lt;/p&gt;
+
+&lt;p&gt;It turns out, many of the maps, zips etc in python 3 are implemented as
+iterators. These objects allow us to generate a single part at each step,
+without storing it all in memory (these are based on range, but work a little
+differently).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [2]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;zip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(1, 4)
+(2, 5)
+(3, 6)
+[]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We can iterate over any iterable in a for loop:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [4]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1
+2
+3
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;But to explicitly make it an iterator, we use the iter() function:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [7]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;iter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1
+2
+3
+
+
+
+---------------------------------------------------------------------------
+
+StopIteration                             Traceback (most recent call last)
+
+&amp;lt;ipython-input-7-31e9e4b4925c&amp;gt; in &amp;lt;module&amp;gt;()
+      3 print(next(j))
+      4 print(next(j))
+----&amp;gt; 5 print(next(j))
+
+
+StopIteration:
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Turning a preexisitng object into an iterator is not very useful however, as we
+already have it in memory.
+If we want to create a function to make our output, we can use a generator
+function
+Generator functuions work very similar to standard functions, but use the yield
+keyword, rather than return:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [9]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;mygen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mygen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;generator object mygen at 0x00000167659A1FC0&amp;gt;
+10
+11
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Or, a fibonacci implementation:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [10]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This is also why we can’t do tuple comprehensions - the syntax is reserved for
+making generator expressions:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [11]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;l&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1
+2
+3
+
+
+
+---------------------------------------------------------------------------
+
+StopIteration                             Traceback (most recent call last)
+
+&amp;lt;ipython-input-11-0f1ad886ef79&amp;gt; in &amp;lt;module&amp;gt;()
+      4 print(next(g))
+      5 print(next(g))
+----&amp;gt; 6 print(next(g))
+
+
+StopIteration:
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In general, we can think of generators as a ‘lazy list’ - a way of storing how
+to get the next object, without taking up all the memory.&lt;/p&gt;
+
+&lt;h3 id=&quot;working-with-large-files&quot;&gt;Working with large files&lt;/h3&gt;
+&lt;p&gt;In general Python holds the data we have in memory. We need to come up with ways
+to handle larger data out of memory in piecemeal (or buy more RAM). Most methods
+are specific to a certain type of data, but we will cover a general method for
+now.
+&lt;a href=&quot;https://docs.python.org/3.5/tutorial/inputoutput.html&quot;&gt;We can open a file on the disk in
+Python&lt;/a&gt;, as long as we
+use the correct permissions (read_csv from pandas took care of this for us).
+Let’s download the test example data -
+http://jeremy.kiwi.nz/pythoncourse/assets/tests/r&amp;amp;d/test1data.csv&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [13]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;c:/users/jeremy/downloads/test1data.csv&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;r&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;_io.TextIOWrapper name=&#39;c:/users/jeremy/downloads/test1data.csv&#39; mode=&#39;r&#39; encoding=&#39;cp1252&#39;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We need to specify a ‘mode’ to open our file - I have chosen r for read, we can
+also use w for writing (this deletes the exsiting file), a for appending, and r+
+for writing/andor reading.
+The file is not read in straight away - we merely have a pointer to the file. We
+can read the next line as though it was created using a generator:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [14]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#nextline&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;readline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;readline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;TripType,VisitNumber,Weekday,Upc,ScanCount,DepartmentDescription,FinelineNumber
+
+999,5,Friday,68113152929,-1,FINANCIAL SERVICES,1000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;If you want to read all the lines of a file in a list you can also use list(f),
+f.readlines() or f.read().
+Once we are done with a file, we need to close it:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [15]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;But, this doesn’t help use too much - we can imagine reading in enough files to
+fill our memory, and then carrying out some analysis, then reading in more.
+Luckily, we have the with statement and generators:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [16]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;c:/users/jeremy/downloads/test1data.csv&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;r&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;head&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;partread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+     &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;partread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;c:/users/jeremy/downloads/test1data.csv&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[&#39;TripType,VisitNumber,Weekday,Upc,ScanCount,DepartmentDescription,FinelineNumber&#39;, &#39;999,5,Friday,68113152929,-1,FINANCIAL SERVICES,1000&#39;, &#39;30,7,Friday,60538815980,1,SHOES,8931&#39;, &#39;30,7,Friday,7410811099,1,PERSONAL CARE,4504&#39;, &#39;26,8,Friday,2238403510,2,PAINT AND ACCESSORIES,3565&#39;]
+
+
+
+
+
+[&#39;26,8,Friday,2006613744,2,PAINT AND ACCESSORIES,1017&#39;,
+ &#39;26,8,Friday,2006618783,2,PAINT AND ACCESSORIES,1017&#39;,
+ &#39;26,8,Friday,2006613743,1,PAINT AND ACCESSORIES,1017&#39;,
+ &#39;26,8,Friday,7004802737,1,PAINT AND ACCESSORIES,2802&#39;,
+ &#39;26,8,Friday,2238495318,1,PAINT AND ACCESSORIES,4501&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Pandas also has a built-in methods to generate an interator:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [17]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pd&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;c:/users/jeremy/downloads/test1data.csv&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iterator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;pandas.io.parsers.TextFileReader object at 0x00000167659E95F8&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;In [18]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_chunk&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;TripType&lt;/th&gt;
+      &lt;th&gt;VisitNumber&lt;/th&gt;
+      &lt;th&gt;Weekday&lt;/th&gt;
+      &lt;th&gt;Upc&lt;/th&gt;
+      &lt;th&gt;ScanCount&lt;/th&gt;
+      &lt;th&gt;DepartmentDescription&lt;/th&gt;
+      &lt;th&gt;FinelineNumber&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;999&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;Friday&lt;/td&gt;
+      &lt;td&gt;68113152929&lt;/td&gt;
+      &lt;td&gt;-1&lt;/td&gt;
+      &lt;td&gt;FINANCIAL SERVICES&lt;/td&gt;
+      &lt;td&gt;1000&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;30&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;Friday&lt;/td&gt;
+      &lt;td&gt;60538815980&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;SHOES&lt;/td&gt;
+      &lt;td&gt;8931&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;30&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;Friday&lt;/td&gt;
+      &lt;td&gt;7410811099&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;PERSONAL CARE&lt;/td&gt;
+      &lt;td&gt;4504&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;26&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;Friday&lt;/td&gt;
+      &lt;td&gt;2238403510&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
+      &lt;td&gt;3565&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;26&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;Friday&lt;/td&gt;
+      &lt;td&gt;2006613744&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
+      &lt;td&gt;1017&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;p&gt;What about SQL? To run a SQL/netezza query from python, we have to install a
+couple of modules…&lt;/p&gt;
+
+&lt;h3 id=&quot;virtual-environments&quot;&gt;Virtual Environments&lt;/h3&gt;
+
+&lt;p&gt;When working on a server, we need to be cognizant that others are also using the
+server. Even if we have permissions to install packages we probably shouldn’t -
+what if we want to upgrade pandas for ourselves, while our coworkers are using
+it?&lt;/p&gt;
+
+&lt;p&gt;Similarly, we may be working on projects where we need specifically to not have
+a certain module installed, or only install a certain version.&lt;/p&gt;
+
+&lt;p&gt;To fix these problems, we can install a &lt;a href=&quot;http://docs.python-guide.org/en/latest/dev/virtualenvs/&quot;&gt;‘virtual
+environment’&lt;/a&gt; and use
+this as the location to load our modules from.&lt;/p&gt;
+
+&lt;p&gt;Anaconda comes with a &lt;a href=&quot;http://conda.pydata.org/docs/using/envs.html&quot;&gt;virtual env
+manager&lt;/a&gt;, the most commonly used
+non-conda version is virtualenv and virtualenvwrapper. They work similarly to
+conda.&lt;/p&gt;
+
+&lt;p&gt;Let’s check what environments we have available:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+conda info --envs
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s make a new environment, called sqlproj which has installed pyodbc:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+conda create -n sqlproj pyodbc
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Now switch to this env:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+activate sqlproj
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Now that we are in our project, if we open python, we get our new version:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+python
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [19]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pyodbc&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---------------------------------------------------------------------------
+
+ImportError                               Traceback (most recent call last)
+
+&amp;lt;ipython-input-19-235fb7d14406&amp;gt; in &amp;lt;module&amp;gt;()
+----&amp;gt; 1 import pyodbc
+      2 import pandas
+
+
+ImportError: No module named &#39;pyodbc&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Huh, we don’t have pandas? By default, none of our previous packages come with
+us. This is to stop us copying our environment to a new computer and have it no
+longer work.&lt;/p&gt;
+
+&lt;p&gt;Let’s install pandas:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+conda install pandas
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;or, if we aren’t in the env:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+conda install -n pyodbc pandas
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;If we want a specific version, we can specify it:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+conda install -n pyodbc pandas=0.15.0
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We can even specify a python version here….&lt;/p&gt;
+
+&lt;p&gt;Deactivate:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;
+deactivate
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We can export our configuration:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+conda -env export &amp;gt; env.yml
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;and use that to share our setup with colleagues:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+conda env create -f env.yml
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;connecting-to-the-databases&quot;&gt;Connecting to the databases&lt;/h3&gt;
+
+&lt;p&gt;netezza is unfortunately a non-free piece of software, and so has a couple of
+integration issues with python.&lt;/p&gt;
+
+&lt;p&gt;Luckily, it is compliant with
+&lt;a href=&quot;https://en.wikipedia.org/wiki/Open_Database_Connectivity&quot;&gt;ODBC&lt;/a&gt;, so we can use
+the pyodbc module to connect to our database.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.sqlalchemy.org/&quot;&gt;sql-alchemy&lt;/a&gt; is also a possibility, but is much
+more involved!&lt;/p&gt;
+
+&lt;p&gt;We have two choices - we can run python on the server, and connect to the
+database locally, or we can run python on our computer and connect to the
+database remotely.&lt;/p&gt;
+
+&lt;p&gt;The exact configuration will depend on your server! We currently can work with
+the R&amp;amp;D servers - individual servers may require some setup - Please email any
+errors you get to me and we will endeavour to make sure we can connect!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [20]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#import odbc&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#in general:&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#conn = pyodbc.connect(&quot;DRIVER={NetezzaSQL};SERVER=&amp;lt;myserver&amp;gt;;PORT=&amp;lt;myport&amp;gt;;DATABASE=&amp;lt;mydbschema&amp;gt;;UID=&amp;lt;user&amp;gt;;PWD=&amp;lt;password&amp;gt;;&quot;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#using DSN&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#conn = pyodbc.connect(dsn = &#39;server&#39;, UID = &#39;uname&#39;, PWD = &#39;PWD&#39;) #server eg:prcmusf&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;I don’t have access to your servers, so here is a simple sqlite database:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [48]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sqlite3&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pd&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sqlite3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;c:/users/jeremy/downloads/survey.db&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#database from software carpentry, http://files.software-carpentry.org/survey.db&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#same as the above connection!&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Once we have a connection, we need to create a cursor. A cursor is a control
+structure which allows us to interact with the database&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [40]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;cxn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cursor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;cxn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;select * from person&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#can do much more complicated....&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#declaritive&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;sqlite3.Cursor at 0x16767ed1490&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now we have our cursor ready to get data from:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [33]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cxn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetchall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cxn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetchall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[]
+[]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;It looks a lot like a generator! (NB it isn’t…).&lt;/p&gt;
+
+&lt;p&gt;We can go line by line, or use it like an iterable:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [30]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;cxn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;select * from person&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cxn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetchone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(&#39;dyer&#39;, &#39;William&#39;, &#39;Dyer&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;In [36]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cxn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;SELECT * FROM person&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(&#39;dyer&#39;, &#39;William&#39;, &#39;Dyer&#39;)
+(&#39;pb&#39;, &#39;Frank&#39;, &#39;Pabodie&#39;)
+(&#39;lake&#39;, &#39;Anderson&#39;, &#39;Lake&#39;)
+(&#39;roe&#39;, &#39;Valentina&#39;, &#39;Roerich&#39;)
+(&#39;danforth&#39;, &#39;Frank&#39;, &#39;Danforth&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;pandas has built in sql integration, through recently is has been reduced to use
+the sql-alchemy backend.&lt;/p&gt;
+
+&lt;p&gt;We use the database connection, rather than the cursor:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [49]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_sql&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;select * from Person&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;ident&lt;/th&gt;
+      &lt;th&gt;personal&lt;/th&gt;
+      &lt;th&gt;family&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;dyer&lt;/td&gt;
+      &lt;td&gt;William&lt;/td&gt;
+      &lt;td&gt;Dyer&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;pb&lt;/td&gt;
+      &lt;td&gt;Frank&lt;/td&gt;
+      &lt;td&gt;Pabodie&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;lake&lt;/td&gt;
+      &lt;td&gt;Anderson&lt;/td&gt;
+      &lt;td&gt;Lake&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;roe&lt;/td&gt;
+      &lt;td&gt;Valentina&lt;/td&gt;
+      &lt;td&gt;Roerich&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;danforth&lt;/td&gt;
+      &lt;td&gt;Frank&lt;/td&gt;
+      &lt;td&gt;Danforth&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;In [46]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;newcol&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;strong&gt;In [52]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#df.to_sql(&#39;data1&#39;, x)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_sql&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;select * from data1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;index&lt;/th&gt;
+      &lt;th&gt;ident&lt;/th&gt;
+      &lt;th&gt;personal&lt;/th&gt;
+      &lt;th&gt;family&lt;/th&gt;
+      &lt;th&gt;newcol&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;dyer&lt;/td&gt;
+      &lt;td&gt;William&lt;/td&gt;
+      &lt;td&gt;Dyer&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;pb&lt;/td&gt;
+      &lt;td&gt;Frank&lt;/td&gt;
+      &lt;td&gt;Pabodie&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;lake&lt;/td&gt;
+      &lt;td&gt;Anderson&lt;/td&gt;
+      &lt;td&gt;Lake&lt;/td&gt;
+      &lt;td&gt;3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;roe&lt;/td&gt;
+      &lt;td&gt;Valentina&lt;/td&gt;
+      &lt;td&gt;Roerich&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;danforth&lt;/td&gt;
+      &lt;td&gt;Frank&lt;/td&gt;
+      &lt;td&gt;Danforth&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In general, we should keep the sql inside python to a minimum - netezza is a
+little finicky with it’s integration, so run a sql command, and then read in all
+the data.&lt;/p&gt;
+
+&lt;h3 id=&quot;scripts-vs-notebooks&quot;&gt;Scripts vs Notebooks&lt;/h3&gt;
+
+&lt;p&gt;The i in iPython stands for interactive. In general, we should use iPython to
+develop code, test and run it, and then run as scripts for production. The
+current move is in to using notebooks in production - we can run them on the
+server, and interact with them from our own computers - This however requires
+running a web facing server which is not super secure.&lt;/p&gt;
+
+&lt;p&gt;We will see if this is possible for our setup…&lt;/p&gt;
+
+&lt;p&gt;In the mean time, see how easy it is to convert a notebook to script.py&lt;/p&gt;
+
+&lt;h3 id=&quot;testing&quot;&gt;Testing&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Test-driven_development&quot;&gt;Test driven development&lt;/a&gt;
+is a development style where we write tests that our completed code should pass,
+then attempt to write code to pass them. In this manner, we can ensure that our
+code works as desired, and gives outputs that we desire.&lt;/p&gt;
+
+&lt;p&gt;To a lesser extent, all code should include tests - a lot of time spent
+debugging and writing code is simply manual testing - why didn’t my code work?
+Why did this particular data give me an error? What about special edge cases?&lt;/p&gt;
+
+&lt;p&gt;This informal testing is often all that code goes through. Code reviews, and
+Pair Programming have been shown to help reduce bugs, but a good start is unit
+testing.&lt;/p&gt;
+
+&lt;p&gt;Unit testing allows us to test each part (unit) of our code automatically, and
+can greatly help in refactoring large code bases, or prexisting code bases. We
+could theoretically completely rewrite entire scripts and keep the same tests,
+so that our inputs and outputs stay identical.&lt;/p&gt;
+
+&lt;p&gt;There are a &lt;a href=&quot;http://docs.python-
+guide.org/en/latest/writing/tests/&quot;&gt;wide range of testing suites available&lt;/a&gt;, here we will use the &lt;a href=&quot;https://docs.python.org/3/library/unittest.html&quot;&gt;unittest
+module&lt;/a&gt; from the standard
+library.&lt;/p&gt;
+
+&lt;p&gt;unittest works best with scripts - Let’s make one with our fibonacci functions
+from the second lesson:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [53]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#saved as fibo.py&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Then we create a seperate script, which imports unittest, and define our tests
+as a class which inherits from unittest.TestCase. All of our tests are methods
+of this class, and must start with test.&lt;/p&gt;
+
+&lt;p&gt;We then use the range of assert* methods built in to the class to say what our
+functions should do:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [54]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;unittest&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;fibo&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fibo&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;testfibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unittest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TestCase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_one&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assertEqual&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_zero&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assertEqual&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_negative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assertRaises&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ValueError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_ten&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assertEqual&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;__main__&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;unittest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#saved as tests.py&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---------------------------------------------------------------------------
+
+ImportError                               Traceback (most recent call last)
+
+&amp;lt;ipython-input-54-097a35bbb889&amp;gt; in &amp;lt;module&amp;gt;()
+      1 import unittest
+----&amp;gt; 2 from fibo import fibo
+      3
+      4 class testfibo(unittest.TestCase):
+      5     def test_one(self):
+
+
+ImportError: No module named &#39;fibo&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;python tests.py&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;```
+jeremy@thin:~$ python tests.py
+F..F
+======================================================================
+FAIL: test_negative (&lt;strong&gt;main&lt;/strong&gt;.testfibo)
+———————————————————————-
+Traceback (most recent call last):
+  File “tests.py”, line 10, in test_negative
+    self.assertRaises(ValueError, fibo, -1)
+AssertionError: ValueError not raised by fibo&lt;/p&gt;
+
+&lt;p&gt;======================================================================
+FAIL: test_zero (&lt;strong&gt;main&lt;/strong&gt;.testfibo)
+———————————————————————-
+Traceback (most recent call last):
+  File “tests.py”, line 8, in test_zero
+    self.assertEqual(fibo(0), 0)
+AssertionError: 1 != 0&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;Ran 4 tests in 0.002s&lt;/p&gt;
+
+&lt;p&gt;FAILED (failures=2)
+```&lt;/p&gt;
+
+&lt;p&gt;Then we can fix our function:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [55]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;ValueError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#saved as fibo.py&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;And rerun our tests.&lt;/p&gt;
+
+&lt;p&gt;We know that this is a slow function, so maybe we would like to refactor it. We
+can do this, leaving the tests as is:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [56]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;memoize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myfunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;function_to_cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myfunction&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cache&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;function_to_cache&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fiborecur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fiborecur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fiborecur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#saved as fibo.py&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Whoops - our refactor didn’t define fibo - We could do this in our script, but
+maybe we don’t want to for now.&lt;/p&gt;
+
+&lt;p&gt;We have the setUp and tearDown methods - using these we can run code to set up
+our tests - eg connect to a database or download some data. In general, we
+should keep any set up inside our class - we don’t want to modify the global
+environment for any other tests.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [None]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;unittest&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;fibo&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fiborecur&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;fibo&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memoize&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;testfibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unittest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TestCase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setUp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fibo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memoize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fiborecur&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_one&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assertEqual&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_zero&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assertEqual&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_negative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assertRaises&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ValueError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_ten&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;assertEqual&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;__main__&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;unittest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#saved as tests.py&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;h3 id=&quot;version-control&quot;&gt;Version Control&lt;/h3&gt;
+
+&lt;p&gt;Every piece of code should be under version control!!&lt;/p&gt;
+
+&lt;p&gt;It seems that there is no company wide version control system set up - so let’s
+use git. We could also use SVN or mecurial.&lt;/p&gt;
+
+&lt;p&gt;Version control allows us to track changes on our code. By making a series of
+commits, we can see the changes we made, who made them, and roll them back if
+necessary.&lt;/p&gt;
+
+&lt;p&gt;Install git from &lt;a href=&quot;https://git-scm.com/downloads&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let’s play around a small amount as an introduction - you will want to learn a
+lot more before git is useful for you!&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+mkdir gittest
+cd gittest
+dir
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we initialise a git repository:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+git init
+dir
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Turns out it’s a hidden folder:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+dir /a
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We can get status using git status:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;
+git status
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Ok, so let’s get coding:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [57]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#saved as fibo.py&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now run git status:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+git status
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;we can see that we have an untracked file!&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+git add fibo.py
+#or git add --all
+git status
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we commit the change!&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+git commit -m &quot;initial commit of fibo.py&quot;
+git status
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We can see the history using git log:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+git log
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Now let’s fix our function!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In [58]:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;fibo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&#39;&#39;&#39;
+    fixed version!
+    &#39;&#39;&#39;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;ValueError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;counter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#saved as fibo.py&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;again git status allows us to see we have changes.&lt;/p&gt;
+
+&lt;p&gt;git diff allows us to see what they are:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;
+git diff
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;we can then add and commit the changes:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+git add --all
+git commit -m &quot;passes tests, docstring&quot;
+git log
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Now if we accidently delete our file, we can restore it:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+git checkout head fibo.py
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;or if our changes are no good, we can revert:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+git checkout head~1 fibo.py
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;git is not github! Github is a website built on remote hosting of git
+repositories. You probably can’t use it for work code, but it is useful to see
+how it works.&lt;/p&gt;
+
+&lt;p&gt;We can clone down from github:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+cd ..
+git clone https://github.com/jeremycg/pythoncourse
+cd pythoncourse
+git log
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;For more information on git, see the online course at Software Carpentry -
+http://swcarpentry.github.io/git-novice/ and at codeschool :
+https://try.github.io/&lt;/p&gt;
+</description>
+        <pubDate>Wed, 13 Apr 2016 00:00:00 -0400</pubDate>
+        <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/04/13/applied09.html</link>
+        <guid isPermaLink="true">http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/04/13/applied09.html</guid>
+        
+        <category>Applied Statistics stream</category>
+        
+        
+      </item>
     
       <item>
         <title>Lesson 08 - Optimization</title>
@@ -6174,1815 +7197,6 @@ clustering.&lt;/p&gt;
         <guid isPermaLink="true">http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/18/lesson-05-rd.html</guid>
         
         <category>R&amp;D stream</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Lesson 05 - pandas part 2</title>
-        <description>&lt;h2 id=&quot;lesson-05---pandas-part-2&quot;&gt;Lesson 05 - Pandas part 2&lt;/h2&gt;
-
-&lt;p&gt;Welcome to lesson 6! In this lesson we will introduce pandas as our main way of
-storing data. NumPy will be useful when we have a uniform multidimensional data
-set, but for now pandas will be our default.&lt;/p&gt;
-
-&lt;p&gt;Again, an exhaustive run through of pandas is too much for this class - see the
-book - &lt;a href=&quot;http://shop.oreilly.com/product/0636920023784.do&quot;&gt;Python for Data
-Analysis&lt;/a&gt; or the &lt;a href=&quot;http://pandas.pydata.org/pandas-docs/version/0.17.1/&quot;&gt;official
-pandas website&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;If you are familiar with &lt;a href=&quot;http://pandas.pydata.org/pandas-
-docs/version/0.17.1/comparison_with_r.html&quot;&gt;R&lt;/a&gt;,
-&lt;a href=&quot;http://pandas.pydata.org/pandas-
-docs/version/0.17.1/comparison_with_sas.html&quot;&gt;SAS&lt;/a&gt;, and/or
-&lt;a href=&quot;http://pandas.pydata.org/pandas-
-docs/version/0.17.1/comparison_with_sql.html&quot;&gt;SQL&lt;/a&gt;, click on the links to lead you to
-the intro to pandas for users of each language.&lt;/p&gt;
-
-&lt;p&gt;Please download todays notebook
-&lt;a href=&quot;/pythoncourse/assets/notebooks/applied/lesson 05 applied.ipynb&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;data-import&quot;&gt;Data Import&lt;/h3&gt;
-
-&lt;p&gt;Importing data is the most important first step to get our data in. Today we
-will cover read_csv, before we finish the course we will talk about how to
-connect to your netezza (and other SQL) databases&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;In [1]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Series&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pd&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;io&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;np&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;We have a ton of ways of reading data into and writing data out of pandas. See
-the &lt;a href=&quot;http://pandas.pydata.org/pandas-docs/stable/io.html&quot;&gt;dataIO page&lt;/a&gt; for more
-details.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;In [3]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#using a string as example&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#we could refer to file names if we had the file saved&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;&#39;&#39;
-date,A,B,C
-20090101,a,1,2
-20090102,b,3,4
-20090103,c,4,5
-&#39;&#39;&#39;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;date,A,B,C
-20090101,a,1,2
-20090102,b,3,4
-20090103,c,4,5
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [3]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#by default, the index is arange(nrows)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StringIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;date&lt;/th&gt;
-      &lt;th&gt;A&lt;/th&gt;
-      &lt;th&gt;B&lt;/th&gt;
-      &lt;th&gt;C&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;20090101&lt;/td&gt;
-      &lt;td&gt;a&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;20090102&lt;/td&gt;
-      &lt;td&gt;b&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;20090103&lt;/td&gt;
-      &lt;td&gt;c&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [4]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#we can specify the index:&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StringIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index_col&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#also index_col=&#39;date&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;A&lt;/th&gt;
-      &lt;th&gt;B&lt;/th&gt;
-      &lt;th&gt;C&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;date&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;20090101&lt;/th&gt;
-      &lt;td&gt;a&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;20090102&lt;/th&gt;
-      &lt;td&gt;b&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;20090103&lt;/th&gt;
-      &lt;td&gt;c&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [40]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#we can also use nested indices:&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StringIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index_col&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;date&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;A&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;B&lt;/th&gt;
-      &lt;th&gt;C&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;date&lt;/th&gt;
-      &lt;th&gt;A&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;20090101&lt;/th&gt;
-      &lt;th&gt;a&lt;/th&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;20090102&lt;/th&gt;
-      &lt;th&gt;b&lt;/th&gt;
-      &lt;td&gt;3&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;20090103&lt;/th&gt;
-      &lt;th&gt;c&lt;/th&gt;
-      &lt;td&gt;4&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [5]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#we can specify data type (it will speed things up, or avoid conversion)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StringIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index_col&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;date&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dtype&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;A&#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;B&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;int32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;C&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;A&lt;/th&gt;
-      &lt;th&gt;B&lt;/th&gt;
-      &lt;th&gt;C&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;date&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;20090101&lt;/th&gt;
-      &lt;td&gt;a&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;20090102&lt;/th&gt;
-      &lt;td&gt;b&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;20090103&lt;/th&gt;
-      &lt;td&gt;c&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [6]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#We can throw out names and use our own&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StringIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;index_col&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;dtype&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;A&#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;B&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;int32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;C&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-           &lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;foo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;bar&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;baz&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-           &lt;span class=&quot;n&quot;&gt;header&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;foo&lt;/th&gt;
-      &lt;th&gt;bar&lt;/th&gt;
-      &lt;th&gt;baz&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;20090101&lt;/th&gt;
-      &lt;td&gt;a&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;20090102&lt;/th&gt;
-      &lt;td&gt;b&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;20090103&lt;/th&gt;
-      &lt;td&gt;c&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [57]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#filter out some unneeded columns:&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StringIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-           &lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;date&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;foo&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;bar&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;baz&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-           &lt;span class=&quot;n&quot;&gt;header&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-           &lt;span class=&quot;n&quot;&gt;usecols&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;foo&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;baz&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;foo&lt;/th&gt;
-      &lt;th&gt;baz&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;a&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;b&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;c&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [5]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#dates! more to come&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StringIO&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-           &lt;span class=&quot;n&quot;&gt;parse_dates&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;index_col&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-           &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;DatetimeIndex([&#39;2009-01-01&#39;, &#39;2009-01-02&#39;, &#39;2009-01-03&#39;], dtype=&#39;datetime64[ns]&#39;, name=&#39;date&#39;, freq=None)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;dataframes&quot;&gt;DataFrames&lt;/h3&gt;
-
-&lt;p&gt;DataFrames are similar to a dict of a series - technically they are a 2d series
-with some linking between levels.&lt;/p&gt;
-
-&lt;p&gt;Columns are arrays (must be one data type), and rows are similar to dicts.&lt;/p&gt;
-
-&lt;p&gt;However, the row/column mapping is not as strictly enforced as R.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;In [7]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;http://jeremy.kiwi.nz/pythoncourse/assets/tests/r&amp;amp;d/test1data.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;TripType&lt;/th&gt;
-      &lt;th&gt;VisitNumber&lt;/th&gt;
-      &lt;th&gt;Weekday&lt;/th&gt;
-      &lt;th&gt;Upc&lt;/th&gt;
-      &lt;th&gt;ScanCount&lt;/th&gt;
-      &lt;th&gt;DepartmentDescription&lt;/th&gt;
-      &lt;th&gt;FinelineNumber&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;30&lt;/td&gt;
-      &lt;td&gt;7&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;60538815980&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;SHOES&lt;/td&gt;
-      &lt;td&gt;8931&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;30&lt;/td&gt;
-      &lt;td&gt;7&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;7410811099&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;PERSONAL CARE&lt;/td&gt;
-      &lt;td&gt;4504&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2238403510&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;3565&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2006613744&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;1017&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;5&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2006618783&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;1017&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;6&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2006613743&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;1017&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;7&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;7004802737&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;2802&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;8&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2238495318&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;4501&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;9&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2238400200&lt;/td&gt;
-      &lt;td&gt;-1&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;3565&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;10&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;5200010239&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;DSD GROCERY&lt;/td&gt;
-      &lt;td&gt;4606&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;11&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;88679300501&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;3504&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;12&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;22006000000&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;MEAT - FRESH &amp;amp; FROZEN&lt;/td&gt;
-      &lt;td&gt;6009&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;13&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2236760452&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;7&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;14&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;88679300501&lt;/td&gt;
-      &lt;td&gt;-1&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;3504&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;15&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2238400200&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;3565&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;16&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;3019294203&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;2801&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;17&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;72450408840&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;1028&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;18&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;25541500000&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;DAIRY&lt;/td&gt;
-      &lt;td&gt;1305&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;19&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2310010776&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;PETS AND SUPPLIES&lt;/td&gt;
-      &lt;td&gt;3300&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [12]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;# get the column names&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#get the first five rows&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#pick out specific columns&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;TripType&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;VisitNumber&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#same as&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;TripType&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;VisitNumber&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#get one specific column&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TripType&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#get one specific column&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;TripType&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#if we want rows, we need ix, loc or iloc&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#loc works on labels in the index:&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#iloc works on integer index:&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;iloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#ix tries to work like loc, but falls back to iloc if not found:&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#add a new column&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;foo&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;spam&quot;&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#using other columns:&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;foo&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;VisitNumber&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;ScanCount&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#add a new column with specific values&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;foo&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Series&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;spam&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;more spam&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;In [13]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#delete a column&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;del&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;foo&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#&#39;http://pandas.pydata.org/pandas-docs/dev/generated/pandas.DataFrame.html&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;In [15]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#recall, indexes are immutable?&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#how to reindex?&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reindex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;TripType&lt;/th&gt;
-      &lt;th&gt;VisitNumber&lt;/th&gt;
-      &lt;th&gt;Weekday&lt;/th&gt;
-      &lt;th&gt;Upc&lt;/th&gt;
-      &lt;th&gt;ScanCount&lt;/th&gt;
-      &lt;th&gt;DepartmentDescription&lt;/th&gt;
-      &lt;th&gt;FinelineNumber&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;30&lt;/td&gt;
-      &lt;td&gt;7&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;60538815980&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;SHOES&lt;/td&gt;
-      &lt;td&gt;8931&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;30&lt;/td&gt;
-      &lt;td&gt;7&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;7410811099&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;PERSONAL CARE&lt;/td&gt;
-      &lt;td&gt;4504&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2238403510&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;3565&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2006613744&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;1017&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [16]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reindex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fill_value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reindex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;method&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;ffill&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;TripType&lt;/th&gt;
-      &lt;th&gt;VisitNumber&lt;/th&gt;
-      &lt;th&gt;Weekday&lt;/th&gt;
-      &lt;th&gt;Upc&lt;/th&gt;
-      &lt;th&gt;ScanCount&lt;/th&gt;
-      &lt;th&gt;DepartmentDescription&lt;/th&gt;
-      &lt;th&gt;FinelineNumber&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;30&lt;/td&gt;
-      &lt;td&gt;7&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;60538815980&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;SHOES&lt;/td&gt;
-      &lt;td&gt;8931&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;30&lt;/td&gt;
-      &lt;td&gt;7&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;7410811099&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;PERSONAL CARE&lt;/td&gt;
-      &lt;td&gt;4504&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2238403510&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;3565&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2006613744&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;1017&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;5&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2006613744&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;1017&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;6&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2006613744&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;1017&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;7&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2006613744&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;1017&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;8&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2006613744&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;1017&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;9&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2006613744&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;1017&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [18]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#dat.drop(&#39;foo&#39;, axis = 1)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;TripType&lt;/th&gt;
-      &lt;th&gt;VisitNumber&lt;/th&gt;
-      &lt;th&gt;Weekday&lt;/th&gt;
-      &lt;th&gt;Upc&lt;/th&gt;
-      &lt;th&gt;ScanCount&lt;/th&gt;
-      &lt;th&gt;DepartmentDescription&lt;/th&gt;
-      &lt;th&gt;FinelineNumber&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;30&lt;/td&gt;
-      &lt;td&gt;7&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;7410811099&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;PERSONAL CARE&lt;/td&gt;
-      &lt;td&gt;4504&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2238403510&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;3565&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2006613744&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;1017&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [19]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#getting data&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;TripType&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;Upc&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;ScanCount&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;ScanCount&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;TripType&lt;/th&gt;
-      &lt;th&gt;VisitNumber&lt;/th&gt;
-      &lt;th&gt;Weekday&lt;/th&gt;
-      &lt;th&gt;Upc&lt;/th&gt;
-      &lt;th&gt;ScanCount&lt;/th&gt;
-      &lt;th&gt;DepartmentDescription&lt;/th&gt;
-      &lt;th&gt;FinelineNumber&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2238403510&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;3565&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;26&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;Friday&lt;/td&gt;
-      &lt;td&gt;2006613744&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;PAINT AND ACCESSORIES&lt;/td&gt;
-      &lt;td&gt;1017&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;quick-review&quot;&gt;Quick Review&lt;/h3&gt;
-
-&lt;p&gt;I mentioned in the previous lecture we can use all our base and NumPy methods on
-pandas DataFrames: Here is a quick review taken from the SQL lesson:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;In [8]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;tips&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;https://raw.github.com/pydata/pandas/master/pandas/tests/data/tips.csv&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;tips&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;total_bill&lt;/th&gt;
-      &lt;th&gt;tip&lt;/th&gt;
-      &lt;th&gt;sex&lt;/th&gt;
-      &lt;th&gt;smoker&lt;/th&gt;
-      &lt;th&gt;day&lt;/th&gt;
-      &lt;th&gt;time&lt;/th&gt;
-      &lt;th&gt;size&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;16.99&lt;/td&gt;
-      &lt;td&gt;1.01&lt;/td&gt;
-      &lt;td&gt;Female&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Sun&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;10.34&lt;/td&gt;
-      &lt;td&gt;1.66&lt;/td&gt;
-      &lt;td&gt;Male&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Sun&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;21.01&lt;/td&gt;
-      &lt;td&gt;3.50&lt;/td&gt;
-      &lt;td&gt;Male&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Sun&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;23.68&lt;/td&gt;
-      &lt;td&gt;3.31&lt;/td&gt;
-      &lt;td&gt;Male&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Sun&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;24.59&lt;/td&gt;
-      &lt;td&gt;3.61&lt;/td&gt;
-      &lt;td&gt;Female&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Sun&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;SQL select:
-&lt;code class=&quot;highlighter-rouge&quot;&gt;
-SELECT total_bill, tip, smoker, time
-FROM tips
-LIMIT 5;
-&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;In [9]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;tips&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;total_bill&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;tip&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;smoker&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;time&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;total_bill&lt;/th&gt;
-      &lt;th&gt;tip&lt;/th&gt;
-      &lt;th&gt;smoker&lt;/th&gt;
-      &lt;th&gt;time&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;16.99&lt;/td&gt;
-      &lt;td&gt;1.01&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;10.34&lt;/td&gt;
-      &lt;td&gt;1.66&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;21.01&lt;/td&gt;
-      &lt;td&gt;3.50&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;23.68&lt;/td&gt;
-      &lt;td&gt;3.31&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;24.59&lt;/td&gt;
-      &lt;td&gt;3.61&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;SQL where:
-&lt;code class=&quot;highlighter-rouge&quot;&gt;
-SELECT *
-FROM tips
-WHERE time = &#39;Dinner&#39; AND tip &amp;gt; 5.00;
-LIMIT 5;
-&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;In [11]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;tips&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tips&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;time&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;Dinner&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tips&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;tip&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;5.00&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;total_bill&lt;/th&gt;
-      &lt;th&gt;tip&lt;/th&gt;
-      &lt;th&gt;sex&lt;/th&gt;
-      &lt;th&gt;smoker&lt;/th&gt;
-      &lt;th&gt;day&lt;/th&gt;
-      &lt;th&gt;time&lt;/th&gt;
-      &lt;th&gt;size&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;23&lt;/th&gt;
-      &lt;td&gt;39.42&lt;/td&gt;
-      &lt;td&gt;7.58&lt;/td&gt;
-      &lt;td&gt;Male&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Sat&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;44&lt;/th&gt;
-      &lt;td&gt;30.40&lt;/td&gt;
-      &lt;td&gt;5.60&lt;/td&gt;
-      &lt;td&gt;Male&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Sun&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;47&lt;/th&gt;
-      &lt;td&gt;32.40&lt;/td&gt;
-      &lt;td&gt;6.00&lt;/td&gt;
-      &lt;td&gt;Male&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Sun&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;52&lt;/th&gt;
-      &lt;td&gt;34.81&lt;/td&gt;
-      &lt;td&gt;5.20&lt;/td&gt;
-      &lt;td&gt;Female&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Sun&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;59&lt;/th&gt;
-      &lt;td&gt;48.27&lt;/td&gt;
-      &lt;td&gt;6.73&lt;/td&gt;
-      &lt;td&gt;Male&lt;/td&gt;
-      &lt;td&gt;No&lt;/td&gt;
-      &lt;td&gt;Sat&lt;/td&gt;
-      &lt;td&gt;Dinner&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;groupby&quot;&gt;Groupby&lt;/h3&gt;
-
-&lt;p&gt;Grouping and summarising data allows us to carry out the key data analysis steps
-of &lt;a href=&quot;https://www.jstatsoft.org/article/view/v040i01/v40i01.pdf&quot;&gt;split, apply,
-combine&lt;/a&gt;. The journal
-article by Hadley Wickham was one of the first formalisations of the split apply
-combine paradigm, and we can of course do it in Python.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Splitting the data into groups based on some criteria&lt;/li&gt;
-  &lt;li&gt;Applying a function to each group independently&lt;/li&gt;
-  &lt;li&gt;Combining the results into a data structure&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Let’s continue on with our analysis of the tips data:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;In [12]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;tipsgroups&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tips&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;groupby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;sex&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;tipsgroups&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;pandas.core.groupby.DataFrameGroupBy object at 0x7f5f60520128&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;We now have a new data type, the groupby object.
-We can access the attribute, groups. This is a dict, with each level as it’s own
-entry and the indices of the original data frame:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;In [13]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tipsgroups&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;groups&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Female
-Male
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;We can do grouping on any axis, or with a custom function (this example is
-pathological):&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;In [14]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;myfun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;group2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tips&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;groupby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myfun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;group2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;groups&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;0:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;[&#39;tip&#39;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&#39;sex&#39;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&#39;day&#39;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&#39;time&#39;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&#39;size&#39;],&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;1:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;[&#39;total_bill&#39;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&#39;smoker&#39;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;We can use tab completion to see all out methods and attributes:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;In [43]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pyplot&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matplotlib&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inline&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;tipsgroups&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#tipsgroups.boxplot();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;total_bill&lt;/th&gt;
-      &lt;th&gt;tip&lt;/th&gt;
-      &lt;th&gt;size&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;sex&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Female&lt;/th&gt;
-      &lt;td&gt;18.056897&lt;/td&gt;
-      &lt;td&gt;2.833448&lt;/td&gt;
-      &lt;td&gt;2.459770&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Male&lt;/th&gt;
-      &lt;td&gt;20.744076&lt;/td&gt;
-      &lt;td&gt;3.089618&lt;/td&gt;
-      &lt;td&gt;2.630573&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;We can iterate through groups:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;In [36]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tipsgroups&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;group&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Female
-    total_bill   tip     sex smoker  day    time  size
-0        16.99  1.01  Female     No  Sun  Dinner     2
-4        24.59  3.61  Female     No  Sun  Dinner     4
-11       35.26  5.00  Female     No  Sun  Dinner     4
-14       14.83  3.02  Female     No  Sun  Dinner     2
-16       10.33  1.67  Female     No  Sun  Dinner     3
-Male
-   total_bill   tip   sex smoker  day    time  size
-1       10.34  1.66  Male     No  Sun  Dinner     3
-2       21.01  3.50  Male     No  Sun  Dinner     3
-3       23.68  3.31  Male     No  Sun  Dinner     2
-5       25.29  4.71  Male     No  Sun  Dinner     4
-6        8.77  2.00  Male     No  Sun  Dinner     2
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;To apply, we can use .aggregate:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;In [15]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;tipsgroups&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aggregate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#selecting columns:&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;tipsgroups&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;tip&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aggregate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sex
-Female    2.833448
-Male      3.089618
-Name: tip, dtype: float64
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [16]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#.agg is short for agg&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;tipsgroups&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;agg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th colspan=&quot;3&quot; halign=&quot;left&quot;&gt;total_bill&lt;/th&gt;
-      &lt;th colspan=&quot;3&quot; halign=&quot;left&quot;&gt;tip&lt;/th&gt;
-      &lt;th colspan=&quot;3&quot; halign=&quot;left&quot;&gt;size&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;mean&lt;/th&gt;
-      &lt;th&gt;sum&lt;/th&gt;
-      &lt;th&gt;std&lt;/th&gt;
-      &lt;th&gt;mean&lt;/th&gt;
-      &lt;th&gt;sum&lt;/th&gt;
-      &lt;th&gt;std&lt;/th&gt;
-      &lt;th&gt;mean&lt;/th&gt;
-      &lt;th&gt;sum&lt;/th&gt;
-      &lt;th&gt;std&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;sex&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Female&lt;/th&gt;
-      &lt;td&gt;18.056897&lt;/td&gt;
-      &lt;td&gt;1570.95&lt;/td&gt;
-      &lt;td&gt;8.009209&lt;/td&gt;
-      &lt;td&gt;2.833448&lt;/td&gt;
-      &lt;td&gt;246.51&lt;/td&gt;
-      &lt;td&gt;1.159495&lt;/td&gt;
-      &lt;td&gt;2.459770&lt;/td&gt;
-      &lt;td&gt;214&lt;/td&gt;
-      &lt;td&gt;0.937644&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Male&lt;/th&gt;
-      &lt;td&gt;20.744076&lt;/td&gt;
-      &lt;td&gt;3256.82&lt;/td&gt;
-      &lt;td&gt;9.246469&lt;/td&gt;
-      &lt;td&gt;3.089618&lt;/td&gt;
-      &lt;td&gt;485.07&lt;/td&gt;
-      &lt;td&gt;1.489102&lt;/td&gt;
-      &lt;td&gt;2.630573&lt;/td&gt;
-      &lt;td&gt;413&lt;/td&gt;
-      &lt;td&gt;0.955997&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [17]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#we can also use a dict, to do different things to different rows:&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;tipsgroups&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;agg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;tip&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;size&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th colspan=&quot;2&quot; halign=&quot;left&quot;&gt;tip&lt;/th&gt;
-      &lt;th&gt;size&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;mean&lt;/th&gt;
-      &lt;th&gt;sum&lt;/th&gt;
-      &lt;th&gt;&amp;lt;lambda&amp;gt;&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;sex&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Female&lt;/th&gt;
-      &lt;td&gt;2.833448&lt;/td&gt;
-      &lt;td&gt;246.51&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Male&lt;/th&gt;
-      &lt;td&gt;3.089618&lt;/td&gt;
-      &lt;td&gt;485.07&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;We can also filter, transform, plot, count etc etc. Take a look in the help for
-more details!&lt;/p&gt;
-
-&lt;h3 id=&quot;joins&quot;&gt;Joins&lt;/h3&gt;
-
-&lt;p&gt;We can use a variety of joins in pandas, the most basic using the concat
-function:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;In [18]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;df1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;A&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;A0&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;A1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;A2&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;A3&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-                    &lt;span class=&quot;s&quot;&gt;&#39;B&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;B0&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;B1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;B2&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;B3&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-                    &lt;span class=&quot;s&quot;&gt;&#39;C&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;C0&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;C1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;C2&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;C3&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-                    &lt;span class=&quot;s&quot;&gt;&#39;D&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;D0&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;D1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;D2&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;D3&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]},&lt;/span&gt;
-                     &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;df2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;A&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;A4&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;A5&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;A6&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;A7&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-                    &lt;span class=&quot;s&quot;&gt;&#39;B&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;B4&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;B5&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;B6&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;B7&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-                    &lt;span class=&quot;s&quot;&gt;&#39;C&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;C4&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;C5&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;C6&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;C7&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-                    &lt;span class=&quot;s&quot;&gt;&#39;D&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;D4&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;D5&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;D6&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;D7&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]},&lt;/span&gt;
-                     &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;In [19]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#joins on index&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;concat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;A&lt;/th&gt;
-      &lt;th&gt;B&lt;/th&gt;
-      &lt;th&gt;C&lt;/th&gt;
-      &lt;th&gt;D&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;A0&lt;/td&gt;
-      &lt;td&gt;B0&lt;/td&gt;
-      &lt;td&gt;C0&lt;/td&gt;
-      &lt;td&gt;D0&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;A1&lt;/td&gt;
-      &lt;td&gt;B1&lt;/td&gt;
-      &lt;td&gt;C1&lt;/td&gt;
-      &lt;td&gt;D1&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;A2&lt;/td&gt;
-      &lt;td&gt;B2&lt;/td&gt;
-      &lt;td&gt;C2&lt;/td&gt;
-      &lt;td&gt;D2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;A3&lt;/td&gt;
-      &lt;td&gt;B3&lt;/td&gt;
-      &lt;td&gt;C3&lt;/td&gt;
-      &lt;td&gt;D3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;A4&lt;/td&gt;
-      &lt;td&gt;B4&lt;/td&gt;
-      &lt;td&gt;C4&lt;/td&gt;
-      &lt;td&gt;D4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;5&lt;/th&gt;
-      &lt;td&gt;A5&lt;/td&gt;
-      &lt;td&gt;B5&lt;/td&gt;
-      &lt;td&gt;C5&lt;/td&gt;
-      &lt;td&gt;D5&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;6&lt;/th&gt;
-      &lt;td&gt;A6&lt;/td&gt;
-      &lt;td&gt;B6&lt;/td&gt;
-      &lt;td&gt;C6&lt;/td&gt;
-      &lt;td&gt;D6&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;7&lt;/th&gt;
-      &lt;td&gt;A7&lt;/td&gt;
-      &lt;td&gt;B7&lt;/td&gt;
-      &lt;td&gt;C7&lt;/td&gt;
-      &lt;td&gt;D7&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [20]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#joins on index!&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;concat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;A&lt;/th&gt;
-      &lt;th&gt;B&lt;/th&gt;
-      &lt;th&gt;C&lt;/th&gt;
-      &lt;th&gt;D&lt;/th&gt;
-      &lt;th&gt;A&lt;/th&gt;
-      &lt;th&gt;B&lt;/th&gt;
-      &lt;th&gt;C&lt;/th&gt;
-      &lt;th&gt;D&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;A0&lt;/td&gt;
-      &lt;td&gt;B0&lt;/td&gt;
-      &lt;td&gt;C0&lt;/td&gt;
-      &lt;td&gt;D0&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;A1&lt;/td&gt;
-      &lt;td&gt;B1&lt;/td&gt;
-      &lt;td&gt;C1&lt;/td&gt;
-      &lt;td&gt;D1&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;A2&lt;/td&gt;
-      &lt;td&gt;B2&lt;/td&gt;
-      &lt;td&gt;C2&lt;/td&gt;
-      &lt;td&gt;D2&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;A3&lt;/td&gt;
-      &lt;td&gt;B3&lt;/td&gt;
-      &lt;td&gt;C3&lt;/td&gt;
-      &lt;td&gt;D3&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;A4&lt;/td&gt;
-      &lt;td&gt;B4&lt;/td&gt;
-      &lt;td&gt;C4&lt;/td&gt;
-      &lt;td&gt;D4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;5&lt;/th&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;A5&lt;/td&gt;
-      &lt;td&gt;B5&lt;/td&gt;
-      &lt;td&gt;C5&lt;/td&gt;
-      &lt;td&gt;D5&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;6&lt;/th&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;A6&lt;/td&gt;
-      &lt;td&gt;B6&lt;/td&gt;
-      &lt;td&gt;C6&lt;/td&gt;
-      &lt;td&gt;D6&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;7&lt;/th&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;A7&lt;/td&gt;
-      &lt;td&gt;B7&lt;/td&gt;
-      &lt;td&gt;C7&lt;/td&gt;
-      &lt;td&gt;D7&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;In [21]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#we can ignore the index!&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;df1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ignore_index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;A&lt;/th&gt;
-      &lt;th&gt;B&lt;/th&gt;
-      &lt;th&gt;C&lt;/th&gt;
-      &lt;th&gt;D&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;A0&lt;/td&gt;
-      &lt;td&gt;B0&lt;/td&gt;
-      &lt;td&gt;C0&lt;/td&gt;
-      &lt;td&gt;D0&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;A1&lt;/td&gt;
-      &lt;td&gt;B1&lt;/td&gt;
-      &lt;td&gt;C1&lt;/td&gt;
-      &lt;td&gt;D1&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;A2&lt;/td&gt;
-      &lt;td&gt;B2&lt;/td&gt;
-      &lt;td&gt;C2&lt;/td&gt;
-      &lt;td&gt;D2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;A3&lt;/td&gt;
-      &lt;td&gt;B3&lt;/td&gt;
-      &lt;td&gt;C3&lt;/td&gt;
-      &lt;td&gt;D3&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;A4&lt;/td&gt;
-      &lt;td&gt;B4&lt;/td&gt;
-      &lt;td&gt;C4&lt;/td&gt;
-      &lt;td&gt;D4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;5&lt;/th&gt;
-      &lt;td&gt;A5&lt;/td&gt;
-      &lt;td&gt;B5&lt;/td&gt;
-      &lt;td&gt;C5&lt;/td&gt;
-      &lt;td&gt;D5&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;6&lt;/th&gt;
-      &lt;td&gt;A6&lt;/td&gt;
-      &lt;td&gt;B6&lt;/td&gt;
-      &lt;td&gt;C6&lt;/td&gt;
-      &lt;td&gt;D6&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;7&lt;/th&gt;
-      &lt;td&gt;A7&lt;/td&gt;
-      &lt;td&gt;B7&lt;/td&gt;
-      &lt;td&gt;C7&lt;/td&gt;
-      &lt;td&gt;D7&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;For more control, we might want to explicitly use merge!&lt;/p&gt;
-
-&lt;p&gt;We have the standard joins - inner, outer, left, right, full and union:&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;In [78]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;df1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;key&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;A&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;B&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;C&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;D&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-                 &lt;span class=&quot;s&quot;&gt;&#39;value&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)})&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;df2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;key&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;B&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;D&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;D&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&#39;E&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-                    &lt;span class=&quot;s&quot;&gt;&#39;value&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)})&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#SQL:&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#SELECT *&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#FROM df1&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#INNER JOIN df2&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#  ON df1.key = df2.key;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;key&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#SQL:&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#SELECT *&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#FROM df1&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#LEFT OUTER JOIN df2&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#  ON df1.key = df2.key;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;key&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;how&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;left&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#SQL:&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#SELECT *&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#FROM df1&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#RIGHT OUTER JOIN df2&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#  ON df1.key = df2.key;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;key&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;how&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;right&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#SQL:&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#SELECT *&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#FROM df1&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#FULL OUTER JOIN df2&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;#  ON df1.key = df2.key;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;key&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;how&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&#39;outer&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;div&gt;
-&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
-  &lt;thead&gt;
-    &lt;tr style=&quot;text-align: right;&quot;&gt;
-      &lt;th&gt;&lt;/th&gt;
-      &lt;th&gt;key&lt;/th&gt;
-      &lt;th&gt;value_x&lt;/th&gt;
-      &lt;th&gt;value_y&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;th&gt;0&lt;/th&gt;
-      &lt;td&gt;A&lt;/td&gt;
-      &lt;td&gt;-2.275516&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;1&lt;/th&gt;
-      &lt;td&gt;B&lt;/td&gt;
-      &lt;td&gt;0.050553&lt;/td&gt;
-      &lt;td&gt;2.301355&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;2&lt;/th&gt;
-      &lt;td&gt;C&lt;/td&gt;
-      &lt;td&gt;0.943035&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;3&lt;/th&gt;
-      &lt;td&gt;D&lt;/td&gt;
-      &lt;td&gt;-0.237517&lt;/td&gt;
-      &lt;td&gt;0.449717&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;4&lt;/th&gt;
-      &lt;td&gt;D&lt;/td&gt;
-      &lt;td&gt;-0.237517&lt;/td&gt;
-      &lt;td&gt;-1.692712&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;th&gt;5&lt;/th&gt;
-      &lt;td&gt;E&lt;/td&gt;
-      &lt;td&gt;NaN&lt;/td&gt;
-      &lt;td&gt;-1.079463&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-
-&lt;p&gt;We have not covered a bunch of stuff: &lt;a href=&quot;http://pandas.pydata.org/pandas-docs/stable/reshaping.html&quot;&gt;Pivot tables and
-reshaping&lt;/a&gt;, &lt;a href=&quot;http://pandas.pydata.org/pandas-
-docs/version/0.18.0/whatsnew.html#whatsnew-0180-enhancements-moments&quot;&gt;window
-functions (which were completely updated on
-Sunday)&lt;/a&gt; and &lt;a href=&quot;http://pandas.pydata.org/pandas-docs/stable/timeseries.html&quot;&gt;time
-series&lt;/a&gt;. We will
-cover these as we continue throughout the course.&lt;/p&gt;
-
-&lt;h3 id=&quot;example&quot;&gt;Example&lt;/h3&gt;
-
-&lt;p&gt;From here, we will look at a worked example of data analysis using pandas. In
-the first lesson, we looked at the example of the tennis fixing scandal, and
-briefly ran through it. Now we have the skills and knowledge to walk through it,
-and assess the analysis.&lt;/p&gt;
-
-&lt;p&gt;Here’s the link to the &lt;a href=&quot;http://www.buzzfeed.com/heidiblake/the-tennis-racket&quot;&gt;original
-article&lt;/a&gt; and the &lt;a href=&quot;https://github.com/BuzzFeedNews/2016-01-tennis-betting-analysis&quot;&gt;notebook
-on github&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;exercises&quot;&gt;Exercises&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Update pandas, using conda. Read the documentation for the new window
-functions.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Read through the tennis example, and make sure you understand the basic idea
-of what is being done&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Rewrite cell 5, so that it does not use the ~ for negation - you might need to
-google how to do this&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Write a function or statement to find how many of the report_players are in
-your list of significant outliers (the output of cell 21)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Read the following csv in, using io.StringIO. There is no header!&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;In [1]:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\
-&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;10/08/2012,12:10:10,name1,0.81,4.02,50;18.5701400N,4;07.7693770E,7.92,10.50,0.0106,4.30,0.0301
-10/08/2012,12:10:11,name2,-999,-999,-999,-999,10.87,1.40,0.0099,9.70,0.0686
-&quot;&quot;&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Read in the data as above, but with -999 being a missing value&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;(advanced) From the tennis data frame, find the player (by hash) who has the
-worst winning record. Find the player with the best winning record (remember, we
-have a row for each betting agent on each match!)&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Sun, 13 Mar 2016 00:00:00 -0500</pubDate>
-        <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/13/lesson05applied.html</link>
-        <guid isPermaLink="true">http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/03/13/lesson05applied.html</guid>
-        
-        <category>Applied Statistics stream</category>
         
         
       </item>
