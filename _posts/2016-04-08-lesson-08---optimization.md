@@ -1148,8 +1148,8 @@ generate 1, 2, 6, 24, 120... up to 10!
 2\. Write a unit test for this generator using the unittest module
 
 3\. Write a small script that takes a user input (something like x = input () in the script)
-and returns that number squared. You should use error a=handling to handle cases where the
-inout might not be a number.
+and returns that number squared. You should use error handling to handle cases where the
+input might not be a number.
 
 4\. Write unit tests for this script - use different types of input as test cases.
 
@@ -1159,6 +1159,6 @@ function and get a feel for the debugger.
 6\. Install both the memory_profiler and line_profiler plugins. Profile your factorial
 code for both performance and memory usage. Is there anything you can optimise?
 
-7\. Advanced, optional. Read in the test data set. Get a numeric column into numpy using .values.
+7\. Advanced, optional. Read in the test data set csv using pandas. Get any numeric column into numpy using .values.
 Profile and benchmark finding the sum, mean and cumulative sum of these numbers in numpy
 and pandas. Which one (if any) performs better? Can you guess why?
