@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 13 Apr 2016 10:40:50 -0400</pubDate>
-    <lastBuildDate>Wed, 13 Apr 2016 10:40:50 -0400</lastBuildDate>
+    <pubDate>Thu, 14 Apr 2016 14:35:06 -0400</pubDate>
+    <lastBuildDate>Thu, 14 Apr 2016 14:35:06 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -452,7 +452,7 @@ deactivate
 &lt;p&gt;We can export our configuration:&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
-conda -env export &amp;gt; env.yml
+conda env export &amp;gt; env.yml
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;and use that to share our setup with colleagues:&lt;/p&gt;
@@ -1017,6 +1017,8 @@ cd ..
 git clone https://github.com/jeremycg/pythoncourse
 cd pythoncourse
 git log
+#you will probably want to look at the raw brach:
+git checkout raw
 &lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;For more information on git, see the online course at Software Carpentry -
