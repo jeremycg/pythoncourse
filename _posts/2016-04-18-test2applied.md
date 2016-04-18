@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Test 01 - Base Python"
+title: "Test 02 - End of Course"
 author: Jeremy
 tags:
  - Applied Statistics stream
