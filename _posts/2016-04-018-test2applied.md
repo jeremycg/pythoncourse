@@ -1,0 +1,25 @@
+---
+layout: post
+title: "Test 01 - Base Python"
+author: Jeremy
+tags:
+ - Applied Statistics stream
+comments: true
+---
+
+## Welcome to Test 2
+
+Please read these instructions carefully!
+
+To access the test, you must first fill out the end of course survey, available
+[online here](http://goo.gl/forms/2xHreQ996T). The responses will be anonymous.
+
+The survey contains a link to the test notebooks - please click on the link and
+the relevant notebook and either the data or machine learning test.
+
+Github will render the notebooks online if you'd like to read them, download them from the download links.
+
+Please open the test using the Jupyter notebook.
+
+The save icon is in the upper left corner - please save your work regularly, and
+once complete, email the entire notebook to Jeremy at Jjeremycgray+pythoncourse@gmail.com
