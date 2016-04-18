@@ -5,8 +5,8 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 18 Apr 2016 18:01:17 -0400</pubDate>
-    <lastBuildDate>Mon, 18 Apr 2016 18:01:17 -0400</lastBuildDate>
+    <pubDate>Mon, 18 Apr 2016 18:02:25 -0400</pubDate>
+    <lastBuildDate>Mon, 18 Apr 2016 18:02:25 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -32,7 +32,7 @@ once complete, email the entire notebook to Jeremy at jeremycgray+pythoncourse@g
         <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/04/18/test2r&d.html</link>
         <guid isPermaLink="true">http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/04/18/test2r&d.html</guid>
         
-        <category>R&amp;D Stream</category>
+        <category>R&amp;D stream</category>
         
         
       </item>
