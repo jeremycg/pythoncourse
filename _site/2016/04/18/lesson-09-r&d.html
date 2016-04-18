@@ -84,6 +84,8 @@
 virtual environment, connecting to and running queries with SQL, parallel
 processing and a brief introduction to version control.</p>
 
+<p>Download the notebook <a href="/pythoncourse/assets/notebooks/r&amp;d/Lesson 09 - r&amp;d.ipynb">here</a></p>
+
 <h3 id="virtual-environments">Virtual Environments</h3>
 
 <p>When working on a server, we need to be cognizant that others are also using the
@@ -434,7 +436,189 @@ GIL</a>.</p>
 We will then cover how we can use the iPython parallel procesisng implementation
 to generalise our parallel work.</p>
 
-<p><strong>In [None]:</strong></p>
+<p>We can define parallel tasks into two categories - <a href="https://en.wikipedia.org/wiki/Embarrassingly_parallel">Embarrassingly
+parallel</a> and inherently
+serial problems. Very briefly, a problem is embarrassingly parallel if it does
+not depend on previous steps. This way we can split it into multiple small
+chunks and pass it to multiple processes and not worry about cross talk.</p>
+
+<p>Algorithm design, again, is a little beyond this class. So if we have serial
+problems, think very carefully if they can be converted to non-serial problems,
+otherwise the programming will get very complicated.</p>
+
+<p>Depending on your implementation of BLAS, numpy will be natively parallel:</p>
+
+<p><strong>In [17]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span></code></pre></figure>
+
+<p>How do we change our BLAS? Well, you will need to build Python from source on
+your current machine/server, or download a version optimised for your current
+computer (my linux machine works with the default Anaconda, my windows one does
+not).</p>
+
+<p>Numpy also releases the GIL when running matrix operations. we can take
+advantage of this using threading….</p>
+
+<p>More advantagous however, is using the iPython parallel module. First we need to
+install it:</p>
+
+<p><code class="highlighter-rouge">
+conda install ipyparallel
+</code></p>
+
+<p>and start an instance:</p>
+
+<p><code class="highlighter-rouge">
+ipcluster start -n 4
+</code></p>
+
+<p>Now we can connect through our notebook (if we are running remotely, we need to
+play with the Client call):</p>
+
+<p><strong>In [3]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">ipyparallel</span> <span class="kn">as</span> <span class="nn">ipp</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">ipp</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span></code></pre></figure>
+
+<p><strong>In [4]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">c</span><span class="o">.</span><span class="n">ids</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[0, 1, 2, 3]
+</code></pre>
+</div>
+
+<p><strong>In [6]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">ourdview</span> <span class="o">=</span> <span class="n">c</span><span class="p">[:]</span></code></pre></figure>
+
+<p>Now we can call methods on our dview object to carry out parallel processing:</p>
+
+<p><strong>In [7]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">ourdview</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+
+<span class="n">y</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;AsyncMapResult: &lt;lambda&gt;&gt;
+</code></pre>
+</div>
+
+<p><strong>In [13]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">%</span><span class="n">time</span> <span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ourdview</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)));</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Wall time: 1.14 s
+</code></pre>
+</div>
+
+<p><strong>In [16]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">%</span><span class="n">time</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)));</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Wall time: 326 ms
+</code></pre>
+</div>
+
+<p>due to overhead, it is slower than the non-parallel version! As we increase
+complexity however, we increase our savings:</p>
+
+<p><strong>In [18]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">64</span><span class="p">,</span><span class="mi">48</span><span class="p">))</span>
+<span class="n">C_local</span> <span class="o">=</span> <span class="n">A</span><span class="o">*</span><span class="n">A</span></code></pre></figure>
+
+<p>We can use a decorator to automate (or at least try to) our functions:</p>
+
+<p><strong>In [19]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nd">@dview.parallel</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">pmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">A</span><span class="o">*</span><span class="n">B</span>
+
+<span class="n">C_remote</span> <span class="o">=</span> <span class="n">pmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">A</span><span class="p">)</span></code></pre></figure>
+
+<p><strong>In [21]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="p">(</span><span class="n">C_remote</span> <span class="o">==</span> <span class="n">C_local</span><span class="p">)</span><span class="o">.</span><span class="nb">all</span><span class="p">()</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>True
+</code></pre>
+</div>
+
+<p>The main method for carrying out functions, is the .apply method:</p>
+
+<p>viewobj.apply(function, args, kwargs)</p>
+
+<p><strong>In [29]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">myfunc</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">ourdview</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="n">myfunc</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">y</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;AsyncResult: myfunc&gt;
+</code></pre>
+</div>
+
+<p><strong>In [30]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">list</span><span class="p">(</span><span class="n">y</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[1, 2, 3, 4, 1, 2, 3, 4],
+ [1, 2, 3, 4, 1, 2, 3, 4],
+ [1, 2, 3, 4, 1, 2, 3, 4],
+ [1, 2, 3, 4, 1, 2, 3, 4]]
+</code></pre>
+</div>
+
+<p>We can push our variables to the remote sessions:</p>
+
+<p><strong>In [41]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">ourdview</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;AsyncResult: _push&gt;
+</code></pre>
+</div>
+
+<p><strong>In [35]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">list</span><span class="p">(</span><span class="n">ourdview</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="s">'a'</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4]]
+</code></pre>
+</div>
+
+<p><strong>In [42]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">list</span><span class="p">(</span><span class="n">ourdview</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[1, 2, 3, 4, 1, 2, 3, 4, 1],
+ [1, 2, 3, 4, 1, 2, 3, 4, 1],
+ [1, 2, 3, 4, 1, 2, 3, 4, 1],
+ [1, 2, 3, 4, 1, 2, 3, 4, 1]]
+</code></pre>
+</div>
+
+<p>That’s the very basic introduction to parallel processing in python - <a href="https://ipyparallel.readthedocs.org/en/latest/index.html#">read the
+documentation</a> and
+use google to figure out how to speed up your own code.</p>
+
+<p>If you are using scikit learn, to use parallel computation, we can use the
+<a href="https://pythonhosted.org/joblib/">joblib library</a>, or use <a href="http://nbviewer.jupyter.org/gist/ogrisel/5115540/Model%20Selection%20for%20t
+he%20Nystroem%20Method.ipynb">ipython as noted abo
+ve</a>.</p>
 
 <h3 id="version-control">Version Control</h3>
 
