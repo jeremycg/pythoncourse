@@ -5,12 +5,12 @@
     <description>A website to house content for the Python for Precima course taught by Jeremy Gray</description>
     <link>http://jeremy.kiwi.nz/pythoncourse/pythoncourse/</link>
     <atom:link href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 18 Apr 2016 07:41:25 -0400</pubDate>
-    <lastBuildDate>Mon, 18 Apr 2016 07:41:25 -0400</lastBuildDate>
+    <pubDate>Mon, 18 Apr 2016 07:43:04 -0400</pubDate>
+    <lastBuildDate>Mon, 18 Apr 2016 07:43:04 -0400</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
-        <title>Test 01 - Base Python</title>
+        <title>Test 02 - End of Course</title>
         <description>&lt;h2 id=&quot;welcome-to-test-2&quot;&gt;Welcome to Test 2&lt;/h2&gt;
 
 &lt;p&gt;Please read these instructions carefully!&lt;/p&gt;
