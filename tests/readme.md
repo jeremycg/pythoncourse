@@ -1,6 +1,6 @@
 The above tests can be directly downloaded at:
 
-# Test 1
+### Test 1
 
 [applied](http://www.jeremy.kiwi.nz/pythoncourse/assets/tests/Test 1 - applied.ipynb)
 
