@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Test 02 - Answers</title>
+  <meta name="description" content="Test 2: Machine learning">
+
+  <link rel="stylesheet" href="/pythoncourse/css/main.css">
+  <link rel="canonical" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/2016/05/23/test2-rd-answers.html">
+  <link rel="alternate" type="application/rss+xml" title="Python @ Precima" href="http://jeremy.kiwi.nz/pythoncourse/pythoncourse/feed.xml">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <a class="site-title" href="/pythoncourse/">Python @ Precima</a>
+
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg viewBox="0 0 18 15">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger">
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/Applied%20Statistics%20stream/">Applied Statistics stream</a>
+          
+        
+          
+          <a class="page-link" href="/pythoncourse/tag/R&D%20stream/">R&D stream</a>
+          
+        
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-73837623-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <div class="page-content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Test 02 - Answers</h1>
+    <p class="post-meta"><time datetime="2016-05-23T00:00:00-04:00" itemprop="datePublished">May 23, 2016</time> • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Jeremy</span></span></p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <h3 id="test-2-machine-learning">Test 2: Machine learning</h3>
+
+<p>Here are the answers, see <a href="/pythoncourse/assets/tests/test2 - rd answers.ipynb">the notebook here</a>.</p>
+
+<p>In this test we will use the entire dataset from the walmart kaggle challenge,
+do some feature engineering and data munging, then fit a random forest model to
+our data.</p>
+
+<p>Again, the data is a csv file which contains one line for each scan on their
+system, with a Upc, Weekday, ScanCount, DepartmentDescription and
+FinelineNumber.</p>
+
+<p>The VisitNumber column groups our data into baskets - Every unique VisitNumber
+is a unique basket, with a basket possibly containing multiple scans.</p>
+
+<p>The label is the TripType column, which is Walmarts proprietary way of
+clustering their visits into categories. We wish to match their algorithm, and
+predict the category of some of our held out data.</p>
+
+<p>This time we will use the full dataset - we have about 650,000 lines, in about
+100,000 baskets. Just as a heads up, using 100 classifiers, my answer to the
+test takes less than 3 minutes to run - no need for hours and hours of
+computation.</p>
+
+<p>If you do need to run this script multiple times, download the dataset from the
+website rather than redownloading each time, as it’s around 30 mb.</p>
+
+<p>Please answer the questions in the cells below them - feel free to answer out of
+order, but leave comments saying where you carried out the answer. I am working
+more or less step by step through my answer - Feel free to add on extra
+predictors if you can think of them.</p>
+
+<p>1. Import the modules you will use for the rest of the test:</p>
+
+<p><strong>In [1]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">ensemble</span>
+<span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.grid_search</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">KFold</span>
+<span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">cross_val_score</span></code></pre></figure>
+
+<p>2. Read in the data, and check its head. The data is available on the website
+at: http://jeremy.kiwi.nz/pythoncourse/assets/tests/test2data.csv</p>
+
+<p><strong>In [2]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">dat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"c:/users/jeremy/desktop/kaglewalmart/data/train.csv"</span><span class="p">)</span>
+<span class="n">dat</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></figure>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TripType</th>
+      <th>VisitNumber</th>
+      <th>Weekday</th>
+      <th>Upc</th>
+      <th>ScanCount</th>
+      <th>DepartmentDescription</th>
+      <th>FinelineNumber</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>999</td>
+      <td>5</td>
+      <td>Friday</td>
+      <td>6.811315e+10</td>
+      <td>-1</td>
+      <td>FINANCIAL SERVICES</td>
+      <td>1000.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>30</td>
+      <td>7</td>
+      <td>Friday</td>
+      <td>6.053882e+10</td>
+      <td>1</td>
+      <td>SHOES</td>
+      <td>8931.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>30</td>
+      <td>7</td>
+      <td>Friday</td>
+      <td>7.410811e+09</td>
+      <td>1</td>
+      <td>PERSONAL CARE</td>
+      <td>4504.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>26</td>
+      <td>8</td>
+      <td>Friday</td>
+      <td>2.238404e+09</td>
+      <td>2</td>
+      <td>PAINT AND ACCESSORIES</td>
+      <td>3565.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>26</td>
+      <td>8</td>
+      <td>Friday</td>
+      <td>2.006614e+09</td>
+      <td>2</td>
+      <td>PAINT AND ACCESSORIES</td>
+      <td>1017.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>3. Fix the Weekday and DepartmentDescription into dummified data. For now they
+can be seperate dataframes</p>
+
+<p><strong>In [3]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#now fix the categorical variables</span>
+<span class="n">weekdum</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="s">'Weekday'</span><span class="p">])</span>
+<span class="n">weekdum</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">departdum</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="s">'DepartmentDescription'</span><span class="p">])</span>
+<span class="n">departdum</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></figure>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>1-HR PHOTO</th>
+      <th>ACCESSORIES</th>
+      <th>AUTOMOTIVE</th>
+      <th>BAKERY</th>
+      <th>BATH AND SHOWER</th>
+      <th>BEAUTY</th>
+      <th>BEDDING</th>
+      <th>BOOKS AND MAGAZINES</th>
+      <th>BOYS WEAR</th>
+      <th>BRAS &amp; SHAPEWEAR</th>
+      <th>...</th>
+      <th>SEAFOOD</th>
+      <th>SEASONAL</th>
+      <th>SERVICE DELI</th>
+      <th>SHEER HOSIERY</th>
+      <th>SHOES</th>
+      <th>SLEEPWEAR/FOUNDATIONS</th>
+      <th>SPORTING GOODS</th>
+      <th>SWIMWEAR/OUTERWEAR</th>
+      <th>TOYS</th>
+      <th>WIRELESS</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 68 columns</p>
+</div>
+
+<p>4. Drop the unneeded columns from the raw data - I suggest removing -
+‘Weekday’, ‘Upc’, ‘DepartmentDescription’ and ‘FinelineNumber’ (we could dummify
+Upc and FineLine, but this will massively increase our data size.)</p>
+
+<p><strong>In [4]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#drop the useless columns:</span>
+<span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s">'Weekday'</span><span class="p">,</span> <span class="s">'Upc'</span><span class="p">,</span> <span class="s">'DepartmentDescription'</span><span class="p">,</span> <span class="s">'FinelineNumber'</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">dat</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></figure>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TripType</th>
+      <th>VisitNumber</th>
+      <th>ScanCount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>999</td>
+      <td>5</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>30</td>
+      <td>7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>30</td>
+      <td>7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>26</td>
+      <td>8</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>26</td>
+      <td>8</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>5. Correct the Dummified data for number bought in each ScanCount. I would
+recommend something like:</p>
+
+<p><code class="highlighter-rouge">departdummies.multiply(dat['ScanCount'], axis = 0)</code></p>
+
+<p><strong>In [5]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#correct for scancount</span>
+<span class="n">departdum</span> <span class="o">=</span> <span class="n">departdum</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="s">'ScanCount'</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">departdum</span><span class="p">[</span><span class="s">'ScanCount'</span><span class="p">]</span> <span class="o">=</span> <span class="n">dat</span><span class="p">[</span><span class="s">'ScanCount'</span><span class="p">]</span>
+<span class="n">dat</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s">'ScanCount'</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span></code></pre></figure>
+
+<p>6. Concatenate back together the dummy variables with the main dataframe</p>
+
+<p><strong>In [6]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">dat</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">dat</span><span class="p">,</span> <span class="n">weekdum</span><span class="p">,</span> <span class="n">departdum</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">dat</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></figure>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TripType</th>
+      <th>VisitNumber</th>
+      <th>Friday</th>
+      <th>Monday</th>
+      <th>Saturday</th>
+      <th>Sunday</th>
+      <th>Thursday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>1-HR PHOTO</th>
+      <th>...</th>
+      <th>SEASONAL</th>
+      <th>SERVICE DELI</th>
+      <th>SHEER HOSIERY</th>
+      <th>SHOES</th>
+      <th>SLEEPWEAR/FOUNDATIONS</th>
+      <th>SPORTING GOODS</th>
+      <th>SWIMWEAR/OUTERWEAR</th>
+      <th>TOYS</th>
+      <th>WIRELESS</th>
+      <th>ScanCount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>999</td>
+      <td>5</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>-0.0</td>
+      <td>...</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>-0.0</td>
+      <td>-1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>30</td>
+      <td>7</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>30</td>
+      <td>7</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>26</td>
+      <td>8</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>26</td>
+      <td>8</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 78 columns</p>
+</div>
+
+<p>7. Summarise the data for each basket (hint, if you groupby columns, an .agg()
+method will not apply to them)</p>
+
+<p><strong>In [7]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">dat1</span> <span class="o">=</span> <span class="n">dat</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s">'TripType'</span><span class="p">,</span> <span class="s">'VisitNumber'</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span>
+<span class="n">dat1</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></figure>
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>Friday</th>
+      <th>Monday</th>
+      <th>Saturday</th>
+      <th>Sunday</th>
+      <th>Thursday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>1-HR PHOTO</th>
+      <th>ACCESSORIES</th>
+      <th>AUTOMOTIVE</th>
+      <th>...</th>
+      <th>SEASONAL</th>
+      <th>SERVICE DELI</th>
+      <th>SHEER HOSIERY</th>
+      <th>SHOES</th>
+      <th>SLEEPWEAR/FOUNDATIONS</th>
+      <th>SPORTING GOODS</th>
+      <th>SWIMWEAR/OUTERWEAR</th>
+      <th>TOYS</th>
+      <th>WIRELESS</th>
+      <th>ScanCount</th>
+    </tr>
+    <tr>
+      <th>TripType</th>
+      <th>VisitNumber</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">3</th>
+      <th>106</th>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>121</th>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>153</th>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>162</th>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>164</th>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 76 columns</p>
+</div>
+
+<p>8. Use the reset_index() method to remove your groupings. As we did not cover
+multiple indices in the lesson, my answer was</p>
+
+<p><code class="highlighter-rouge">dat1 = dat1.reset_index()</code></p>
+
+<p><strong>In [8]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">dat1</span> <span class="o">=</span> <span class="n">dat1</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span></code></pre></figure>
+
+<p>9. Split the data into training and testing sets: Use 0.25 of the data in the
+test set.</p>
+
+<p><strong>In [9]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">classes</span> <span class="o">=</span> <span class="n">dat1</span><span class="o">.</span><span class="n">TripType</span>
+<span class="n">dat1</span> <span class="o">=</span> <span class="n">dat1</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'TripType'</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">classes</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> \
+    <span class="n">train_test_split</span><span class="p">(</span><span class="n">dat1</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span></code></pre></figure>
+
+<p>10. Construct at least two more features for the data - For Example, a 1/0
+variable for if any product was returned (ScanCount &lt; 0). You might want to do
+this step before splitting the data as above</p>
+
+<p><strong>In [10]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#lots of good answers here!</span></code></pre></figure>
+
+<p>11. Plot the training data using matplotlib or seaborn. Choose at least 3
+meaningful plots to present aspects of the data.</p>
+
+<p><strong>In [11]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#lots of good answers here</span></code></pre></figure>
+
+<p>12. Take out the TripType from our dataframe - we don’t want our label as a
+feature.</p>
+
+<p>Make sure to save it somewhere though, as our model needs to be fit to these
+labels.</p>
+
+<p><strong>In [12]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#see part 9</span></code></pre></figure>
+
+<p>13. Describe and fit a pipeline that carries out a kfold crossvalidation
+randomforest model on the data. Include any relevant preprocessing steps such as
+centering and scaling. The kfold might need to be outside the pipeline.</p>
+
+<p><strong>In [13]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">(</span><span class="s">'rf'</span><span class="p">,</span> <span class="n">RandomForestClassifier</span><span class="p">())</span>
+        <span class="c">#we don't really need preprocessing, the bootstrapped nature of RF takes care of it for use</span>
+        <span class="c">#most people chose a sensible option anyway!</span>
+        <span class="p">])</span>
+
+<span class="c">#kfold, using the Kfold package</span>
+<span class="c">#most people did this</span>
+<span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="n">n_folds</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">kf</span><span class="p">:</span>
+    <span class="n">pipe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">y_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_index</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">pipe</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>0.626322170659
+0.626991094945
+0.622684894853
+</code></pre>
+</div>
+
+<p><strong>In [14]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#I really wanted this, but explained it very poorly in the original question.</span>
+<span class="c">#apologies!</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">scores</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>array([ 0.61009174,  0.61923639,  0.6049718 ,  0.62408377,  0.61556208])
+</code></pre>
+</div>
+
+<p>14. Modify your pipeline to include a grid search for a variable in the
+RandomForest model. Try at least 3 values, choose a sensible variable to
+optimise. (NB this question has changed from the initial version)</p>
+
+<p><strong>In [15]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">estimators</span> <span class="o">=</span> <span class="p">{</span><span class="s">'rf__n_estimators'</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">))}</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">estimators</span><span class="p">)</span>
+<span class="n">gs</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>GridSearchCV(cv=None, error_score='raise',
+       estimator=Pipeline(steps=[('rf', RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False))]),
+       fit_params={}, iid=True, n_jobs=1,
+       param_grid={'rf__n_estimators': [10, 20]}, pre_dispatch='2*n_jobs',
+       refit=True, scoring=None, verbose=0)
+</code></pre>
+</div>
+
+<p><strong>In [16]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">gs</span><span class="o">.</span><span class="n">best_estimator_</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Pipeline(steps=[('rf', RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='auto', max_leaf_nodes=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=20, n_jobs=1,
+            oob_score=False, random_state=None, verbose=0,
+            warm_start=False))])
+</code></pre>
+</div>
+
+<p>15. What is the score of the model on the training data?</p>
+
+<p><strong>In [21]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#we could just use our fitted CV here...</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">(</span><span class="s">'rf'</span><span class="p">,</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span> <span class="o">=</span> <span class="mi">20</span><span class="p">))])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>0.99396557731168556
+</code></pre>
+</div>
+
+<p>16. What is the score of the model on the testing data?</p>
+
+<p><strong>In [22]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>0.64045319620385466
+</code></pre>
+</div>
+
+<p>17. What is the most important variable? Can you explain the model?</p>
+
+<p><strong>In [23]:</strong></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">importances</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">named_steps</span><span class="p">[</span><span class="s">'rf'</span><span class="p">]</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="n">max_index</span><span class="p">,</span> <span class="n">max_value</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">importances</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Feature {x} was the most important, with an importance value of {y}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">dat1</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">max_index</span><span class="p">],</span> <span class="n">y</span> <span class="o">=</span> <span class="n">max_value</span><span class="p">))</span></code></pre></figure>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Feature ScanCount was the most important, with an importance value of 0.16822170595499625
+</code></pre>
+</div>
+
+<p>Thanks for taking the Python Course!</p>
+
+<p>Please save your notebook file as ‘your name - test2.ipynb’, and email it to
+jeremycgray+pythoncourse@gmail.com by the 2nd of May.</p>
+
+  </div>
+  
+      <div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'jeremycg';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+  
+</article>
+
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Python @ Precima</h2>
+
+
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
